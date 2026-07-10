@@ -1,764 +1,780 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surya Ghosh | Finance Educator & Multi-Topic Mentor</title>
-  <meta name="description" content="Learn practical money, career, and high-value life skills that school never taught you. Simple, self-paced, and conversion-focused education for the next generation.">
-  
-  <!-- SEO Meta Tags -->
-  <meta property="og:title" content="Surya Ghosh | Finance Educator & Multi-Topic Mentor">
-  <meta property="og:description" content="Learn practical money, career, and life skills that actually matter. Premium actionable courses tailored for students and young professionals.">
-  <meta property="og:type" content="website">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surya Finance Freedom — Master Your Money. Design the Life You Actually Want.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF7F0;
+  --cream-2:#F3EEE2;
+  --teal:#0A3D4C;
+  --teal-deep:#072A35;
+  --forest:#1E5631;
+  --gold:#C9A14D;
+  --gold-soft:#E4C98A;
+  --ink:#1B2B31;
+  --muted:#5D6E73;
+  --card:#FFFFFF;
+  --line:rgba(10,61,76,.12);
+  --shadow:0 18px 50px -18px rgba(10,61,76,.22);
+  --sky-a:#FAF3E3; --sky-b:#F4DFB7; --sky-c:#E8C58A;
+  --ridge-1:#0A3D4C; --ridge-2:#14526A; --ridge-3:#2C6E86;
+  --sun:#C9A14D;
+  --radius:20px;
+}
+[data-theme="dark"]{
+  --cream:#071E26;
+  --cream-2:#0A2733;
+  --teal:#0A3D4C;
+  --teal-deep:#04141A;
+  --forest:#7FBF95;
+  --ink:#F2EDE1;
+  --muted:#9FB3B8;
+  --card:#0D3040;
+  --line:rgba(250,247,240,.14);
+  --shadow:0 18px 50px -18px rgba(0,0,0,.55);
+  --sky-a:#0A2733; --sky-b:#0E3A4A; --sky-c:#1B5468;
+  --ridge-1:#04141A; --ridge-2:#072A35; --ridge-3:#0D3949;
+  --sun:#E4C98A;
+  --gold:#D9B966;
+  --gold-soft:#EAD49B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{
+  font-family:'Newsreader',Georgia,serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:17.5px;
+  transition:background .4s ease,color .4s ease;
+}
+h1,h2,h3,h4,.btn,nav,.eyebrow,.stat b,.card h3,.num{font-family:'Bricolage Grotesque',system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);border-radius:2px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
 
-  <!-- Core Premium Stylesheet -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+/* ---------- NAV ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--cream) 82%,transparent);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.logo .sunmark{
+  width:34px;height:34px;border-radius:50%;
+  background:radial-gradient(circle at 50% 42%,var(--gold-soft),var(--gold) 68%);
+  position:relative;flex:none;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 18%,transparent);
+}
+.logo .sunmark::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:46%;
+  background:var(--teal);border-radius:0 0 17px 17px;
+}
+[data-theme="dark"] .logo .sunmark::after{background:var(--teal-deep)}
+.logo small{display:block;font-weight:500;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.nav-links{display:flex;gap:34px;font-size:15px;font-weight:500}
+.nav-links a{position:relative;padding:6px 0;color:var(--ink);opacity:.85}
+.nav-links a:hover{opacity:1}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .25s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.theme-toggle{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;font-size:18px;line-height:1;
+  display:grid;place-items:center;transition:transform .2s;color:var(--ink);
+}
+.theme-toggle:hover{transform:rotate(20deg)}
+.hamburger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;font-size:20px;color:var(--ink)}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 30px;border-radius:999px;font-weight:600;font-size:15.5px;
+  border:none;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+  letter-spacing:.01em;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  color:#2B2005;
+  box-shadow:0 10px 30px -8px color-mix(in srgb,var(--gold) 65%,transparent);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 38px -8px color-mix(in srgb,var(--gold) 75%,transparent)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-teal{background:var(--teal);color:#FAF7F0}
+[data-theme="dark"] .btn-teal{background:var(--gold);color:#2B2005}
+.btn-teal:hover{transform:translateY(-2px)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;min-height:88vh;display:flex;align-items:center}
+.horizon{position:absolute;inset:0;z-index:0}
+.horizon svg{width:100%;height:100%;display:block}
+.hero-inner{position:relative;z-index:2;padding:110px 0 160px;max-width:720px}
+.hero h1{
+  font-size:clamp(40px,6vw,76px);
+  font-weight:800;line-height:1.04;letter-spacing:-.028em;
+  margin:22px 0 24px;
+}
+.hero h1 .accent{color:var(--gold);font-style:normal}
+.hero p.sub{
+  font-size:clamp(17px,1.6vw,21px);color:var(--muted);
+  max-width:560px;font-weight:400;
+}
+.hero .cta-row{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:44px;margin-top:56px;flex-wrap:wrap}
+.stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em}
+.stat span{font-size:13.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-family:'Bricolage Grotesque',sans-serif;font-weight:500}
+.sun-orb{
+  position:absolute;z-index:1;right:8%;top:16%;
+  width:min(320px,26vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 42% 38%,var(--gold-soft),var(--sun) 62%,transparent 74%);
+  filter:blur(1px);
+  box-shadow:0 0 120px 40px color-mix(in srgb,var(--sun) 32%,transparent);
+  animation:rise 2.4s ease-out both;
+}
+@keyframes rise{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ---------- SECTIONS ---------- */
+section{padding:104px 0}
+.section-head{max-width:640px;margin-bottom:58px}
+.section-head h2{font-size:clamp(30px,3.6vw,46px);font-weight:700;letter-spacing:-.025em;line-height:1.12;margin:16px 0 14px}
+.section-head p{color:var(--muted);font-size:18px}
+.arc-divider{height:70px;overflow:hidden}
+.arc-divider svg{width:100%;height:100%;display:block}
+
+/* ---------- FEATURE CARDS ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:36px 32px;box-shadow:var(--shadow);
+  transition:transform .25s ease,border-color .25s ease;
+  position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
+.card .glyph{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  font-size:26px;margin-bottom:22px;
+  background:color-mix(in srgb,var(--gold) 14%,transparent);
+}
+.card h3{font-size:21px;font-weight:700;letter-spacing:-.015em;margin-bottom:10px}
+.card p{color:var(--muted);font-size:16px}
+.card .link{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;color:var(--gold)}
+.card .link:hover{gap:12px}
+.card .link{transition:gap .2s}
+
+/* ---------- CALCULATOR ---------- */
+.calc-section{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.calc-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start}
+.calc-panel{
+  background:var(--card);border:1px solid var(--line);border-radius:24px;
+  padding:38px;box-shadow:var(--shadow);
+}
+.field{margin-bottom:26px}
+.field label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;
+  margin-bottom:10px;letter-spacing:.02em;
+}
+.field label output{color:var(--gold);font-size:16px;font-variant-numeric:tabular-nums}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
+  background:linear-gradient(to right,var(--gold) var(--fill,50%),var(--line) var(--fill,50%));
+  outline-offset:6px;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--card);border:3.5px solid var(--gold);
+  box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:grab;
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--card);
+  border:3.5px solid var(--gold);box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:grab;
+}
+.result-panel{position:sticky;top:100px}
+.result-hero{
+  background:linear-gradient(160deg,var(--teal),var(--teal-deep));
+  color:#FAF7F0;border-radius:24px;padding:40px 38px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.result-hero::before{
+  content:"";position:absolute;right:-70px;top:-70px;width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--gold) 55%,transparent),transparent 70%);
+}
+.result-hero .eyebrow{color:var(--gold-soft)}
+.num{font-size:clamp(40px,4.4vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;margin:10px 0 4px}
+.result-hero .when{font-size:16px;opacity:.85;font-style:italic}
+.result-rows{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
+.rrow{background:rgba(250,247,240,.08);border:1px solid rgba(250,247,240,.16);border-radius:14px;padding:16px 18px}
+.rrow b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-variant-numeric:tabular-nums}
+.rrow span{font-size:12.5px;opacity:.75;letter-spacing:.08em;text-transform:uppercase;font-family:'Bricolage Grotesque',sans-serif}
+.progress-arc{margin-top:30px}
+.progress-arc svg{width:100%;display:block}
+.calc-note{font-size:13.5px;color:var(--muted);margin-top:18px;font-style:italic}
+
+/* ---------- COURSES ---------- */
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.course{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
+  transition:transform .25s;
+}
+.course:hover{transform:translateY(-6px)}
+.course .banner{
+  height:120px;position:relative;
+  background:linear-gradient(140deg,var(--teal),var(--forest));
+  display:flex;align-items:flex-end;padding:18px 24px;
+}
+.course:nth-child(2) .banner{background:linear-gradient(140deg,var(--forest),var(--teal))}
+.course:nth-child(3) .banner{background:linear-gradient(140deg,var(--teal-deep),var(--teal))}
+.course:nth-child(4) .banner{background:linear-gradient(140deg,#5A3E1B,var(--gold))}
+.course:nth-child(5) .banner{background:linear-gradient(140deg,var(--teal),#134B3A)}
+.course:nth-child(6) .banner{background:linear-gradient(140deg,#123240,var(--forest))}
+.course .level{
+  font-family:'Bricolage Grotesque',sans-serif;font-size:11.5px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:#FAF7F0;
+  background:rgba(0,0,0,.28);padding:6px 12px;border-radius:999px;
+}
+.course .body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
+.course h3{font-size:19.5px;font-weight:700;letter-spacing:-.015em;margin-bottom:8px}
+.course p{color:var(--muted);font-size:15.5px;flex:1}
+.course .meta{
+  display:flex;justify-content:space-between;align-items:center;margin-top:22px;
+  font-family:'Bricolage Grotesque',sans-serif;
+}
+.course .price{font-weight:800;font-size:19px;color:var(--gold)}
+.course .lessons{font-size:13px;color:var(--muted);font-weight:500}
+
+/* ---------- STORIES ---------- */
+.stories{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.story{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:34px 30px;box-shadow:var(--shadow);
+}
+.story blockquote{
+  font-size:17.5px;font-style:italic;font-weight:400;line-height:1.6;
+  color:var(--ink);
+}
+.story blockquote::before{content:"“";color:var(--gold);font-size:44px;line-height:0;display:block;margin:14px 0 2px;font-family:Georgia,serif}
+.story .who{display:flex;align-items:center;gap:14px;margin-top:24px}
+.story .avatar{
+  width:48px;height:48px;border-radius:50%;flex:none;
+  display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:700;color:#FAF7F0;font-size:16px;
+  background:linear-gradient(140deg,var(--teal),var(--forest));
+}
+.story:nth-child(2) .avatar{background:linear-gradient(140deg,var(--gold),#8A6620)}
+.story:nth-child(3) .avatar{background:linear-gradient(140deg,var(--forest),var(--teal))}
+.story .who b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:15.5px}
+.story .who span{font-size:13.5px;color:var(--muted)}
+.story .badge{
+  display:inline-block;margin-top:16px;font-family:'Bricolage Grotesque',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--forest);background:color-mix(in srgb,var(--forest) 12%,transparent);
+  padding:6px 12px;border-radius:999px;
+}
+[data-theme="dark"] .story .badge{color:var(--gold-soft);background:color-mix(in srgb,var(--gold) 14%,transparent)}
+
+/* ---------- ABOUT ---------- */
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.portrait{
+  aspect-ratio:4/5;border-radius:26px;position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--sky-b),var(--sky-c) 55%,var(--teal) 56%);
+  box-shadow:var(--shadow);
+}
+.portrait .p-sun{position:absolute;left:50%;top:34%;transform:translateX(-50%);width:34%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 45% 40%,var(--gold-soft),var(--gold));box-shadow:0 0 60px 18px color-mix(in srgb,var(--gold) 40%,transparent)}
+.portrait .p-fig{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:14%;aspect-ratio:1/2.6;background:var(--teal-deep);border-radius:40px 40px 8px 8px}
+.portrait .p-fig::before{content:"";position:absolute;top:-16%;left:50%;transform:translateX(-50%);width:64%;aspect-ratio:1;border-radius:50%;background:var(--teal-deep)}
+.portrait .p-ridge{position:absolute;left:0;right:0;bottom:0;height:26%;background:var(--teal);border-radius:100% 100% 0 0 / 55% 55% 0 0}
+.portrait figcaption{
+  position:absolute;left:20px;bottom:20px;z-index:2;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:14px;padding:12px 18px;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;font-weight:600;
+}
+.about-copy h2{font-size:clamp(30px,3.4vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.14;margin:16px 0 20px}
+.about-copy p{color:var(--muted);margin-bottom:16px}
+.about-copy .pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 32px}
+.pillar{border-left:3px solid var(--gold);padding:4px 0 4px 16px}
+.pillar b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:15.5px}
+.pillar span{font-size:14px;color:var(--muted)}
+
+/* ---------- CTA BAND ---------- */
+.cta-band{
+  background:linear-gradient(150deg,var(--teal),var(--teal-deep));
+  border-radius:30px;padding:74px 60px;text-align:center;color:#FAF7F0;
+  position:relative;overflow:hidden;box-shadow:var(--shadow);
+}
+.cta-band::before{
+  content:"";position:absolute;left:50%;bottom:-140px;transform:translateX(-50%);
+  width:480px;height:280px;border-radius:50% 50% 0 0;
+  background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--gold) 50%,transparent),transparent 70%);
+}
+.cta-band h2{font-size:clamp(28px,3.6vw,44px);font-weight:800;letter-spacing:-.025em;line-height:1.12;position:relative}
+.cta-band p{opacity:.85;max-width:520px;margin:16px auto 34px;position:relative}
+.cta-band .btn{position:relative}
+
+/* ---------- FOOTER ---------- */
+footer{padding:70px 0 44px;border-top:1px solid var(--line)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:50px}
+.foot-grid h4{font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;color:var(--muted)}
+.foot-grid a{display:block;font-size:15.5px;margin-bottom:11px;color:var(--ink);opacity:.8}
+.foot-grid a:hover{opacity:1;color:var(--gold)}
+.foot-brand p{color:var(--muted);font-size:15px;margin-top:16px;max-width:300px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);flex-wrap:wrap;gap:12px}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1000px){
+  .cards,.course-grid,.story-grid{grid-template-columns:1fr 1fr}
+  .calc-grid{grid-template-columns:1fr}
+  .result-panel{position:static}
+  .about-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .sun-orb{right:-6%;top:8%}
+}
+@media (max-width:680px){
+  .nav-links{display:none;position:absolute;top:74px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--line);flex-direction:column;gap:0;padding:10px 28px 20px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:17px}
+  .hamburger{display:block}
+  .nav-cta .btn{display:none}
+  .cards,.course-grid,.story-grid,.foot-grid{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .hero-inner{padding:80px 0 130px}
+  .hero-stats{gap:26px}
+  .calc-panel,.result-hero{padding:28px 22px}
+  .cta-band{padding:56px 26px}
+  .result-rows{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
 
-  <!-- ==========================================================================
-       Header Navigation
-       ========================================================================== -->
-  <header class="header" id="academy-header">
-    <div class="container header-container">
-      <!-- Premium Styled Brand Logo -->
-      <a href="#home" class="logo" id="brand-logo">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.68 0-5.302.2-7.854.582V21M3 21h18" />
-        </svg>
-        <span>Surya Ghosh</span>
-      </a>
-
-      <!-- Navigation Menu -->
-      <nav class="nav-menu" id="nav-menu">
-        <a href="#home" class="nav-link active" id="nav-home">Home</a>
-        <a href="#about" class="nav-link" id="nav-about">About</a>
-        <a href="#courses" class="nav-link" id="nav-courses">Courses</a>
-        <a href="#contact" class="nav-link" id="nav-contact">Contact & Community</a>
-      </nav>
-
-      <!-- Utility Actions -->
-      <div class="nav-actions">
-        <!-- Dual Mode Theme Toggle Switcher -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light and dark theme">
-          <!-- Sun Icon -->
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21M5.25 5.25l1.591 1.591M18.296 18.296l1.591 1.591M3 12h2.25m13.5 0H21M5.25 19.5l1.591-1.591M18.296 5.25l1.591 1.591M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z" />
-          </svg>
-          <!-- Moon Icon -->
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998z" />
-          </svg>
-        </button>
-
-        <a href="#courses" class="btn btn-primary btn-sm btn-header-cta" style="display: inline-flex;">Start Learning</a>
-
-        <!-- Responsive Mobile Burger Menu Button -->
-        <button class="menu-btn" id="mobile-menu-btn" aria-label="Open navigation drawer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 24px; height: 24px;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ==========================================================================
-       Home View Section Container
-       ========================================================================== */ -->
-  <main>
-    <section class="view-section active" id="home-view">
-      <!-- 1. Hero Module -->
-      <div class="hero">
-        <div class="container hero-grid">
-          <div class="hero-content">
-            <h1>Learn money, career, and life skills that <span>actually matter.</span></h1>
-            <p>Practical, simplified courses designed to help students and young professionals master personal finance and high-value life skills traditional school skipped.</p>
-            <div class="hero-actions">
-              <a href="#courses" class="btn btn-primary">Explore Courses</a>
-              <a href="#about" class="btn btn-secondary">Meet Your Mentor</a>
-            </div>
-            <!-- Credibility Stats -->
-            <div class="hero-stats">
-              <div class="stat-item">
-                <span class="stat-val">15,000+</span>
-                <span class="stat-lbl">Learners</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">4.9/5</span>
-                <span class="stat-lbl">Course Rating</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">100K+</span>
-                <span class="stat-lbl">YouTube Peers</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Character Frame Illustration Placeholder -->
-          <div class="hero-visual">
-            <div class="visual-canvas">
-              <div class="visual-bg-glow"></div>
-              <div class="avatar-wrapper">
-                <img src="assets/images/surya_portrait.jpg" alt="Surya Ghosh portrait">
-              </div>
-              <!-- Floating Interactive Badges -->
-              <div class="badge-float badge-float-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <div class="badge-text">
-                  <h4>Practical Finance</h4>
-                  <p>No textbook definitions</p>
-                </div>
-              </div>
-              <div class="badge-float badge-float-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                </svg>
-                <div class="badge-text">
-                  <h4>Premium Mentor</h4>
-                  <p>15k+ careers upgraded</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Credibility Section: Why Surya? -->
-      <div class="section why-section">
-        <div class="container">
-          <div class="section-header" style="text-align: center; margin: 0 auto 4rem;">
-            <span class="tag">The Teaching Philosophy</span>
-            <h2>Why Learn From Surya Ghosh?</h2>
-            <p>Most education platforms throw heavy terminology and rigid exams at you. Surya offers real-world systems built around execution.</p>
-          </div>
-          <div class="why-grid">
-            <div class="why-card">
-              <div class="why-card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.467 5.99 5.99 0 0 0-1.925-3.546 5.974 5.974 0 0 1-2.133-1A3.75 3.75 0 0 0 2.25 6c0 1.353.716 2.53 1.793 3.193a5.99 5.99 0 0 0 3.09 7.31A3.75 3.75 0 0 0 12 18z" />
-                </svg>
-              </div>
-              <h3>100% Practical Insights</h3>
-              <p>Forget dry slides. We open real demat accounts, optimize direct tax sheets, and write resume drafts live together.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A9.342 9.342 0 0 0 12 21a9.34 9.34 0 0 0-3-.763v-.11a9.38 9.38 0 0 0-5.59-6.38 4.125 4.125 0 0 0-7.532 2.492 9.337 9.337 0 0 0 4.121.953 9.38 9.38 0 0 0 2.625-.372M12 21c-1.11 0-2.16-.285-3.07-.786m6.14 0A9.342 9.342 0 0 0 15 19.128" />
-                </svg>
-              </div>
-              <h3>Scalable Life Skills Ecosystem</h3>
-              <p>Finance is our core, but we expand your value stack with productivity loops, nocode setups, and job-ready networking tactics.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3>Supportive Peer Community</h3>
-              <p>Never study in isolation again. Connect with 15,000+ peers in our private Discord, complete with monthly live Q&As and mentorship pools.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Honors & National Innovations (Achievements) -->
-      <div class="section" id="achievements-section">
-        <div class="container">
-          <div class="section-header" style="text-align: center; margin: 0 auto 4rem; max-width: 700px;">
-            <span class="tag">National Recognition</span>
-            <h2>Honors, Patents & Industry Breakthroughs</h2>
-            <p>Before becoming a mentor, Surya Ghosh built deep technical credibility as an innovator and industrial scientist. Discover his patented inventions and national engineering awards.</p>
-          </div>
-          <div class="achievements-grid" id="achievements-grid-container">
-            <!-- Dynamic achievements render here from app.js -->
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Featured Courses Section -->
-      <div class="section">
-        <div class="container">
-          <div class="section-header">
-            <span class="tag">Flagship Education</span>
-            <h2>Active Courses & blueprints</h2>
-            <p>Practical programs with direct lifetime access and step-by-step toolkits.</p>
-          </div>
-          <div class="courses-grid" id="featured-courses-container">
-            <!-- Dynamic courses render here -->
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. Topics Taught Overview -->
-      <div class="section why-section">
-        <div class="container">
-          <div class="section-header" style="text-align: center; margin: 0 auto 4rem;">
-            <span class="tag">Broad Knowledge Stack</span>
-            <h2>What We Teach</h2>
-            <p>We blend finance and wealth systems with crucial modern life skills to help you build an elite career profile.</p>
-          </div>
-          <div class="topics-grid">
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-              </div>
-              <h4>Personal Finance</h4>
-              <p>Budgeting, direct mutual funds, index investing, and inflation-beating systems.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75m0 .75h-.75M3 7.5h-.75m.75 3h-.75m3-6h13.5m-16.5 0h16.5M3 18.75h16.5M21 4.5v12.75A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V4.5M12 9v6m3-3H9" /></svg>
-              </div>
-              <h4>Direct Investing</h4>
-              <p>Navigating demat setups, analysis algorithms, and legal tax planning systems.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
-              </div>
-              <h4>Time-Blocking</h4>
-              <p>Managing focus levels, designing calendars, and escaping procrastination loops.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
-              </div>
-              <h4>ATS Resume Hacks</h4>
-              <p>Passing corporate gatekeeping scripts and standing out to elite HR panels.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A9.342 9.342 0 0 0 12 21a9.34 9.34 0 0 0-3-.763v-.11a9.38 9.38 0 0 0-5.59-6.38 4.125 4.125 0 0 0-7.532 2.492 9.337 9.337 0 0 0 4.121.953 9.38 9.38 0 0 0 2.625-.372M12 21c-1.11 0-2.16-.285-3.07-.786m6.14 0A9.342 9.342 0 0 0 15 19.128" /></svg>
-              </div>
-              <h4>LinkedIn Branding</h4>
-              <p>Writing high-value industry posts to attract inbound recruitment offers.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>
-              </div>
-              <h4>Influence & Speaking</h4>
-              <p>Formulating simple, persuasive pitches for managers and client briefings.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.64 8.38m6 .15a4.5 4.5 0 0 0-6.085-6.085m1.505 1.505a4.5 4.5 0 0 0-4.5 4.5v3.185a15 15 0 0 0-2.25 11.25l1.21-1.21a9.768 9.768 0 0 1 3.02-2.122m13.955-16.83a8.032 8.032 0 0 1-2.24 3.02" /></svg>
-              </div>
-              <h4>Micro-Business</h4>
-              <p>Validating digital offerings and setting up international nocode pipelines.</p>
-            </div>
-            <div class="topic-item">
-              <div class="topic-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <h4>Critical Decisions</h4>
-              <p>Utilizing mental models to neutralize bad biases and map choices risk-free.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. Student Outcomes & Benefits grid -->
-      <div class="section">
-        <div class="container outcomes-grid">
-          <div class="outcomes-visual">
-            <!-- Sleek SVG Art Panel instead of low-quality generic stock photo -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="auto" style="border-radius: var(--radius-lg); background-color: var(--bg-secondary); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
-              <defs>
-                <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.1"/>
-                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.1"/>
-                </linearGradient>
-                <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#3b82f6"/>
-                  <stop offset="100%" stop-color="#2563eb"/>
-                </linearGradient>
-                <linearGradient id="successGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#10b981"/>
-                  <stop offset="100%" stop-color="#059669"/>
-                </linearGradient>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#glowGrad)" />
-              <!-- Graphic Grid Lines -->
-              <line x1="50" y1="50" x2="450" y2="50" stroke="var(--border-color)" stroke-dasharray="4 4" />
-              <line x1="50" y1="150" x2="450" y2="150" stroke="var(--border-color)" stroke-dasharray="4 4" />
-              <line x1="50" y1="250" x2="450" y2="250" stroke="var(--border-color)" stroke-dasharray="4 4" />
-              <line x1="50" y1="350" x2="450" y2="350" stroke="var(--border-color)" stroke-dasharray="4 4" />
-              
-              <!-- Growth Chart Illustration -->
-              <rect x="90" y="220" width="40" height="130" rx="8" fill="url(#barGrad)" />
-              <rect x="170" y="160" width="40" height="190" rx="8" fill="url(#barGrad)" />
-              <rect x="250" y="100" width="40" height="250" rx="8" fill="url(#barGrad)" />
-              <rect x="330" y="40" width="40" height="310" rx="8" fill="url(#successGrad)" />
-              
-              <!-- Line Plot Indicator -->
-              <path d="M 110 200 L 190 140 L 270 80 L 350 20" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" />
-              <circle cx="350" cy="20" r="8" fill="#fbbf24" />
-            </svg>
-          </div>
-          
-          <div class="outcomes-content">
-            <div class="section-header" style="margin-bottom: 2.5rem;">
-              <span class="tag">Tangible Upgrades</span>
-              <h2>Real outcomes that shape careers</h2>
-              <p>Traditional tests score your memory. Surya’s programs score your lifestyle, wealth accumulation, and professional advancement.</p>
-            </div>
-            <div class="outcomes-list">
-              <div class="outcome-check-item">
-                <div class="outcome-check-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
-                </div>
-                <div class="outcome-check-text">
-                  <h4>Automated Wealth Accumulation</h4>
-                  <p>Setup systems that save, track, and reinvest portions of your paycheck before you even see it.</p>
-                </div>
-              </div>
-              <div class="outcome-check-item">
-                <div class="outcome-check-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
-                </div>
-                <div class="outcome-check-text">
-                  <h4>Higher Entry Packages</h4>
-                  <p>Gain absolute negotiation leverage to secure salaries 30-50% higher than default campus metrics.</p>
-                </div>
-              </div>
-              <div class="outcome-check-item">
-                <div class="outcome-check-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
-                </div>
-                <div class="outcome-check-text">
-                  <h4>Continuous Habit Compound loops</h4>
-                  <p>Design schedules where deep focus is default, liberating 15-20 hours a week for side-ventures.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6. Student Testimonials (Slider) -->
-      <div class="section why-section">
-        <div class="container">
-          <div class="section-header" style="max-width: 550px;">
-            <span class="tag">Peer Consensus</span>
-            <h2>What other learners are saying</h2>
-            <p>Read about students and early career specialists who took control of their financial trajectory.</p>
-          </div>
-          
-          <div class="testimonial-slider-container">
-            <div class="testimonial-track" id="testimonial-track">
-              <!-- Dynamically rendered testimonial cards -->
-            </div>
-            
-            <div class="slider-controls">
-              <button class="slider-btn" id="prev-testimonial" aria-label="Previous review">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
-              </button>
-              <button class="slider-btn" id="next-testimonial" aria-label="Next review">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 7. Platform general FAQ accordion -->
-      <div class="section">
-        <div class="container">
-          <div class="section-header" style="text-align:center; margin:0 auto 4rem;">
-            <span class="tag">Clarifications</span>
-            <h2>Frequently Asked Questions</h2>
-            <p>Everything you need to know about our self-paced ecosystem, community access, and refund guarantees.</p>
-          </div>
-          
-          <div style="max-width: 800px; margin: 0 auto;">
-            <div class="accordion-list" id="platform-faq-list">
-              <!-- Dynamically populated FAQs -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 8. Newsletter Section -->
-      <div class="section newsletter-section">
-        <div class="container">
-          <div class="newsletter-box" id="newsletter-box-wrapper">
-            <div class="newsletter-text">
-              <h2>Join "The 1% Club" Newsletter</h2>
-              <p>Receive actionable personal growth guides, budgeting spreadsheets, and premium market templates once a week. Strictly zero spam, direct inboxes only.</p>
-            </div>
-            
-            <div class="newsletter-form-container">
-              <!-- Primary Capture Form -->
-              <form class="newsletter-form" id="academy-newsletter-form">
-                <div class="form-group">
-                  <input type="email" placeholder="Enter your best email address" required aria-label="Email address for newsletter">
-                  <button type="submit" class="btn btn-primary">Subscribe</button>
-                </div>
-                <p style="margin-top:0.75rem;">Join 25,000+ weekly smart professionals. Safe checkout.</p>
-              </form>
-
-              <!-- Success Card Feedback -->
-              <div class="form-success-card" id="newsletter-success-card">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                </svg>
-                <h3>Welcome to the 1% Club!</h3>
-                <p>We've successfully registered <strong class="email-feedback-placeholder" style="color: var(--color-primary);"></strong>. Look out for your first free Net Worth Excel Template in your inbox shortly!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 9. Final conversion CTA -->
-      <div class="section final-cta-section">
-        <div class="container">
-          <h2>Ready to learn things school never taught?</h2>
-          <p>Ditch textbook memorization. Secure lifetime access to modular dashboards, financial blueprints, and a global community today.</p>
-          <div class="final-cta-actions">
-            <a href="#courses" class="btn btn-success btn-lg">Explore All Courses</a>
-            <a href="#contact" class="btn btn-secondary btn-lg" style="background-color: transparent; border-color: rgba(255,255,255,0.4); color: white;">Join Waitlists</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================================
-         About View Section Container
-         ========================================================================== */ -->
-    <section class="view-section" id="about-view">
-      <div class="container section">
-        <div class="about-grid">
-          <!-- Sidebar column -->
-          <div class="about-sidebar">
-            <div class="about-card">
-              <div class="about-avatar-wrapper">
-                <div class="about-avatar-canvas">
-                  <img src="assets/images/surya_portrait.jpg" alt="Surya Ghosh portrait">
-                </div>
-              </div>
-              <h3>Surya Ghosh</h3>
-              <p>Finance Educator & Multi-Topic Mentor</p>
-              
-              <!-- Social contacts link bank -->
-              <div class="about-socials">
-                <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-circle" aria-label="LinkedIn Profile">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener" class="social-circle" aria-label="YouTube Channel">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener" class="social-circle" aria-label="Instagram Account">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Trust highlights counts -->
-            <div class="about-stats-card">
-              <div class="about-stat">
-                <span class="about-stat-num">15k+</span>
-                <span class="about-stat-label">Learners</span>
-              </div>
-              <div class="about-stat">
-                <span class="about-stat-num">4.9★</span>
-                <span class="about-stat-label">Feedback</span>
-              </div>
-              <div class="about-stat" style="margin-top:1rem;">
-                <span class="about-stat-num">5+</span>
-                <span class="about-stat-label">Masterclasses</span>
-              </div>
-              <div class="about-stat" style="margin-top:1rem;">
-                <span class="about-stat-num">100%</span>
-                <span class="about-stat-label">Execution</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Story Column -->
-          <div class="about-story">
-            <div class="story-block">
-              <span class="section-header" style="margin-bottom:1rem;"><span class="tag">The Genesis</span></span>
-              <h2>My Story & Mission</h2>
-              <p>Hi, I'm Surya Ghosh. For years, I watched brilliant friends and peers graduate from elite institutes, secure fantastic first jobs, and then immediately stumble on the basics of life management. They didn't know how to choose a mutual fund, how to structure their income tax regimes, or how to negotiate their first salary hikes without feeling guilty.</p>
-              <p>I realized standard textbook education does a stellar job teaching theoretical mathematics and generic science, but leaves young adults completely helpless on high-value life infrastructure. I founded this platform to simplify these exact frameworks in clean, practical, and highly visual modules.</p>
-            </div>
-
-            <div class="story-block">
-              <h2>My Teaching Philosophy</h2>
-              <p>No exams, no heavy jargon, and no fake hype. We build actionable spreadsheets, write direct cold emails live, and test real demat pipelines. If a lesson cannot be directly applied to your lifestyle this weekend, it doesn't belong in our courses.</p>
-              
-              <div class="philosophy-grid">
-                <div class="philosophy-item">
-                  <h3>First-Principles Thinking</h3>
-                  <p>We strip every issue down to basic truths. You won't just copy my portfolio—you'll understand the exact asset-allocation formula to design your own.</p>
-                </div>
-                <div class="philosophy-item">
-                  <h3>Actionable Blueprints</h3>
-                  <p>Our modules are complete with automated Net Worth Trackers, LinkedIn Outreach Templates, and ATS check sheets for fast results.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- New dynamic achievements sub-story -->
-            <div class="story-block" style="margin-top:2.5rem;">
-              <h2>Patents & Scientific Honors</h2>
-              <p>Beyond education, I have dedicated years to industrial chemical and materials research. I believe that the rigors of scientific research—first-principles thinking, testing, and system automation—are the exact secret weapons needed to master personal finance and career optimization.</p>
-              <div class="achievements-compact-grid" id="about-achievements-container">
-                <!-- Painted dynamically via app.js -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================================
-         Courses Page View Container
-         ========================================================================== */ -->
-    <section class="view-section" id="courses-view">
-      <div class="container section">
-        <!-- Title and browser header -->
-        <div class="section-header" style="max-width: 650px;">
-          <span class="tag">Course Library</span>
-          <h2>Explore practical blueprints</h2>
-          <p>Use filters to find courses that align with your immediate goals—from starting a mutual fund portfolio to mastering ATS resume systems.</p>
-        </div>
-
-        <div class="courses-browser">
-          <!-- Dynamic Filter and Search Header -->
-          <div class="courses-filter-pane">
-            <div class="search-input-box">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-              </svg>
-              <input type="text" id="course-search-field" placeholder="Search by course title or short summary (e.g. mutual funds, tax, resume)..." aria-label="Search courses">
-            </div>
-            
-            <div class="filter-tags-row" id="filter-tags-row">
-              <span class="filter-label">Filter:</span>
-              <button class="filter-tag active" data-category="all">All Topics</button>
-              <button class="filter-tag" data-category="finance">Finance</button>
-              <button class="filter-tag" data-category="career">Career Growth</button>
-              <button class="filter-tag" data-category="productivity">Productivity</button>
-              <button class="filter-tag" data-category="life-skills">Life Skills</button>
-              <button class="filter-tag" data-category="entrepreneurship">Side Hustles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Matching courses container grid -->
-        <div class="courses-grid" id="courses-grid-container">
-          <!-- Dynamically populated via app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================================
-         Course Details View Container
-         ========================================================================== */ -->
-    <section class="view-section" id="course-details-view">
-      <div class="container section">
-        <!-- Back navigation button link -->
-        <div class="back-nav">
-          <a href="#courses" class="back-nav-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            <span>Back to Course Directory</span>
-          </a>
-        </div>
-
-        <!-- Render dynamically -->
-        <div id="course-details-dynamic-body">
-          <!-- Populated dynamically via app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================================
-         Contact & Mentorship Inquiry Page View Container
-         ========================================================================== */ -->
-    <section class="view-section" id="contact-view">
-      <div class="container section">
-        <div class="contact-grid">
-          <!-- Left info sidebar -->
-          <div class="contact-info">
-            <div class="section-header" style="margin-bottom: 0.5rem;">
-              <span class="tag">Inquiries</span>
-              <h2>Let's build together</h2>
-              <p>Have questions about a course? Interested in securing corporate training cohorts, or joining Surya's private mentorship queue? Drop a line below.</p>
-            </div>
-
-            <div class="contact-info-block">
-              <h3>Office Communication</h3>
-              <p>Email: <a href="mailto:hello@suryaghosh.edu">hello@suryaghosh.edu</a></p>
-              <p>Expected Response: Under 24 Business Hours</p>
-            </div>
-
-            <div class="contact-social-pane">
-              <h3>Creator Feeds</h3>
-              <div class="contact-social-row">
-                <a href="https://linkedin.com" class="contact-social-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                  <span>LinkedIn Network</span>
-                </a>
-                <a href="https://youtube.com" class="contact-social-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                  <span>100K+ Subscribers</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right form block -->
-          <div class="contact-pane-box" id="contact-pane-box-wrapper">
-            <h3>Send a Message</h3>
-            <p style="margin-bottom: 1.5rem; font-size:0.95rem;">Select your area of interest to speed up routing.</p>
-            
-            <form id="academy-contact-form">
-              <div class="contact-form-grid">
-                <div class="contact-form-element">
-                  <label for="contact-name">Full Name</label>
-                  <input type="text" id="contact-name" placeholder="Enter your full name" required>
-                </div>
-                <div class="contact-form-element">
-                  <label for="contact-email">Email Address</label>
-                  <input type="email" id="contact-email" placeholder="Enter your best email" required>
-                </div>
-                <div class="contact-form-element contact-form-element-full">
-                  <label for="contact-interest">I am interested in</label>
-                  <select id="contact-interest" required>
-                    <option value="" disabled selected>Select an option</option>
-                    <option value="Personal Finance Course">Personal Finance Masterclass</option>
-                    <option value="Career & Resume Blueprint">Career Accelerate Blueprint</option>
-                    <option value="1-on-1 Premium Mentorship">Private Mentorship Queue</option>
-                    <option value="Corporate / Cohort Training">Corporate Training</option>
-                    <option value="General Question">General Question</option>
-                  </select>
-                </div>
-                <div class="contact-form-element contact-form-element-full">
-                  <label for="contact-message">Your Message</label>
-                  <textarea id="contact-message" placeholder="Please write your questions or request here..." required></textarea>
-                </div>
-              </div>
-              
-              <button type="submit" class="btn btn-primary w-100" style="display:flex; width: 100%;">Submit Inquiry</button>
-            </form>
-
-            <!-- Submission Success Modal -->
-            <div class="form-success-card" id="contact-success-card">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-              </svg>
-              <h3>Thank you, <span class="contact-name-feedback"></span>!</h3>
-              <p>Your inquiry regarding <strong class="contact-interest-feedback" style="color: var(--color-primary);"></strong> has been received by our office. An admissions rep or Surya himself will reach out to your inbox shortly.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ==========================================================================
-       Bottom Mobile Sticky Navigation bar (Course details view context only)
-       ========================================================================== */ -->
-  <div class="mobile-sticky-action-bar" id="mobile-sticky-action-bar">
-    <div class="mobile-sticky-price">
-      <span class="sale">₹0</span>
-      <span class="title">Course Name</span>
-    </div>
-    <div class="mobile-sticky-btn-wrapper">
-      <!-- Injected dynamically -->
+<!-- ============ NAV ============ -->
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Surya Finance Freedom home">
+      <span class="sunmark" aria-hidden="true"></span>
+      <span>Surya<small>Finance Freedom</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#top">Home</a>
+      <a href="#learn">Learn</a>
+      <a href="#tools">Tools</a>
+      <a href="#stories">Stories</a>
+      <a href="#about">About Surya</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">☀️</button>
+      <a href="#tools" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Start Learning</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
   </div>
+</header>
 
-  <!-- ==========================================================================
-       Footer Component
-       ========================================================================== -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <!-- Brand column -->
-      <div class="footer-brand">
-        <a href="#home" class="logo" style="margin-bottom:0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.68 0-5.302.2-7.854.582V21M3 21h18" />
-          </svg>
-          <span>Surya Ghosh</span>
-        </a>
-        <p>Practical money, career, and high-value life skills taught through direct, self-paced blueprints. Lifetime access guaranteed.</p>
+<!-- ============ HERO ============ -->
+<main id="top">
+<section class="hero" style="padding:0">
+  <div class="horizon" aria-hidden="true">
+    <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  style="stop-color:var(--sky-a)"/>
+          <stop offset="55%" style="stop-color:var(--sky-b)"/>
+          <stop offset="100%" style="stop-color:var(--sky-c)"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="810" fill="url(#sky)"/>
+      <path d="M0,560 Q240,470 480,540 T900,520 T1440,470 V810 H0 Z" style="fill:var(--ridge-3)" opacity=".55"/>
+      <path d="M0,620 Q300,520 640,610 T1140,580 T1440,610 V810 H0 Z" style="fill:var(--ridge-2)" opacity=".8"/>
+      <path d="M0,700 Q360,600 760,690 T1440,660 V810 H0 Z" style="fill:var(--ridge-1)"/>
+    </svg>
+  </div>
+  <div class="sun-orb" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow">India's path to financial independence</span>
+      <h1>Master Your Money. Design the Life You <em class="accent">Actually Want.</em></h1>
+      <p class="sub">Practical personal finance for financial independence and early retirement — so you can travel, follow your passions, be present with family, and live free on your own terms.</p>
+      <div class="cta-row">
+        <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
+        <a href="#learn" class="btn btn-ghost">Explore Courses</a>
       </div>
-
-      <!-- Syllabus links -->
-      <div class="footer-links-col">
-        <h4>Academy Tracks</h4>
-        <div class="footer-links">
-          <a href="#courses">Personal Finance</a>
-          <a href="#courses">Direct Investing</a>
-          <a href="#courses">Time Hacking</a>
-          <a href="#courses">LinkedIn Personal Brand</a>
-        </div>
-      </div>
-
-      <!-- Institutional pages links -->
-      <div class="footer-links-col">
-        <h4>Academy Info</h4>
-        <div class="footer-links">
-          <a href="#about">Our Story</a>
-          <a href="#about">Philosophy</a>
-          <a href="#contact">Mentorship Queue</a>
-          <a href="#contact">Corporate / Cohorts</a>
-        </div>
-      </div>
-
-      <!-- Terms & support -->
-      <div class="footer-links-col">
-        <h4>Support & Help</h4>
-        <div class="footer-links">
-          <a href="#contact">Contact Admissions</a>
-          <a href="#home">FAQ Database</a>
-          <a href="#contact">Join Discord Peer Group</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom sub-footer -->
-    <div class="container footer-bottom">
-      <p>&copy; 2026 Surya Ghosh Academy. All Rights Reserved. Taught by Surya Ghosh.</p>
-      <div class="footer-bottom-links">
-        <a href="#home">Terms of Service</a>
-        <a href="#home">Privacy Policy</a>
-        <a href="#home">Refund Guarantee</a>
-      </div>
-  </footer>
-
-  <!-- ==========================================================================
-       Achievement Lightbox Modal
-       ========================================================================== -->
-  <div class="lightbox-modal" id="achievement-lightbox" style="display:none;">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close modal">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Full-size award proof">
-      <div class="lightbox-caption">
-        <span class="caption-badge" id="lightbox-badge">Patent</span>
-        <h3 id="lightbox-title">Achievement Title</h3>
-        <p id="lightbox-subtitle">Achievement Subtitle</p>
+      <div class="hero-stats">
+        <div class="stat"><b>12,400+</b><span>Students taught</span></div>
+        <div class="stat"><b>₹38 Cr+</b><span>Wealth being built</span></div>
+        <div class="stat"><b>4.9 ★</b><span>Average rating</span></div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Core Scripts Loaders (Loaded in sequence) -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/app.js"></script>
+<!-- ============ FEATURE CARDS ============ -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Everything you need</span>
+      <h2>One clear path from paycheque to freedom</h2>
+      <p>No jargon, no get-rich-quick noise. Just the systems, tools, and habits that quietly build wealth — designed for Indian incomes, taxes, and family life.</p>
+    </div>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="glyph">🧮</div>
+        <h3>FIRE Calculator</h3>
+        <p>Find your exact freedom number in ₹ and the year you can walk away from mandatory work — based on your real expenses and SIPs.</p>
+        <a class="link" href="#tools">Calculate my number →</a>
+      </article>
+      <article class="card reveal">
+        <div class="glyph">☕</div>
+        <h3>Daily Money Mastery</h3>
+        <p>Budgeting that survives weddings, festivals, and family obligations. Automate savings, kill EMIs, and make every rupee work.</p>
+        <a class="link" href="#learn">See the course →</a>
+      </article>
+      <article class="card reveal">
+        <div class="glyph">🌄</div>
+        <h3>Real Student Transformations</h3>
+        <p>Teachers, engineers, and small business owners across India who went from money stress to a clear freedom date.</p>
+        <a class="link" href="#stories">Read their stories →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIRE CALCULATOR ============ -->
+<section class="calc-section" id="tools">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Free tool</span>
+      <h2>What's your freedom number?</h2>
+      <p>Move the sliders. Watch your sunrise get closer. This is the same calculator Surya uses in every course — tuned for Indian returns and inflation.</p>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-panel reveal" aria-label="FIRE calculator inputs">
+        <div class="field">
+          <label for="age">Your current age <output id="ageOut">28 yrs</output></label>
+          <input type="range" id="age" min="20" max="55" value="28">
+        </div>
+        <div class="field">
+          <label for="expense">Monthly expenses <output id="expenseOut">₹60,000</output></label>
+          <input type="range" id="expense" min="15000" max="300000" step="5000" value="60000">
+        </div>
+        <div class="field">
+          <label for="savings">Current savings &amp; investments <output id="savingsOut">₹8,00,000</output></label>
+          <input type="range" id="savings" min="0" max="20000000" step="100000" value="800000">
+        </div>
+        <div class="field">
+          <label for="sip">Monthly investment (SIP) <output id="sipOut">₹40,000</output></label>
+          <input type="range" id="sip" min="2000" max="300000" step="2000" value="40000">
+        </div>
+        <div class="field" style="margin-bottom:6px">
+          <label for="ret">Expected annual return <output id="retOut">12%</output></label>
+          <input type="range" id="ret" min="7" max="15" step="0.5" value="12">
+        </div>
+        <p class="calc-note">Assumes 6% inflation, the 4% safe-withdrawal rule (25× annual expenses), and consistent monthly SIPs. Educational estimate — not investment advice.</p>
+      </div>
+
+      <div class="result-panel reveal">
+        <div class="result-hero">
+          <span class="eyebrow">Your freedom number</span>
+          <div class="num" id="fireNumber">₹4.5 Cr</div>
+          <div class="when" id="fireWhen">Freedom by age 47 — the year 2045</div>
+          <div class="progress-arc" aria-hidden="true">
+            <svg viewBox="0 0 400 130">
+              <path d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="rgba(250,247,240,.18)" stroke-width="10" stroke-linecap="round"/>
+              <path id="arcFill" d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="#C9A14D" stroke-width="10" stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="480"/>
+              <circle id="arcSun" cx="20" cy="120" r="13" fill="#E4C98A"/>
+              <text id="arcPct" x="200" y="105" text-anchor="middle" fill="#FAF7F0" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="30">15%</text>
+              <text x="200" y="126" text-anchor="middle" fill="rgba(250,247,240,.7)" font-family="Bricolage Grotesque,sans-serif" font-size="11" letter-spacing="2">OF THE WAY THERE</text>
+            </svg>
+          </div>
+          <div class="result-rows">
+            <div class="rrow"><b id="yearsTo">19 yrs</b><span>Years to freedom</span></div>
+            <div class="rrow"><b id="corpusAt">₹4.5 Cr</b><span>Corpus needed</span></div>
+            <div class="rrow"><b id="monthlyIncome">₹1.5 L</b><span>Monthly income then</span></div>
+            <div class="rrow"><b id="totalInvest">₹91 L</b><span>You'll invest in total</span></div>
+          </div>
+        </div>
+        <p class="calc-note">Want the full plan behind this number — asset allocation, tax shields (PPF · NPS · ELSS), and withdrawal strategy? That's the <b>FIRE Blueprint</b> course below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COURSES ============ -->
+<section id="learn">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Learn · Step by step</span>
+      <h2>Courses for every stage of the journey</h2>
+      <p>Start where you are. Each course is bite-sized video lessons in simple English &amp; Hindi, with worksheets built for Indian salaries, taxes, and families.</p>
+    </div>
+    <div class="course-grid">
+      <article class="course reveal">
+        <div class="banner"><span class="level">Foundation</span></div>
+        <div class="body">
+          <h3>Money Foundations</h3>
+          <p>Budgeting that actually sticks, emergency funds, killing credit-card debt, and automating your first ₹10,000/month savings habit.</p>
+          <div class="meta"><span class="price">₹1,999</span><span class="lessons">24 lessons · 4 hrs</span></div>
+        </div>
+      </article>
+      <article class="course reveal">
+        <div class="banner"><span class="level">Investing</span></div>
+        <div class="body">
+          <h3>SIP &amp; Index Investing Mastery</h3>
+          <p>Mutual funds and index funds demystified. Build a simple 3-fund portfolio, set up SIPs, and stop losing money to fear and tips.</p>
+          <div class="meta"><span class="price">₹3,499</span><span class="lessons">32 lessons · 6 hrs</span></div>
+        </div>
+      </article>
+      <article class="course reveal">
+        <div class="banner"><span class="level">Tax &amp; Protection</span></div>
+        <div class="body">
+          <h3>Tax Shields: PPF, NPS &amp; ELSS</h3>
+          <p>Legally pay less tax and redirect it to your freedom fund. Old vs new regime, insurance done right, and estate basics.</p>
+          <div class="meta"><span class="price">₹2,999</span><span class="lessons">21 lessons · 4.5 hrs</span></div>
+        </div>
+      </article>
+      <article class="course reveal">
+        <div class="banner"><span class="level">Flagship</span></div>
+        <div class="body">
+          <h3>The FIRE Blueprint</h3>
+          <p>The complete system: your freedom number, coast/lean/fat FIRE paths, asset allocation by age, and safe withdrawal in retirement.</p>
+          <div class="meta"><span class="price">₹9,999</span><span class="lessons">58 lessons · 12 hrs</span></div>
+        </div>
+      </article>
+      <article class="course reveal">
+        <div class="banner"><span class="level">Lifestyle</span></div>
+        <div class="body">
+          <h3>Design Your Rich Life</h3>
+          <p>Money is the tool, not the goal. Plan sabbaticals, slow travel, passion projects, and giving — without derailing the numbers.</p>
+          <div class="meta"><span class="price">₹2,499</span><span class="lessons">18 lessons · 3.5 hrs</span></div>
+        </div>
+      </article>
+      <article class="course reveal">
+        <div class="banner"><span class="level">Family</span></div>
+        <div class="body">
+          <h3>Family Money &amp; Big Goals</h3>
+          <p>Children's education, parents' healthcare, weddings, and home buying — planned early so they never become emergencies.</p>
+          <div class="meta"><span class="price">₹2,999</span><span class="lessons">20 lessons · 4 hrs</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORIES ============ -->
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Proven path to financial freedom</span>
+      <h2>Real people. Real freedom dates.</h2>
+      <p>Not screenshots of lucky trades — steady, boring, unstoppable progress from students across India.</p>
+    </div>
+    <div class="story-grid">
+      <article class="story reveal">
+        <blockquote>I was 31 with three EMIs and zero savings. Two years later my SIPs run on autopilot and I have a freedom date: 46. I sleep differently now.</blockquote>
+        <div class="who">
+          <span class="avatar">PR</span>
+          <div><b>Priya Ramachandran</b><span>School teacher · Coimbatore</span></div>
+        </div>
+        <span class="badge">Freedom date: 2041</span>
+      </article>
+      <article class="story reveal">
+        <blockquote>The tax course alone saved me ₹1.4 lakh in the first year. All of it went straight into index funds. It felt like finding money in an old kurta.</blockquote>
+        <div class="who">
+          <span class="avatar">AB</span>
+          <div><b>Arjun Banerjee</b><span>Software engineer · Kolkata</span></div>
+        </div>
+        <span class="badge">Corpus: ₹42 L and growing</span>
+      </article>
+      <article class="story reveal">
+        <blockquote>We run a small shop. Surya's family-money course helped us plan our daughter's education AND our own retirement — for the first time, both felt possible.</blockquote>
+        <div class="who">
+          <span class="avatar">MK</span>
+          <div><b>Meera &amp; Kunal Shah</b><span>Business owners · Ahmedabad</span></div>
+        </div>
+        <span class="badge">Coast FIRE reached</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <figure class="portrait reveal" aria-label="Illustration of Surya on a mountain ridge at sunrise">
+      <div class="p-sun"></div>
+      <div class="p-ridge"></div>
+      <div class="p-fig"></div>
+      <figcaption>Surya Ghosh · Personal Finance Coach</figcaption>
+    </figure>
+    <div class="about-copy reveal">
+      <span class="eyebrow">About Surya</span>
+      <h2>A mentor who walked the path before drawing the map</h2>
+      <p>Surya Ghosh spent a decade in the corporate grind before realising that financial independence isn't about luck or a huge salary — it's about a system. He built his own freedom fund rupee by rupee, and reached financial independence years ahead of schedule.</p>
+      <p>Today he teaches that same system to thousands of everyday Indians: clear, honest, and free of hype. No stock tips. No trading signals. Just the quiet math of freedom.</p>
+      <div class="pillars">
+        <div class="pillar"><b>Simplicity first</b><span>If your money plan needs a spreadsheet PhD, it will fail.</span></div>
+        <div class="pillar"><b>India-real</b><span>Built around Indian taxes, families, and festivals.</span></div>
+        <div class="pillar"><b>Freedom, not frugality</b><span>Spend richly on what you love. Cut what you don't.</span></div>
+        <div class="pillar"><b>Evidence over hype</b><span>Index funds, discipline, and time beat tips. Always.</span></div>
+      </div>
+      <a href="#learn" class="btn btn-teal">Learn with Surya</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Your sunrise is closer than you think.</h2>
+      <p>Join 12,400+ students building their freedom fund. Start with the free FIRE calculator and a 5-day email course.</p>
+      <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#top"><span class="sunmark"></span><span>Surya<small>Finance Freedom</small></span></a>
+        <p>Practical personal finance education for financial independence — made in India, for India.</p>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <a href="#learn">All courses</a>
+        <a href="#learn">The FIRE Blueprint</a>
+        <a href="#learn">Free 5-day course</a>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <a href="#tools">FIRE calculator</a>
+        <a href="#tools">SIP planner</a>
+        <a href="#tools">Budget worksheet</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#about">About Surya</a>
+        <a href="#stories">Student stories</a>
+        <a href="#top">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Surya Finance Freedom. Education, not investment advice.</span>
+      <span>Made with ☀️ in India</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Theme toggle ---------- */
+const root=document.documentElement;
+const toggle=document.getElementById('themeToggle');
+toggle.addEventListener('click',()=>{
+  const dark=root.getAttribute('data-theme')==='dark';
+  root.setAttribute('data-theme',dark?'light':'dark');
+  toggle.textContent=dark?'☀️':'🌙';
+});
+
+/* ---------- Mobile menu ---------- */
+const burger=document.getElementById('hamburger');
+const links=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{
+  const open=links.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+/* ---------- Indian number formatting ---------- */
+function inr(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
+function inrShort(n){
+  if(n>=1e7) return '₹'+(n/1e7).toFixed(n>=1e8?1:2).replace(/\.0+$/,'')+' Cr';
+  if(n>=1e5) return '₹'+(n/1e5).toFixed(1).replace(/\.0$/,'')+' L';
+  return inr(n);
+}
+
+/* ---------- FIRE calculator ---------- */
+const el=id=>document.getElementById(id);
+const inputs=['age','expense','savings','sip','ret'].map(el);
+function paintRange(r){
+  const pct=(r.value-r.min)/(r.max-r.min)*100;
+  r.style.setProperty('--fill',pct+'%');
+}
+function calc(){
+  const age=+el('age').value, expM=+el('expense').value,
+        sav=+el('savings').value, sip=+el('sip').value, ret=+el('ret').value/100;
+  const infl=0.06;
+  el('ageOut').textContent=age+' yrs';
+  el('expenseOut').textContent=inr(expM);
+  el('savingsOut').textContent=inr(sav);
+  el('sipOut').textContent=inr(sip);
+  el('retOut').textContent=el('ret').value+'%';
+  inputs.forEach(paintRange);
+
+  // Simulate month by month: corpus grows at ret, target (25x annual expenses) grows at inflation
+  let corpus=sav, months=0, target=expM*12*25;
+  const rM=Math.pow(1+ret,1/12)-1, iM=Math.pow(1+infl,1/12)-1;
+  const maxMonths=(90-age)*12;
+  while(corpus<target && months<maxMonths){
+    corpus=corpus*(1+rM)+sip;
+    target=target*(1+iM);
+    months++;
+  }
+  const years=months/12;
+  const freeAge=Math.round(age+years);
+  const freeYear=2026+Math.round(years);
+  const reached=months<maxMonths;
+
+  el('fireNumber').textContent=inrShort(target);
+  el('fireWhen').textContent=reached
+    ? `Freedom by age ${freeAge} — the year ${freeYear}`
+    : 'Increase your SIP to reach freedom sooner';
+  el('yearsTo').textContent=reached?(years<1?'<1 yr':Math.round(years)+' yrs'):'—';
+  el('corpusAt').textContent=inrShort(target);
+  el('monthlyIncome').textContent=inrShort(target*0.04/12)+'/mo';
+  el('totalInvest').textContent=inrShort(sip*months);
+
+  // Progress arc: current savings vs today's target
+  const todayTarget=expM*12*25;
+  const pct=Math.max(0,Math.min(1,sav/todayTarget));
+  const arcLen=565;
+  el('arcFill').style.strokeDashoffset=arcLen*(1-pct);
+  el('arcPct').textContent=Math.round(pct*100)+'%';
+  // Move sun along semicircle: center (200,120), r=180
+  const theta=Math.PI*(1-pct);
+  el('arcSun').setAttribute('cx',200+180*Math.cos(theta));
+  el('arcSun').setAttribute('cy',120-180*Math.sin(theta));
+}
+inputs.forEach(r=>r.addEventListener('input',calc));
+calc();
+
+/* ---------- Scroll reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+</script>
 </body>
 </html>
