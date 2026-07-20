@@ -72,7 +72,7 @@ button:hover{transform:translateY(-1px)}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, collection, query, where, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
@@ -118,18 +118,30 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
 
   function load(status){
     if(unsub) unsub();
-    const q = status==='pending'
-      ? query(questions,where('status','==','pending'),orderBy('votes','desc'))
-      : status==='answered'
-      ? query(questions,where('status','==','answered'),orderBy('answeredAt','desc'))
-      : query(questions,where('status','==','submitted'),orderBy('createdAt','asc'));
-    unsub=onSnapshot(q,snap=>render(status,snap));
+    // Only filter by status — no orderBy, so no composite index is required.
+    // Sorting is done client-side in render().
+    const q = query(questions,where('status','==',status));
+    unsub=onSnapshot(q,
+      snap=>render(status,snap),
+      err=>{
+        console.error('Firestore query failed:',err);
+        el('list').innerHTML='<p class="empty" style="color:#A33C28">Could not load questions: '+esc(err.message)+'</p>';
+      }
+    );
   }
+
+  const ts=v=>(v&&v.toMillis)?v.toMillis():0;
 
   function render(status,snap){
     const list=el('list');
     if(snap.empty){list.innerHTML='<p class="empty">Nothing here right now.</p>';return;}
-    list.innerHTML=snap.docs.map(d=>{
+    const docs=[...snap.docs].sort((a,b)=>{
+      const A=a.data(),B=b.data();
+      if(status==='pending')  return (B.votes||0)-(A.votes||0);      // most votes first
+      if(status==='answered') return ts(B.answeredAt)-ts(A.answeredAt); // newest answer first
+      return ts(A.createdAt)-ts(B.createdAt);                        // oldest submission first
+    });
+    list.innerHTML=docs.map(d=>{
       const q=d.data();
       const head=`<p class="text">${esc(q.text)}</p>
         <p class="meta">${q.name?esc(q.name)+' · ':''}${status!=='submitted'?'<span class="count">▲ '+(q.votes||0)+'</span> · ':''}${q.createdAt&&q.createdAt.toDate?q.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>`;
