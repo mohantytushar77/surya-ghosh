@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surya Finance Freedom — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF7F0;--teal:#0A3D4C;--forest:#1E5631;--gold:#C9A14D;--ink:#1B2B31;--muted:#5D6E73;--card:#fff;--line:rgba(10,61,76,.14)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Newsreader',Georgia,serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:16.5px}
+h1,h2,button,.tab,label,.count{font-family:'Bricolage Grotesque',sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:34px 22px 80px}
+h1{font-size:26px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:12px}
+h1 .dot{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#E4C98A,var(--gold))}
+.sub{color:var(--muted);margin:6px 0 30px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 14px 40px -16px rgba(10,61,76,.18);margin-bottom:20px}
+label{display:block;font-weight:600;font-size:13.5px;margin:14px 0 6px}
+input,textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:16px;background:var(--cream);color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+button{border:none;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .15s}
+button:hover{transform:translateY(-1px)}
+.gold{background:linear-gradient(135deg,#E4C98A,var(--gold));color:#2B2005}
+.teal{background:var(--teal);color:#FAF7F0}
+.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.danger{background:transparent;border:1.5px solid rgba(180,60,40,.4);color:#A33C28}
+.tabs{display:flex;gap:10px;margin:26px 0 18px;flex-wrap:wrap}
+.tab{padding:9px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:13.5px;cursor:pointer}
+.tab.active{background:var(--teal);border-color:var(--teal);color:#FAF7F0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.q p.text{font-size:17px}
+.q .meta{font-size:13px;color:var(--muted);margin-top:6px}
+.q .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.q textarea{margin-top:12px}
+.count{font-weight:700;color:var(--gold)}
+.msg{margin-top:10px;font-size:14px;color:var(--forest);min-height:1.3em;font-family:'Bricolage Grotesque',sans-serif}
+.hidden{display:none}
+.empty{color:var(--muted);font-style:italic;padding:8px 4px}
+.warn{background:#FBF3E2;border:1px solid rgba(201,161,77,.4);border-radius:12px;padding:14px 16px;font-size:14.5px;margin-bottom:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
+  <p class="sub">Review questions, approve them for public voting, and publish Sunday's answers.</p>
+
+  <div class="warn" id="configWarn">⚠ Firebase is not configured yet. Open this file and paste your Firebase config into the script at the bottom, then set your admin email in <b>firestore.rules</b>. See FIREBASE-SETUP.md.</div>
+
+  <!-- LOGIN -->
+  <div class="panel" id="loginPanel">
+    <h2 style="font-size:19px;font-weight:700">Sign in</h2>
+    <label for="email">Admin email</label>
+    <input id="email" type="email" autocomplete="username">
+    <label for="pass">Password</label>
+    <input id="pass" type="password" autocomplete="current-password">
+    <div style="margin-top:16px"><button class="gold" id="loginBtn">Sign in</button></div>
+    <p class="msg" id="loginMsg"></p>
+  </div>
+
+  <!-- APP -->
+  <div id="app" class="hidden">
+    <div class="tabs">
+      <button class="tab active" data-status="submitted">🕵️ To review</button>
+      <button class="tab" data-status="pending">📥 Approved & waiting</button>
+      <button class="tab" data-status="answered">✅ Answered</button>
+      <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
+    </div>
+    <div id="list"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
+  authDomain: "surya-finance-freedom.firebaseapp.com",
+  projectId: "surya-finance-freedom",
+  storageBucket: "surya-finance-freedom.firebasestorage.app",
+  messagingSenderId: "385238983487",
+  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+};
+
+const el=id=>document.getElementById(id);
+const esc=t=>{const d=document.createElement('div');d.textContent=t||'';return d.innerHTML;};
+
+if(firebaseConfig.apiKey.startsWith('PASTE')){
+  el('loginPanel').classList.add('hidden');
+}else{
+  el('configWarn').classList.add('hidden');
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app);
+  const db=getFirestore(app);
+  const questions=collection(db,'questions');
+  let currentTab='submitted', unsub=null;
+
+  el('loginBtn').addEventListener('click',async()=>{
+    el('loginMsg').textContent='Signing in…';
+    try{ await signInWithEmailAndPassword(auth,el('email').value.trim(),el('pass').value); }
+    catch(e){ el('loginMsg').textContent='Sign-in failed: '+(e.code||'check email and password.'); }
+  });
+  el('logoutBtn').addEventListener('click',()=>signOut(auth));
+
+  onAuthStateChanged(auth,user=>{
+    el('loginPanel').classList.toggle('hidden',!!user);
+    el('app').classList.toggle('hidden',!user);
+    if(user) load(currentTab); else if(unsub){unsub();unsub=null;}
+  });
+
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    currentTab=t.dataset.status;
+    load(currentTab);
+  }));
+
+  function load(status){
+    if(unsub) unsub();
+    const q = status==='pending'
+      ? query(questions,where('status','==','pending'),orderBy('votes','desc'))
+      : status==='answered'
+      ? query(questions,where('status','==','answered'),orderBy('answeredAt','desc'))
+      : query(questions,where('status','==','submitted'),orderBy('createdAt','asc'));
+    unsub=onSnapshot(q,snap=>render(status,snap));
+  }
+
+  function render(status,snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML='<p class="empty">Nothing here right now.</p>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const q=d.data();
+      const head=`<p class="text">${esc(q.text)}</p>
+        <p class="meta">${q.name?esc(q.name)+' · ':''}${status!=='submitted'?'<span class="count">▲ '+(q.votes||0)+'</span> · ':''}${q.createdAt&&q.createdAt.toDate?q.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>`;
+      if(status==='submitted') return `<div class="q" data-id="${d.id}">${head}
+        <div class="row">
+          <button class="teal" data-act="approve">Approve for voting</button>
+          <button class="danger" data-act="reject">Reject</button>
+        </div></div>`;
+      if(status==='pending') return `<div class="q" data-id="${d.id}">${head}
+        <label>Topic</label>
+        <select data-field="topic">
+          <option value="general">General</option><option value="start">Getting started</option>
+          <option value="invest">SIP &amp; investing</option><option value="tax">Tax</option><option value="fire">FIRE</option>
+        </select>
+        <label>Surya's answer</label>
+        <textarea rows="5" data-field="answer" placeholder="Write the honest answer…"></textarea>
+        <div class="row"><button class="gold" data-act="publish">Publish answer</button>
+        <button class="danger" data-act="reject">Remove</button></div></div>`;
+      return `<div class="q" data-id="${d.id}">${head}
+        <p style="margin-top:10px;border-left:3px solid var(--gold);padding-left:14px">${esc(q.answer)}</p>
+        <div class="row"><button class="danger" data-act="reject">Unpublish &amp; delete</button></div></div>`;
+    }).join('');
+  }
+
+  el('list').addEventListener('click',async e=>{
+    const btn=e.target.closest('button[data-act]');
+    if(!btn) return;
+    const card=btn.closest('.q'), id=card.dataset.id, ref=doc(db,'questions',id);
+    const act=btn.dataset.act;
+    btn.disabled=true;
+    try{
+      if(act==='approve') await updateDoc(ref,{status:'pending'});
+      if(act==='reject'){ if(confirm('Delete this question permanently?')) await deleteDoc(ref); }
+      if(act==='publish'){
+        const answer=card.querySelector('[data-field="answer"]').value.trim();
+        const topic=card.querySelector('[data-field="topic"]').value;
+        if(!answer){alert('Write the answer first.');btn.disabled=false;return;}
+        await updateDoc(ref,{answer,topic,status:'answered',answeredAt:serverTimestamp()});
+      }
+    }catch(err){alert('Action failed: '+err.message);}
+    btn.disabled=false;
+  });
+}
+</script>
+</body>
+</html>
