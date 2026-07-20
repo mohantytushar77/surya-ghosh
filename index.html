@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -259,36 +259,128 @@ input[type=range]::-moz-range-thumb{
 .course .price{font-weight:800;font-size:19px;color:var(--gold)}
 .course .lessons{font-size:13px;color:var(--muted);font-weight:500}
 
-/* ---------- STORIES ---------- */
+/* ---------- ASK ME ANYTHING ---------- */
 .stories{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.story{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:34px 30px;box-shadow:var(--shadow);
+.ama-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start}
+.ama-panel{
+  background:var(--card);border:1px solid var(--line);border-radius:24px;
+  padding:36px;box-shadow:var(--shadow);
 }
-.story blockquote{
-  font-size:17.5px;font-style:italic;font-weight:400;line-height:1.6;
-  color:var(--ink);
+.ama-label{
+  display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;
+  font-size:14.5px;letter-spacing:.02em;margin-bottom:10px;
 }
-.story blockquote::before{content:"“";color:var(--gold);font-size:44px;line-height:0;display:block;margin:14px 0 2px;font-family:Georgia,serif}
-.story .who{display:flex;align-items:center;gap:14px;margin-top:24px}
-.story .avatar{
-  width:48px;height:48px;border-radius:50%;flex:none;
-  display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;
-  font-weight:700;color:#FAF7F0;font-size:16px;
-  background:linear-gradient(140deg,var(--teal),var(--forest));
+.ama-panel textarea,.ama-panel input[type=text]{
+  width:100%;border:1.5px solid var(--line);border-radius:14px;
+  background:var(--cream);color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;font-size:17px;line-height:1.55;
+  padding:16px 18px;resize:vertical;transition:border-color .2s;
 }
-.story:nth-child(2) .avatar{background:linear-gradient(140deg,var(--gold),#8A6620)}
-.story:nth-child(3) .avatar{background:linear-gradient(140deg,var(--forest),var(--teal))}
-.story .who b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:15.5px}
-.story .who span{font-size:13.5px;color:var(--muted)}
-.story .badge{
-  display:inline-block;margin-top:16px;font-family:'Bricolage Grotesque',sans-serif;
-  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+.ama-panel textarea:focus,.ama-panel input[type=text]:focus{outline:none;border-color:var(--gold)}
+.ama-panel ::placeholder{color:var(--muted);font-style:italic}
+.ama-row{display:flex;gap:14px;margin-top:16px;align-items:stretch}
+.ama-row input{flex:1}
+.ama-sent{
+  margin-top:14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;
+  font-size:14.5px;color:var(--forest);min-height:1.4em;
+}
+.ama-side-title{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;
+  margin-bottom:14px;color:var(--muted);letter-spacing:.02em;
+}
+.ama-chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  font-family:'Newsreader',Georgia,serif;font-size:15.5px;font-style:italic;
+  background:var(--card);color:var(--ink);border:1.5px solid var(--line);
+  border-radius:999px;padding:10px 18px;cursor:pointer;
+  transition:border-color .2s,transform .15s;text-align:left;
+}
+.chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.ama-promise{
+  margin-top:28px;border-left:3px solid var(--gold);padding:6px 0 6px 18px;
+}
+.ama-promise b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;margin-bottom:6px}
+.ama-promise span{font-size:15.5px;color:var(--muted);font-style:italic}
+
+/* Sunday badge */
+.sunday-badge{
+  display:inline-block;margin-top:20px;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;
+  color:#2B2005;background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  padding:10px 20px;border-radius:999px;letter-spacing:.02em;
+  box-shadow:0 8px 24px -8px color-mix(in srgb,var(--gold) 60%,transparent);
+}
+
+/* Pending questions with votes */
+.pending-list{display:flex;flex-direction:column;gap:12px}
+.pending{
+  display:flex;gap:16px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:16px 18px;box-shadow:var(--shadow);transition:transform .35s ease;
+}
+.pending p{font-size:16px;line-height:1.55;padding-top:4px}
+.vote{
+  flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;
+  min-width:52px;padding:8px 6px;border-radius:12px;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--cream);color:var(--ink);
+  font-family:'Bricolage Grotesque',sans-serif;transition:border-color .2s,background .2s;
+}
+.vote .v-arrow{font-size:13px;color:var(--gold)}
+.vote .v-count{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.vote:hover{border-color:var(--gold)}
+.vote[aria-pressed="true"]{
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  border-color:var(--gold);color:#2B2005;
+}
+.vote[aria-pressed="true"] .v-arrow{color:#2B2005}
+.vote-note{font-size:12px;color:var(--muted)}
+
+/* Answer library */
+.library{margin-top:64px}
+.library-head h3{font-size:clamp(24px,2.6vw,32px);font-weight:700;letter-spacing:-.02em}
+.library-head p{color:var(--muted);margin:8px 0 26px}
+.topic-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.tchip{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;
+  padding:9px 18px;border-radius:999px;cursor:pointer;letter-spacing:.02em;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  transition:border-color .2s,background .2s;
+}
+.tchip:hover{border-color:var(--gold)}
+.tchip.active{background:var(--teal);border-color:var(--teal);color:#FAF7F0}
+[data-theme="dark"] .tchip.active{background:var(--gold);border-color:var(--gold);color:#2B2005}
+.qa-list{display:flex;flex-direction:column;gap:12px}
+.qa{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.qa[open]{border-color:color-mix(in srgb,var(--gold) 50%,var(--line))}
+.qa summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;
+  padding:20px 24px;font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:600;font-size:16.5px;letter-spacing:-.01em;
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa-topic{
+  flex:none;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:var(--forest);background:color-mix(in srgb,var(--forest) 12%,transparent);
-  padding:6px 12px;border-radius:999px;
+  padding:5px 11px;border-radius:999px;
 }
-[data-theme="dark"] .story .badge{color:var(--gold-soft);background:color-mix(in srgb,var(--gold) 14%,transparent)}
+[data-theme="dark"] .qa-topic{color:var(--gold-soft);background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.qa-caret{margin-left:auto;color:var(--gold);transition:transform .25s}
+.qa[open] .qa-caret{transform:rotate(180deg)}
+.qa-answer{
+  margin:0 24px 22px;padding:20px 22px;border-radius:14px;
+  background:var(--cream);border-left:3px solid var(--gold);
+}
+.qa-answer p{font-size:16.5px;line-height:1.7}
+.qa-byline{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px}
+.qa-byline span:last-child{color:var(--muted)}
+.qa-mark{
+  width:22px;height:22px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 45% 40%,var(--gold-soft),var(--gold));
+}
+.qa.hide{display:none}
 
 /* ---------- ABOUT ---------- */
 .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
@@ -344,7 +436,8 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:1000px){
-  .cards,.course-grid,.story-grid{grid-template-columns:1fr 1fr}
+  .cards,.course-grid{grid-template-columns:1fr 1fr}
+  .ama-grid{grid-template-columns:1fr}
   .calc-grid{grid-template-columns:1fr}
   .result-panel{position:static}
   .about-grid{grid-template-columns:1fr}
@@ -357,7 +450,12 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
   .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:17px}
   .hamburger{display:block}
   .nav-cta .btn{display:none}
-  .cards,.course-grid,.story-grid,.foot-grid{grid-template-columns:1fr}
+  .cards,.course-grid,.foot-grid{grid-template-columns:1fr}
+  .ama-panel{padding:26px 20px}
+  .ama-row{flex-direction:column}
+  .qa summary{flex-wrap:wrap;font-size:15.5px;padding:16px 18px}
+  .qa-answer{margin:0 14px 16px;padding:16px}
+  .library{margin-top:44px}
   section{padding:72px 0}
   .hero-inner{padding:80px 0 130px}
   .hero-stats{gap:26px}
@@ -380,11 +478,11 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
       <a href="#top">Home</a>
       <a href="#learn">Learn</a>
       <a href="#tools">Tools</a>
-      <a href="#stories">Stories</a>
+      <a href="#ask">Ask Surya</a>
       <a href="#about">About Surya</a>
     </nav>
     <div class="nav-cta">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">☀️</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to day mode" title="Switch to day mode">🌙</button>
       <a href="#tools" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Start Learning</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
@@ -420,9 +518,9 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
         <a href="#learn" class="btn btn-ghost">Explore Courses</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><b>12,400+</b><span>Students taught</span></div>
-        <div class="stat"><b>₹38 Cr+</b><span>Wealth being built</span></div>
-        <div class="stat"><b>4.9 ★</b><span>Average rating</span></div>
+        <div class="stat"><b>4 languages</b><span>English · Hindi · Bengali · Odia</span></div>
+        <div class="stat"><b>0 stock tips</b><span>Ever. That's a promise</span></div>
+        <div class="stat"><b>₹0</b><span>Free FIRE calculator</span></div>
       </div>
     </div>
   </div>
@@ -450,10 +548,10 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
         <a class="link" href="#learn">See the course →</a>
       </article>
       <article class="card reveal">
-        <div class="glyph">🌄</div>
-        <h3>Real Student Transformations</h3>
-        <p>Teachers, engineers, and small business owners across India who went from money stress to a clear freedom date.</p>
-        <a class="link" href="#stories">Read their stories →</a>
+        <div class="glyph">🙋</div>
+        <h3>Ask Surya Anything</h3>
+        <p>A brand-new platform built on complete honesty. Bring any money question — in English, Hindi, Bengali, or Odia — and get a straight answer.</p>
+        <a class="link" href="#ask">Ask a question →</a>
       </article>
     </div>
   </div>
@@ -580,39 +678,109 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ============ STORIES ============ -->
-<section class="stories" id="stories">
+<!-- ============ ASK ME ANYTHING ============ -->
+<section class="stories" id="ask">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Proven path to financial freedom</span>
-      <h2>Real people. Real freedom dates.</h2>
-      <p>Not screenshots of lucky trades — steady, boring, unstoppable progress from students across India.</p>
+      <span class="eyebrow">Complete honesty · One trusted voice</span>
+      <h2>Ask me anything about money.</h2>
+      <p>Anyone can ask. Only Surya answers — so every answer here is one you can trust. Ask in English, Hindi, Bengali, or Odia. No question is too small, and no stock tips, ever.</p>
+      <span class="sunday-badge">☀️ Surya answers every Sunday</span>
     </div>
-    <div class="story-grid">
-      <article class="story reveal">
-        <blockquote>I was 31 with three EMIs and zero savings. Two years later my SIPs run on autopilot and I have a freedom date: 46. I sleep differently now.</blockquote>
-        <div class="who">
-          <span class="avatar">PR</span>
-          <div><b>Priya Ramachandran</b><span>School teacher · Coimbatore</span></div>
+
+    <div class="ama-grid">
+      <!-- ASK PANEL -->
+      <div class="ama-panel reveal">
+        <label class="ama-label" for="amaInput">Your question</label>
+        <textarea id="amaInput" rows="4" placeholder="e.g. I earn ₹45,000 a month. Where do I even start?"></textarea>
+        <div class="ama-row">
+          <input id="amaName" type="text" placeholder="Your name (optional)">
+          <button class="btn btn-gold" id="amaSend">Ask Surya →</button>
         </div>
-        <span class="badge">Freedom date: 2041</span>
-      </article>
-      <article class="story reveal">
-        <blockquote>The tax course alone saved me ₹1.4 lakh in the first year. All of it went straight into index funds. It felt like finding money in an old kurta.</blockquote>
-        <div class="who">
-          <span class="avatar">AB</span>
-          <div><b>Arjun Banerjee</b><span>Software engineer · Kolkata</span></div>
+        <p class="ama-sent" id="amaSent" role="status"></p>
+        <p class="calc-note">Questions are answered publicly (anonymously) so everyone learns. Please don't include personal details like PAN, Aadhaar, or account numbers. Education only — never personalised investment advice.</p>
+        <div class="ama-promise">
+          <b>My promise to you</b>
+          <span>Every answer comes from study and evidence, in plain language, with complete honesty about what I know — and what nobody can predict.</span>
         </div>
-        <span class="badge">Corpus: ₹42 L and growing</span>
-      </article>
-      <article class="story reveal">
-        <blockquote>We run a small shop. Surya's family-money course helped us plan our daughter's education AND our own retirement — for the first time, both felt possible.</blockquote>
-        <div class="who">
-          <span class="avatar">MK</span>
-          <div><b>Meera &amp; Kunal Shah</b><span>Business owners · Ahmedabad</span></div>
+      </div>
+
+      <!-- PENDING QUESTIONS -->
+      <div class="ama-side reveal">
+        <p class="ama-side-title">Waiting for Sunday — vote for what Surya answers next</p>
+        <div class="pending-list" id="pendingList">
+          <div class="pending" data-votes="14">
+            <button class="vote" aria-pressed="false" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">14</span></button>
+            <p>My parents want me to buy a flat, but rent is much cheaper in my city. How do I think about rent vs buy honestly?</p>
+          </div>
+          <div class="pending" data-votes="11">
+            <button class="vote" aria-pressed="false" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">11</span></button>
+            <p>I'm 24 and just got my first job. What should my first three money moves be?</p>
+          </div>
+          <div class="pending" data-votes="8">
+            <button class="vote" aria-pressed="false" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">8</span></button>
+            <p>Gold vs index funds — my family trusts only gold. What does the evidence say?</p>
+          </div>
+          <div class="pending" data-votes="5">
+            <button class="vote" aria-pressed="false" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">5</span></button>
+            <p>Which way do you think the major world economies are moving this year?</p>
+          </div>
         </div>
-        <span class="badge">Coast FIRE reached</span>
-      </article>
+        <p class="calc-note">Tap ▲ if you have the same question — the most-wanted ones get answered first. <em>(Sample questions shown for design preview.)</em></p>
+      </div>
+    </div>
+
+    <!-- ANSWERED LIBRARY -->
+    <div class="library reveal">
+      <div class="library-head">
+        <h3>The Answer Library</h3>
+        <p>Every Sunday's answers live here forever, organised by topic. It grows every week.</p>
+      </div>
+      <div class="topic-filter" role="tablist" aria-label="Filter answers by topic">
+        <button class="tchip active" data-topic="all">All</button>
+        <button class="tchip" data-topic="start">Getting started</button>
+        <button class="tchip" data-topic="invest">SIP &amp; investing</button>
+        <button class="tchip" data-topic="tax">Tax</button>
+        <button class="tchip" data-topic="fire">FIRE</button>
+        <button class="tchip" data-topic="general">General</button>
+      </div>
+      <div class="qa-list" id="qaList">
+        <details class="qa" data-topic="start">
+          <summary><span class="qa-topic">Getting started</span>How much emergency fund do I actually need?<span class="qa-caret">▾</span></summary>
+          <div class="qa-answer">
+            <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+            <p>Six months of your essential expenses — rent, food, EMIs, school fees — kept in a savings account or liquid fund. Not investments, not gold: money you can reach in a day. If your job is unstable or you're the only earner, stretch it to nine months. Build this before any investing; it's what lets you invest without fear later.</p>
+          </div>
+        </details>
+        <details class="qa" data-topic="invest">
+          <summary><span class="qa-topic">SIP &amp; investing</span>SIP vs FD — what's actually better?<span class="qa-caret">▾</span></summary>
+          <div class="qa-answer">
+            <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+            <p>Wrong question — they do different jobs. An FD protects money you'll need in the next 1–3 years. A SIP into an index fund builds money you won't touch for 7+ years, riding through market ups and downs. FDs feel safe but often lose to inflation after tax; equity feels risky but historically wins over long periods. Use both, for different goals. Anyone who says one is always better is selling something.</p>
+          </div>
+        </details>
+        <details class="qa" data-topic="tax">
+          <summary><span class="qa-topic">Tax</span>Old tax regime or new — how do I choose?<span class="qa-caret">▾</span></summary>
+          <div class="qa-answer">
+            <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+            <p>One honest rule: calculate, don't assume. If you genuinely use deductions — home loan interest, 80C investments, health insurance, HRA — the old regime can still win. If you don't, the new regime's lower rates usually win and your life gets simpler. Run both numbers on the official income-tax calculator each year; it takes ten minutes and the answer can flip as your salary changes.</p>
+          </div>
+        </details>
+        <details class="qa" data-topic="fire">
+          <summary><span class="qa-topic">FIRE</span>Is early retirement realistic on an Indian salary?<span class="qa-caret">▾</span></summary>
+          <div class="qa-answer">
+            <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+            <p>Yes — but honesty first: it depends far more on your savings rate than your salary. Someone earning ₹60,000 and investing ₹20,000 will reach freedom before someone earning ₹2 lakh and investing ₹15,000. The path is unglamorous: raise your savings rate every increment, automate SIPs, avoid lifestyle debt, and give it 15–20 patient years. Use the calculator above with your real numbers — that's your honest starting point.</p>
+          </div>
+        </details>
+        <details class="qa" data-topic="start">
+          <summary><span class="qa-topic">Getting started</span>I have EMIs. Should I invest or clear debt first?<span class="qa-caret">▾</span></summary>
+          <div class="qa-answer">
+            <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+            <p>Look at the interest rate. Credit cards (30–40%) and personal loans (12–18%) — attack these first; no honest investment reliably beats those rates. A home loan at 8–9% is different: keep it, take the tax benefit, and invest alongside it. And whatever your debt, build one month of emergency money first, so a surprise doesn't push you into new debt.</p>
+          </div>
+        </details>
+      </div>
     </div>
   </div>
 </section>
@@ -624,18 +792,19 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
       <div class="p-sun"></div>
       <div class="p-ridge"></div>
       <div class="p-fig"></div>
-      <figcaption>Surya Ghosh · Personal Finance Coach</figcaption>
+      <figcaption>Surya Ghosh · Researcher &amp; Finance Coach · Balasore, Odisha</figcaption>
     </figure>
     <div class="about-copy reveal">
       <span class="eyebrow">About Surya</span>
-      <h2>A mentor who walked the path before drawing the map</h2>
-      <p>Surya Ghosh spent a decade in the corporate grind before realising that financial independence isn't about luck or a huge salary — it's about a system. He built his own freedom fund rupee by rupee, and reached financial independence years ahead of schedule.</p>
-      <p>Today he teaches that same system to thousands of everyday Indians: clear, honest, and free of hype. No stock tips. No trading signals. Just the quiet math of freedom.</p>
+      <h2>A researcher's mind. A teacher's heart.</h2>
+      <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. I'm a researcher by profession, and studying is what I do whenever I find time. As a child I read biographies of great lives; today I study money — as a concept, and as the invisible current that quietly runs the world.</p>
+      <p>Why do I teach? Call it a selfish desire: I want everyone around me to be well off — to never have to worry about money. Financial stress has broken too many good people. If money worries weigh on you, I'm here to share everything I know and help you see the bigger picture clearly.</p>
+      <p><strong>One honest promise:</strong> I will never give you stock tips — I can't and I won't. What I <em>can</em> share is how I read the world's major economies, and the patient, evidence-based path to your own freedom.</p>
       <div class="pillars">
-        <div class="pillar"><b>Simplicity first</b><span>If your money plan needs a spreadsheet PhD, it will fail.</span></div>
-        <div class="pillar"><b>India-real</b><span>Built around Indian taxes, families, and festivals.</span></div>
-        <div class="pillar"><b>Freedom, not frugality</b><span>Spend richly on what you love. Cut what you don't.</span></div>
-        <div class="pillar"><b>Evidence over hype</b><span>Index funds, discipline, and time beat tips. Always.</span></div>
+        <div class="pillar"><b>Ask me anything</b><span>This platform is a place where no money question is too small.</span></div>
+        <div class="pillar"><b>Four languages, one mission</b><span>Fluent in English, Hindi, Bengali &amp; Odia — currently learning Marathi.</span></div>
+        <div class="pillar"><b>Perspective over tips</b><span>Macro understanding and broad thinking, never hot picks.</span></div>
+        <div class="pillar"><b>Beyond the spreadsheets</b><span>Biography reader, lifelong student — and yes, a Naruto &amp; One Piece fan.</span></div>
       </div>
       <a href="#learn" class="btn btn-teal">Learn with Surya</a>
     </div>
@@ -647,7 +816,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
   <div class="wrap">
     <div class="cta-band reveal">
       <h2>Your sunrise is closer than you think.</h2>
-      <p>Join 12,400+ students building their freedom fund. Start with the free FIRE calculator and a 5-day email course.</p>
+      <p>This platform is just beginning — and it starts with complete honesty. Try the free FIRE calculator, ask any money question, and grow with us from day one.</p>
       <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
     </div>
   </div>
@@ -677,7 +846,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
       <div>
         <h4>Company</h4>
         <a href="#about">About Surya</a>
-        <a href="#stories">Student stories</a>
+        <a href="#ask">Ask Surya</a>
         <a href="#top">Contact</a>
       </div>
     </div>
@@ -696,6 +865,9 @@ toggle.addEventListener('click',()=>{
   const dark=root.getAttribute('data-theme')==='dark';
   root.setAttribute('data-theme',dark?'light':'dark');
   toggle.textContent=dark?'☀️':'🌙';
+  const label=dark?'Switch to dark mode':'Switch to day mode';
+  toggle.setAttribute('aria-label',label);
+  toggle.setAttribute('title',label);
 });
 
 /* ---------- Mobile menu ---------- */
@@ -770,11 +942,136 @@ function calc(){
 inputs.forEach(r=>r.addEventListener('input',calc));
 calc();
 
+/* ---------- Ask Me Anything ---------- */
+const amaInput=document.getElementById('amaInput');
+document.getElementById('amaSend').addEventListener('click',async()=>{
+  const sent=document.getElementById('amaSent');
+  const text=amaInput.value.trim();
+  if(!text){
+    sent.textContent='Write your question first — anything at all.';
+    sent.style.color='var(--gold)';
+    return;
+  }
+  const name=document.getElementById('amaName').value.trim();
+  if(window.SFF && window.SFF.live){
+    sent.style.color='var(--muted)';
+    sent.textContent='Sending…';
+    try{
+      await window.SFF.ask(text,name);
+      sent.style.color='var(--forest)';
+      sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question has been sent to Surya for review. Approved questions appear in the list, and answers arrive on Sunday.';
+      amaInput.value='';document.getElementById('amaName').value='';
+    }catch(err){
+      sent.style.color='var(--gold)';
+      sent.textContent='Could not send right now — please check your connection and try again.';
+    }
+  }else{
+    sent.style.color='var(--forest)';
+    sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question is on its way to Surya — answers are shared here and in the newsletter. (Demo mode: connect Firebase to store questions for real.)';
+    amaInput.value='';
+  }
+});
+
+/* ---------- Pending question votes (delegated; works for demo + live) ---------- */
+document.getElementById('pendingList').addEventListener('click',e=>{
+  const btn=e.target.closest('.vote');
+  if(!btn) return;
+  const pressed=btn.getAttribute('aria-pressed')==='true';
+  const count=btn.querySelector('.v-count');
+  count.textContent=+count.textContent+(pressed?-1:1);
+  btn.setAttribute('aria-pressed',String(!pressed));
+  const card=btn.closest('.pending');
+  if(window.SFF && window.SFF.live){
+    window.SFF.vote(card.dataset.id, pressed?-1:1);
+  }else{
+    const list=document.getElementById('pendingList');
+    [...list.children]
+      .sort((a,b)=>+b.querySelector('.v-count').textContent - +a.querySelector('.v-count').textContent)
+      .forEach(n=>list.appendChild(n));
+  }
+});
+
+/* ---------- Answer library topic filter ---------- */
+document.querySelectorAll('.tchip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.tchip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const t=chip.dataset.topic;
+    document.querySelectorAll('.qa').forEach(q=>{
+      q.classList.toggle('hide', t!=='all' && q.dataset.topic!==t);
+    });
+  });
+});
+
 /* ---------- Scroll reveal ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
 }),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+</script>
+
+<!-- ================= FIREBASE (LIVE MODE) =================
+Paste your Firebase web-app config below (Project settings → Your apps → Web).
+Until then, the page runs in demo mode with sample content. -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
+  authDomain: "surya-finance-freedom.firebaseapp.com",
+  projectId: "surya-finance-freedom",
+  storageBucket: "surya-finance-freedom.firebasestorage.app",
+  messagingSenderId: "385238983487",
+  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+};
+
+window.SFF = { live:false, ask:null, vote:null };
+if(!firebaseConfig.apiKey.startsWith('PASTE')){
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const questions = collection(db,'questions');
+  const votedIds = new Set();
+  const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
+  window.SFF.live = true;
+
+  window.SFF.ask = (text,name)=> addDoc(questions,{
+    text, name: name||'', status:'submitted', votes:0, topic:'general', createdAt: serverTimestamp()
+  });
+
+  window.SFF.vote = (id,delta)=>{
+    if(delta>0) votedIds.add(id); else votedIds.delete(id);
+    return updateDoc(doc(db,'questions',id),{votes:increment(delta)}).catch(()=>{});
+  };
+
+  onSnapshot(query(questions, where('status','==','pending'), orderBy('votes','desc'), limit(6)), snap=>{
+    const list=document.getElementById('pendingList');
+    if(snap.empty){
+      list.innerHTML='<p class="calc-note">No questions waiting yet — yours could be the first Surya answers this Sunday.</p>';
+      return;
+    }
+    list.innerHTML=snap.docs.map(d=>{
+      const q=d.data(), voted=votedIds.has(d.id);
+      return `<div class="pending" data-id="${d.id}">
+        <button class="vote" aria-pressed="${voted}" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">${q.votes||0}</span></button>
+        <p>${esc(q.text)}</p></div>`;
+    }).join('');
+  });
+
+  onSnapshot(query(questions, where('status','==','answered'), orderBy('answeredAt','desc')), snap=>{
+    if(snap.empty) return;
+    const topics={start:'Getting started',invest:'SIP & investing',tax:'Tax',fire:'FIRE',general:'General'};
+    document.getElementById('qaList').innerHTML=snap.docs.map(d=>{
+      const q=d.data(), t=q.topic in topics ? q.topic : 'general';
+      return `<details class="qa" data-topic="${t}">
+        <summary><span class="qa-topic">${topics[t]}</span>${esc(q.text)}<span class="qa-caret">▾</span></summary>
+        <div class="qa-answer">
+          <div class="qa-byline"><span class="qa-mark"></span><b>Surya's answer</b><span>· Answered Sunday</span></div>
+          <p>${esc(q.answer||'')}</p>
+        </div></details>`;
+    }).join('');
+  });
+}
 </script>
 </body>
 </html>
