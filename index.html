@@ -1015,7 +1015,7 @@ Paste your Firebase web-app config below (Project settings → Your apps → Web
 Until then, the page runs in demo mode with sample content. -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
@@ -1044,24 +1044,29 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
     return updateDoc(doc(db,'questions',id),{votes:increment(delta)}).catch(()=>{});
   };
 
-  onSnapshot(query(questions, where('status','==','pending'), orderBy('votes','desc'), limit(6)), snap=>{
+  // Note: only where('status'...) in the query — no orderBy, so no composite
+  // index is needed. Sorting/limiting happens client-side below.
+  onSnapshot(query(questions, where('status','==','pending')), snap=>{
     const list=document.getElementById('pendingList');
     if(snap.empty){
       list.innerHTML='<p class="calc-note">No questions waiting yet — yours could be the first Surya answers this Sunday.</p>';
       return;
     }
-    list.innerHTML=snap.docs.map(d=>{
+    const docs=[...snap.docs].sort((a,b)=>(b.data().votes||0)-(a.data().votes||0)).slice(0,6);
+    list.innerHTML=docs.map(d=>{
       const q=d.data(), voted=votedIds.has(d.id);
       return `<div class="pending" data-id="${d.id}">
         <button class="vote" aria-pressed="${voted}" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">${q.votes||0}</span></button>
         <p>${esc(q.text)}</p></div>`;
     }).join('');
-  });
+  }, err=>console.error('Pending questions failed to load:', err));
 
-  onSnapshot(query(questions, where('status','==','answered'), orderBy('answeredAt','desc')), snap=>{
+  onSnapshot(query(questions, where('status','==','answered')), snap=>{
     if(snap.empty) return;
     const topics={start:'Getting started',invest:'SIP & investing',tax:'Tax',fire:'FIRE',general:'General'};
-    document.getElementById('qaList').innerHTML=snap.docs.map(d=>{
+    const ts=v=>(v&&v.toMillis)?v.toMillis():0;
+    const docs=[...snap.docs].sort((a,b)=>ts(b.data().answeredAt)-ts(a.data().answeredAt)); // newest first
+    document.getElementById('qaList').innerHTML=docs.map(d=>{
       const q=d.data(), t=q.topic in topics ? q.topic : 'general';
       return `<details class="qa" data-topic="${t}">
         <summary><span class="qa-topic">${topics[t]}</span>${esc(q.text)}<span class="qa-caret">▾</span></summary>
@@ -1070,7 +1075,11 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
           <p>${esc(q.answer||'')}</p>
         </div></details>`;
     }).join('');
-  });
+    // Re-apply whichever topic chip is currently active to the freshly rendered list
+    const active=document.querySelector('.tchip.active');
+    const t=active?active.dataset.topic:'all';
+    document.querySelectorAll('.qa').forEach(q=>q.classList.toggle('hide', t!=='all' && q.dataset.topic!==t));
+  }, err=>console.error('Answer library failed to load:', err));
 }
 </script>
 </body>
