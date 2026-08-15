@@ -63,6 +63,7 @@ button:hover{transform:translateY(-1px)}
       <button class="tab active" data-status="submitted">🕵️ To review</button>
       <button class="tab" data-status="pending">📥 Approved & waiting</button>
       <button class="tab" data-status="answered">✅ Answered</button>
+      <button class="tab" data-status="comments">💬 Comments</button>
       <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
     </div>
     <div id="list"></div>
@@ -72,7 +73,7 @@ button:hover{transform:translateY(-1px)}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, collection, query, where, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
@@ -118,30 +119,39 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
 
   function load(status){
     if(unsub) unsub();
-    // Only filter by status — no orderBy, so no composite index is required.
-    // Sorting is done client-side in render().
-    const q = query(questions,where('status','==',status));
-    unsub=onSnapshot(q,
-      snap=>render(status,snap),
-      err=>{
-        console.error('Firestore query failed:',err);
-        el('list').innerHTML='<p class="empty" style="color:#A33C28">Could not load questions: '+esc(err.message)+'</p>';
-      }
-    );
+    if(status==='comments'){
+      const q=query(collectionGroup(db,'comments'),orderBy('createdAt','desc'),limit(60));
+      unsub=onSnapshot(q,snap=>renderComments(snap));
+      return;
+    }
+    const q = status==='pending'
+      ? query(questions,where('status','==','pending'),orderBy('votes','desc'))
+      : status==='answered'
+      ? query(questions,where('status','==','answered'),orderBy('answeredAt','desc'))
+      : query(questions,where('status','==','submitted'),orderBy('createdAt','asc'));
+    unsub=onSnapshot(q,snap=>render(status,snap));
   }
 
-  const ts=v=>(v&&v.toMillis)?v.toMillis():0;
+  function renderComments(snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML='<p class="empty">No comments yet.</p>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const c=d.data();
+      return `<div class="q" data-path="${d.ref.path}">
+        <p class="meta">On: “${esc(c.qtext)||'—'}”</p>
+        <p class="text"><b>${esc(c.name)||'Anonymous'}</b> · <span style="color:var(--muted);font-size:13px">${c.createdAt&&c.createdAt.toDate?c.createdAt.toDate().toLocaleString('en-IN'):''}</span></p>
+        <textarea rows="2" data-field="ctext">${esc(c.text)}</textarea>
+        <div class="row">
+          <button class="teal" data-cact="save">Save edit</button>
+          <button class="danger" data-cact="delete">Delete comment</button>
+        </div></div>`;
+    }).join('');
+  }
 
   function render(status,snap){
     const list=el('list');
     if(snap.empty){list.innerHTML='<p class="empty">Nothing here right now.</p>';return;}
-    const docs=[...snap.docs].sort((a,b)=>{
-      const A=a.data(),B=b.data();
-      if(status==='pending')  return (B.votes||0)-(A.votes||0);      // most votes first
-      if(status==='answered') return ts(B.answeredAt)-ts(A.answeredAt); // newest answer first
-      return ts(A.createdAt)-ts(B.createdAt);                        // oldest submission first
-    });
-    list.innerHTML=docs.map(d=>{
+    list.innerHTML=snap.docs.map(d=>{
       const q=d.data();
       const head=`<p class="text">${esc(q.text)}</p>
         <p class="meta">${q.name?esc(q.name)+' · ':''}${status!=='submitted'?'<span class="count">▲ '+(q.votes||0)+'</span> · ':''}${q.createdAt&&q.createdAt.toDate?q.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>`;
@@ -167,6 +177,24 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   }
 
   el('list').addEventListener('click',async e=>{
+    const cbtn=e.target.closest('button[data-cact]');
+    if(cbtn){
+      const card=cbtn.closest('.q');
+      const ref=doc(db,card.dataset.path);
+      cbtn.disabled=true;
+      try{
+        if(cbtn.dataset.cact==='save'){
+          const t=card.querySelector('[data-field="ctext"]').value.trim();
+          if(!t){alert('Comment text cannot be empty — use Delete instead.');}
+          else await updateDoc(ref,{text:t});
+        }
+        if(cbtn.dataset.cact==='delete'){
+          if(confirm('Delete this comment permanently?')) await deleteDoc(ref);
+        }
+      }catch(err){alert('Action failed: '+err.message);}
+      cbtn.disabled=false;
+      return;
+    }
     const btn=e.target.closest('button[data-act]');
     if(!btn) return;
     const card=btn.closest('.q'), id=card.dataset.id, ref=doc(db,'questions',id);
