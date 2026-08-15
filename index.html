@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Master Your Money. Design the Life You Actually Want.</title>
+<!-- BUILD: full-platform-v4 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
@@ -382,8 +383,41 @@ input[type=range]::-moz-range-thumb{
 }
 .qa.hide{display:none}
 
+/* ---------- BOOKS ---------- */
+.book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.book{display:flex;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s}
+.book:hover{transform:translateY(-6px)}
+.book-spine{width:10px;flex:none;background:linear-gradient(180deg,var(--gold),var(--teal))}
+.book:nth-child(2) .book-spine{background:linear-gradient(180deg,var(--forest),var(--gold))}
+.book:nth-child(3) .book-spine{background:linear-gradient(180deg,var(--teal),var(--forest))}
+.book-body{padding:26px 24px}
+.book-body h3{font-size:19px;font-weight:700;letter-spacing:-.015em}
+.book-author{font-size:14px;color:var(--gold);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;margin:4px 0 12px}
+.book-sum{font-size:15.5px;color:var(--muted)}
+.book-more{margin-top:14px}
+.book-more summary{cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;color:var(--gold);list-style:none}
+.book-more summary::-webkit-details-marker{display:none}
+.book-more p{margin-top:10px;font-size:15px;padding-left:14px;border-left:2px solid var(--line)}
+
+/* ---------- BLOG ---------- */
+.blog-list{display:flex;flex-direction:column;gap:22px}
+.post{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 34px;box-shadow:var(--shadow)}
+.post-tag{display:inline-block;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,transparent);padding:5px 12px;border-radius:999px}
+.post h3{font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.02em;margin:12px 0 6px;line-height:1.2}
+.post-meta{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;color:var(--muted)}
+.post-excerpt{margin-top:14px;font-size:17px;color:var(--muted)}
+.post-full{margin-top:14px}
+.post-full summary{cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;color:var(--gold);list-style:none}
+.post-full summary::-webkit-details-marker{display:none}
+.post-body{margin-top:16px;border-left:3px solid var(--gold);padding-left:20px}
+.post-body p{margin-bottom:14px;font-size:17px;line-height:1.72}
+.post-comments{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}
+@media (max-width:1000px){.book-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.book-grid{grid-template-columns:1fr}.post{padding:24px 20px}}
+
 /* Comments under answers */
 .comments{margin:0 24px 22px;padding-top:6px}
+.post-comments .comments{margin:0}
 .c-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .c-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
 .c-item{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
@@ -503,7 +537,9 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Main">
       <a href="#top">Home</a>
-      <a href="#learn">Learn</a>
+      <a href="#learn">Courses</a>
+      <a href="#books">Book Summaries</a>
+      <a href="#blog">Blog</a>
       <a href="#tools">Tools</a>
       <a href="#ask">Ask Surya</a>
       <a href="#about">About Surya</a>
@@ -648,7 +684,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
       <h2>Courses for every stage of the journey</h2>
       <p>Start where you are. Each course is bite-sized video lessons in simple English &amp; Hindi, with worksheets built for Indian salaries, taxes, and families.</p>
     </div>
-    <div class="course-grid">
+    <div class="course-grid" id="courseGrid">
       <article class="course reveal">
         <div class="banner"><span class="level">Foundation</span></div>
         <div class="body">
@@ -701,6 +737,83 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
   </div>
 </section>
 
+<!-- ============ BOOK SUMMARIES ============ -->
+<section id="books" class="calc-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Read in minutes, not months</span>
+      <h2>Summaries of the great finance books</h2>
+      <p>The ideas that shaped how Surya thinks about money — distilled honestly, with what each book gets right and where it needs an Indian lens.</p>
+    </div>
+    <div class="book-grid" id="bookGrid">
+      <article class="book">
+        <div class="book-spine"></div>
+        <div class="book-body">
+          <h3>The Psychology of Money</h3>
+          <p class="book-author">Morgan Housel</p>
+          <p class="book-sum">Doing well with money has little to do with intelligence and everything to do with behaviour. Wealth is what you don't see — the restraint, the patience, the unspent.</p>
+          <details class="book-more"><summary>Key takeaways</summary>
+            <p>Saving rate beats returns. Room for error is a feature. Nothing is as good or as bad as it seems.</p>
+          </details>
+        </div>
+      </article>
+      <article class="book">
+        <div class="book-spine"></div>
+        <div class="book-body">
+          <h3>The Richest Man in Babylon</h3>
+          <p class="book-author">George S. Clason</p>
+          <p class="book-sum">Ancient parables carrying one unbreakable rule: pay yourself first. A tenth of everything you earn is yours to keep — before any expense claims it.</p>
+          <details class="book-more"><summary>Key takeaways</summary>
+            <p>Save 10% minimum. Make gold work for you. Guard your capital from schemes promising the impossible.</p>
+          </details>
+        </div>
+      </article>
+      <article class="book">
+        <div class="book-spine"></div>
+        <div class="book-body">
+          <h3>Let's Talk Money</h3>
+          <p class="book-author">Monika Halan</p>
+          <p class="book-sum">Written for Indian households — how to build an emergency fund, buy the right insurance, and stop mixing investment with protection.</p>
+          <details class="book-more"><summary>Key takeaways</summary>
+            <p>Never buy ULIPs for protection. Term insurance plus index funds beats endowment plans. Build cash buffers first.</p>
+          </details>
+        </div>
+      </article>
+    </div>
+    <p class="calc-note" style="margin-top:20px">Sample summaries shown — Surya's own summaries appear here as he publishes them.</p>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<section id="blog">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Written by Surya</span>
+      <h2>Notes on money, markets and freedom</h2>
+      <p>Longer thoughts — how economies move, what the data actually says, and the honest lessons behind the numbers. Read and join the discussion.</p>
+    </div>
+    <div class="blog-list" id="blogList">
+      <article class="post">
+        <div class="post-head">
+          <span class="post-tag">Macro</span>
+          <h3>What "the economy is slowing" actually means for your SIP</h3>
+          <p class="post-meta">By Surya Ghosh</p>
+        </div>
+        <p class="post-excerpt">Headlines panic every quarter. Your SIP shouldn't. Here's how to read growth numbers without letting them change a plan built for twenty years.</p>
+        <details class="post-full"><summary>Read the full post</summary>
+          <div class="post-body">
+            <p>When GDP growth slows from 7% to 6%, news channels reach for dramatic language. But consider what that number describes: the pace at which an entire economy expands, measured over a year, revised twice afterwards. Your SIP, meanwhile, buys units every month for the next two decades.</p>
+            <p>The honest position is this: nobody — not me, not any analyst on television — can tell you what markets will do next quarter. What we do know from long historical records is that regular investing through slow periods has generally rewarded the patient more than reacting has. Slowdowns are when units are cheap.</p>
+            <p>So read the macro news for understanding, not for instructions. Understanding builds conviction. Instructions build anxiety.</p>
+          </div>
+        </details>
+        <div class="post-comments"></div>
+      </article>
+    </div>
+    <p class="calc-note" style="margin-top:20px">Sample post shown — Surya's posts appear here as he publishes them from the admin panel.</p>
+  </div>
+</section>
+
 <!-- ============ ASK ME ANYTHING ============ -->
 <section class="stories" id="ask">
   <div class="wrap">
@@ -721,6 +834,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
           <button class="btn btn-gold" id="amaSend">Ask Surya →</button>
         </div>
         <p class="ama-sent" id="amaSent" role="status"></p>
+        <p id="sffStatus" style="font-family:'Bricolage Grotesque',sans-serif;font-size:12.5px;margin-top:6px"></p>
         <p class="calc-note">Questions are answered publicly (anonymously) so everyone learns. Please don't include personal details like PAN, Aadhaar, or account numbers. Education only — never personalised investment advice.</p>
         <div class="ama-promise">
           <b>My promise to you</b>
@@ -983,7 +1097,7 @@ document.getElementById('amaSend').addEventListener('click',async()=>{
     try{
       await window.SFF.ask(text,name);
       sent.style.color='var(--forest)';
-      sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question has been sent to Surya for review. Approved questions appear in the list, and answers arrive on Sunday.';
+      sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question is now live below — others can vote on it, and Surya answers on Sunday.';
       amaInput.value='';document.getElementById('amaName').value='';
     }catch(err){
       sent.style.color='var(--gold)';
@@ -1039,26 +1153,31 @@ function commentHTML(c){
 function renderComments(listEl,items){
   listEl.innerHTML=items.length?items.map(commentHTML).join(''):'<p class="c-empty">No comments yet — be the first to share your thoughts.</p>';
 }
-function ensureCommentsUI(qa){
-  if(qa.querySelector('.comments')) return;
+function mountComments(host,kind,id,label){
+  if(host.querySelector('.comments')) return;
   const box=document.createElement('div');
   box.className='comments';
+  box.dataset.kind=kind; box.dataset.id=id||''; box.dataset.label=label||'';
   box.innerHTML=`<p class="c-title">Community comments</p>
     <div class="c-list"></div>
     <div class="c-form">
       <textarea rows="2" placeholder="Share your experience or a follow-up thought…"></textarea>
       <div class="c-row"><input type="text" placeholder="Name (optional)"><button class="c-post" type="button">Post comment</button></div>
     </div>
-    <p class="c-note">Open to everyone. Please be kind and never share personal financial details. Comments are moderated — Surya's team may edit or remove them.</p>`;
-  qa.appendChild(box);
+    <p class="c-note">Open to everyone. Please be kind and never share personal financial details. Comments are moderated — Surya may edit or remove them.</p>`;
+  host.appendChild(box);
   const listEl=box.querySelector('.c-list');
-  const qid=qa.dataset.id;
-  const key=qa.querySelector('summary').textContent.trim();
-  if(qid && window.SFF && window.SFF.live){
-    commentSubs[qid]=window.SFF.watchComments(qid,items=>renderComments(listEl,items));
+  if(id && window.SFF && window.SFF.live){
+    const key=kind+':'+id;
+    if(commentSubs[key]) commentSubs[key]();
+    commentSubs[key]=window.SFF.watchComments(kind,id,items=>renderComments(listEl,items));
   }else{
-    renderComments(listEl,demoComments[key]||[]);
+    renderComments(listEl,demoComments[label]||[]);
   }
+}
+function ensureCommentsUI(qa){
+  if(qa.querySelector('.comments')) return;
+  mountComments(qa,'questions',qa.dataset.id,qa.querySelector('summary').textContent.trim());
 }
 // Open/close: build UI on first open, detach live listener on close
 document.getElementById('qaList').addEventListener('toggle',e=>{
@@ -1066,33 +1185,42 @@ document.getElementById('qaList').addEventListener('toggle',e=>{
   if(!qa) return;
   if(qa.open){ ensureCommentsUI(qa); }
   else{
-    const qid=qa.dataset.id;
-    if(qid && commentSubs[qid]){ commentSubs[qid](); delete commentSubs[qid]; }
+    const k='questions:'+qa.dataset.id;
+    if(commentSubs[k]){ commentSubs[k](); delete commentSubs[k]; }
   }
 },true);
 // Post handler (delegated)
-document.getElementById('qaList').addEventListener('click',async e=>{
+document.addEventListener('click',async e=>{
   const btn=e.target.closest('.c-post');
   if(!btn) return;
-  const qa=btn.closest('details.qa');
+  const box=btn.closest('.comments');
   const form=btn.closest('.c-form');
   const text=form.querySelector('textarea').value.trim();
   const name=form.querySelector('input').value.trim();
   if(!text) return;
   btn.disabled=true;
-  const qid=qa.dataset.id;
-  const key=qa.querySelector('summary').textContent.trim();
+  const {kind,id,label}=box.dataset;
   try{
-    if(qid && window.SFF && window.SFF.live){
-      await window.SFF.addComment(qid,key,name,text); // live list updates via listener
+    if(id && window.SFF && window.SFF.live){
+      await window.SFF.addComment(kind,id,label,name,text);
     }else{
-      (demoComments[key]=demoComments[key]||[]).push({name,text,when:new Date()});
-      renderComments(qa.querySelector('.c-list'),demoComments[key]);
+      (demoComments[label]=demoComments[label]||[]).push({name,text,when:new Date()});
+      renderComments(box.querySelector('.c-list'),demoComments[label]);
     }
     form.querySelector('textarea').value='';
-  }catch(err){ alert('Could not post right now — please try again.'); }
+  }catch(err){ console.error('[SFF] Posting comment',err); alert('Could not post comment: '+(err.code||err.message)); }
   btn.disabled=false;
 });
+
+/* Mount comments on any blog posts present (demo + live) */
+function mountBlogComments(){
+  document.querySelectorAll('#blogList .post').forEach(post=>{
+    const host=post.querySelector('.post-comments');
+    if(host) mountComments(host,'posts',post.dataset.id||'',post.querySelector('h3').textContent.trim());
+  });
+}
+mountBlogComments();
+window.SFF_mountBlogComments=mountBlogComments;
 
 /* ---------- Scroll reveal ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
@@ -1118,6 +1246,16 @@ const firebaseConfig = {
 };
 
 window.SFF = { live:false, ask:null, vote:null };
+const statusEl = document.getElementById('sffStatus');
+const setStatus = (msg,color) => { if(statusEl){ statusEl.textContent=msg; statusEl.style.color=color; } };
+const reportErr = (err,what) => {
+  console.error('[SFF] '+what, err);
+  const link=(err.message||'').match(/https:\/\/console\.firebase\.google\.com\S+/);
+  setStatus('⚠ '+what+' failed: '+(err.code||err.message)+(link?' → open the browser console (F12) and click the index link.':''),'#B4472F');
+};
+if(firebaseConfig.apiKey.startsWith('PASTE')){
+  setStatus('◐ DEMO MODE — Firebase config not pasted yet. Questions and comments are not saved.','#C9A14D');
+}
 if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -1125,19 +1263,82 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
+  setStatus('● LIVE (build full-platform-v4) — connected to Firebase.','#1E5631');
+  if(location.protocol==='file:'){
+    setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#B4472F');
+  }
 
   window.SFF.ask = (text,name)=> addDoc(questions,{
-    text, name: name||'', status:'submitted', votes:0, topic:'general', createdAt: serverTimestamp()
+    text: String(text).slice(0,990), name: String(name||'').slice(0,90),
+    status:'pending', votes:0, topic:'general', createdAt: serverTimestamp()
   });
 
-  window.SFF.addComment = (qid,qtext,name,text)=> addDoc(collection(db,'questions',qid,'comments'),{
-    text, name: name||'', qtext:(qtext||'').slice(0,90), createdAt: serverTimestamp()
+  window.SFF.addComment = (kind,id,label,name,text)=> addDoc(collection(db,kind,id,'comments'),{
+    text: String(text).slice(0,590),
+    name: String(name||'').slice(0,55),
+    qtext: String(label||'').slice(0,90),
+    createdAt: serverTimestamp()
   });
 
-  window.SFF.watchComments = (qid,render)=> onSnapshot(
-    query(collection(db,'questions',qid,'comments'), orderBy('createdAt','asc')),
-    snap=> render(snap.docs.map(d=>({name:d.data().name,text:d.data().text,when:d.data().createdAt&&d.data().createdAt.toDate?d.data().createdAt.toDate():null})))
+  window.SFF.watchComments = (kind,id,render)=> onSnapshot(
+    query(collection(db,kind,id,'comments'), orderBy('createdAt','asc')),
+    snap=> render(snap.docs.map(d=>({name:d.data().name,text:d.data().text,when:d.data().createdAt&&d.data().createdAt.toDate?d.data().createdAt.toDate():null}))),
+    err=> reportErr(err,'Loading comments')
   );
+
+  const nl = t => esc(t).replace(/\n/g,'<br>');
+
+  /* ---- Live COURSES ---- */
+  onSnapshot(query(collection(db,'courses'), orderBy('createdAt','desc')), snap=>{
+    if(snap.empty) return;
+    document.getElementById('courseGrid').innerHTML=snap.docs.map(d=>{
+      const c=d.data();
+      return `<article class="course">
+        <div class="banner"><span class="level">${esc(c.level||'Course')}</span></div>
+        <div class="body">
+          <h3>${esc(c.title||'')}</h3>
+          <p>${esc(c.summary||'')}</p>
+          ${c.content?`<details class="book-more" style="margin-top:12px"><summary>What's inside</summary><p>${nl(c.content)}</p></details>`:''}
+          <div class="meta"><span class="price">${esc(c.price||'')}</span><span class="lessons">${esc(c.duration||'')}</span></div>
+        </div></article>`;
+    }).join('');
+  }, err=>reportErr(err,'Loading courses'));
+
+  /* ---- Live BOOK SUMMARIES ---- */
+  onSnapshot(query(collection(db,'books'), orderBy('createdAt','desc')), snap=>{
+    if(snap.empty) return;
+    document.getElementById('bookGrid').innerHTML=snap.docs.map(d=>{
+      const b=d.data();
+      return `<article class="book"><div class="book-spine"></div>
+        <div class="book-body">
+          <h3>${esc(b.title||'')}</h3>
+          <p class="book-author">${esc(b.author||'')}</p>
+          <p class="book-sum">${nl(b.summary||'')}</p>
+          ${b.takeaways?`<details class="book-more"><summary>Key takeaways</summary><p>${nl(b.takeaways)}</p></details>`:''}
+        </div></article>`;
+    }).join('');
+  }, err=>reportErr(err,'Loading book summaries'));
+
+  /* ---- Live BLOG ---- */
+  onSnapshot(query(collection(db,'posts'), orderBy('createdAt','desc')), snap=>{
+    if(snap.empty) return;
+    document.getElementById('blogList').innerHTML=snap.docs.map(d=>{
+      const b=d.data(), when=b.createdAt&&b.createdAt.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'';
+      return `<article class="post" data-id="${d.id}">
+        <div class="post-head">
+          ${b.tag?`<span class="post-tag">${esc(b.tag)}</span>`:''}
+          <h3>${esc(b.title||'')}</h3>
+          <p class="post-meta">By Surya Ghosh${when?' · '+when:''}</p>
+        </div>
+        ${b.excerpt?`<p class="post-excerpt">${esc(b.excerpt)}</p>`:''}
+        <details class="post-full"><summary>Read the full post</summary>
+          <div class="post-body"><p>${nl(b.body||'')}</p></div>
+        </details>
+        <div class="post-comments"></div>
+      </article>`;
+    }).join('');
+    if(window.SFF_mountBlogComments) window.SFF_mountBlogComments();
+  }, err=>reportErr(err,'Loading blog posts'));
 
   window.SFF.vote = (id,delta)=>{
     if(delta>0) votedIds.add(id); else votedIds.delete(id);
@@ -1156,7 +1357,7 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
         <button class="vote" aria-pressed="${voted}" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">${q.votes||0}</span></button>
         <p>${esc(q.text)}</p></div>`;
     }).join('');
-  });
+  }, err=>reportErr(err,'Loading pending questions'));
 
   onSnapshot(query(questions, where('status','==','answered'), orderBy('answeredAt','desc')), snap=>{
     if(snap.empty) return;
@@ -1170,7 +1371,7 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
           <p>${esc(q.answer||'')}</p>
         </div></details>`;
     }).join('');
-  });
+  }, err=>reportErr(err,'Loading answered questions'));
 }
 </script>
 </body>
