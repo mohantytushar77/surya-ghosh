@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Admin</title>
+<!-- BUILD: full-platform-v4 -->
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
 <style>
 :root{--cream:#FAF7F0;--teal:#0A3D4C;--forest:#1E5631;--gold:#C9A14D;--ink:#1B2B31;--muted:#5D6E73;--card:#fff;--line:rgba(10,61,76,.14)}
@@ -42,7 +43,7 @@ button:hover{transform:translateY(-1px)}
 <body>
 <div class="wrap">
   <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
-  <p class="sub">Review questions, approve them for public voting, and publish Sunday's answers.</p>
+  <p class="sub">Review questions, approve them for public voting, and publish Sunday's answers. <span style="font-size:12px;color:var(--muted)">build full-platform-v4</span></p>
 
   <div class="warn" id="configWarn">⚠ Firebase is not configured yet. Open this file and paste your Firebase config into the script at the bottom, then set your admin email in <b>firestore.rules</b>. See FIREBASE-SETUP.md.</div>
 
@@ -60,12 +61,15 @@ button:hover{transform:translateY(-1px)}
   <!-- APP -->
   <div id="app" class="hidden">
     <div class="tabs">
-      <button class="tab active" data-status="submitted">🕵️ To review</button>
-      <button class="tab" data-status="pending">📥 Approved & waiting</button>
+      <button class="tab active" data-status="pending">❓ Questions</button>
       <button class="tab" data-status="answered">✅ Answered</button>
       <button class="tab" data-status="comments">💬 Comments</button>
+      <button class="tab" data-status="posts">✍️ Blog</button>
+      <button class="tab" data-status="courses">🎓 Courses</button>
+      <button class="tab" data-status="books">📚 Book summaries</button>
       <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
     </div>
+    <div id="creator"></div>
     <div id="list"></div>
   </div>
 </div>
@@ -73,7 +77,7 @@ button:hover{transform:translateY(-1px)}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
@@ -82,7 +86,6 @@ const firebaseConfig = {
   storageBucket: "surya-finance-freedom.firebasestorage.app",
   messagingSenderId: "385238983487",
   appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
-};
 
 const el=id=>document.getElementById(id);
 const esc=t=>{const d=document.createElement('div');d.textContent=t||'';return d.innerHTML;};
@@ -95,7 +98,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   const auth=getAuth(app);
   const db=getFirestore(app);
   const questions=collection(db,'questions');
-  let currentTab='submitted', unsub=null;
+  let currentTab='pending', unsub=null;
 
   el('loginBtn').addEventListener('click',async()=>{
     el('loginMsg').textContent='Signing in…';
@@ -119,17 +122,93 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
 
   function load(status){
     if(unsub) unsub();
+    el('creator').innerHTML='';
     if(status==='comments'){
+      el('list').innerHTML='<p class="empty">Loading comments…</p>';
       const q=query(collectionGroup(db,'comments'),orderBy('createdAt','desc'),limit(60));
-      unsub=onSnapshot(q,snap=>renderComments(snap));
+      unsub=onSnapshot(q,snap=>renderComments(snap),err=>showError(err,'comments'));
+      return;
+    }
+    if(['posts','courses','books'].includes(status)){
+      showCreator(status);
+      const q=query(collection(db,status),orderBy('createdAt','desc'));
+      unsub=onSnapshot(q,snap=>renderContent(status,snap),err=>showError(err,status));
       return;
     }
     const q = status==='pending'
       ? query(questions,where('status','==','pending'),orderBy('votes','desc'))
-      : status==='answered'
-      ? query(questions,where('status','==','answered'),orderBy('answeredAt','desc'))
-      : query(questions,where('status','==','submitted'),orderBy('createdAt','asc'));
-    unsub=onSnapshot(q,snap=>render(status,snap));
+      : query(questions,where('status','==','answered'),orderBy('answeredAt','desc'));
+    unsub=onSnapshot(q,snap=>render(status,snap),err=>showError(err,status));
+  }
+
+  /* ---------- Blog / Courses / Books: create + edit + delete ---------- */
+  const FIELDS={
+    posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
+    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['summary','Summary','textarea'],['content','Contents / what\'s inside','textarea']],
+    books:[['title','Book title','input'],['author','Author','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
+  };
+  const LABEL={posts:'blog post',courses:'course',books:'book summary'};
+
+  function fieldHTML(kind,vals={},prefix=''){
+    return FIELDS[kind].map(([k,label,type])=>{
+      const v=esc(vals[k]||'');
+      return `<label>${label}</label>`+(type==='textarea'
+        ? `<textarea rows="${k==='body'||k==='content'?6:3}" data-f="${k}">${v}</textarea>`
+        : `<input type="text" data-f="${k}" value="${v}">`);
+    }).join('');
+  }
+
+  function showCreator(kind){
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">Add a new ${LABEL[kind]}</h2>
+      ${fieldHTML(kind)}
+      <div style="margin-top:16px"><button class="gold" data-new="${kind}">Publish ${LABEL[kind]}</button></div>
+      <p class="msg" id="newMsg"></p>
+    </div>`;
+  }
+
+  function renderContent(kind,snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML=`<p class="empty">No ${LABEL[kind]}s yet — add your first one above.</p>`;return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const v=d.data();
+      return `<div class="q" data-path="${d.ref.path}">
+        <p class="text"><b>${esc(v.title||'Untitled')}</b></p>
+        <p class="meta">${v.createdAt&&v.createdAt.toDate?v.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>
+        <details style="margin-top:10px"><summary style="cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;color:var(--gold)">Edit</summary>
+          <div style="margin-top:8px">${fieldHTML(kind,v)}</div>
+          <div class="row"><button class="teal" data-save="${kind}">Save changes</button>
+          <button class="danger" data-del="1">Delete</button></div>
+        </details></div>`;
+    }).join('');
+  }
+
+  // Create new content
+  el('creator').addEventListener('click',async e=>{
+    const btn=e.target.closest('button[data-new]');
+    if(!btn) return;
+    const kind=btn.dataset.new, panel=btn.closest('.panel'), data={};
+    panel.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
+    if(!data.title){alert('A title is required.');return;}
+    btn.disabled=true;
+    try{
+      await addDoc(collection(db,kind),{...data,createdAt:serverTimestamp()});
+      panel.querySelectorAll('[data-f]').forEach(i=>i.value='');
+      el('newMsg').textContent='Published — it is now live on the website.';
+      setTimeout(()=>el('newMsg').textContent='',4000);
+    }catch(err){alert('Could not publish: '+err.message);}
+    btn.disabled=false;
+  });
+
+  function showError(err,where){
+    console.error(err);
+    const link=(err.message||'').match(/https:\/\/console\.firebase\.google\.com\S+/);
+    el('list').innerHTML=`<div class="q" style="border-color:rgba(180,60,40,.4)">
+      <p class="text"><b>Could not load ${where}.</b></p>
+      <p class="meta">${esc(err.code||'')} — ${esc(err.message||'')}</p>
+      ${link?`<div class="row"><a class="teal" style="text-decoration:none;padding:11px 22px;border-radius:999px;display:inline-block" href="${link[0]}" target="_blank">Create the missing index →</a></div>`:''}
+      ${(err.code||'').includes('permission')?'<p class="meta">Permission denied usually means the admin email in firestore.rules does not exactly match your login email. Re-check and re-publish the rules.</p>':''}
+    </div>`;
   }
 
   function renderComments(snap){
@@ -155,11 +234,6 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
       const q=d.data();
       const head=`<p class="text">${esc(q.text)}</p>
         <p class="meta">${q.name?esc(q.name)+' · ':''}${status!=='submitted'?'<span class="count">▲ '+(q.votes||0)+'</span> · ':''}${q.createdAt&&q.createdAt.toDate?q.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>`;
-      if(status==='submitted') return `<div class="q" data-id="${d.id}">${head}
-        <div class="row">
-          <button class="teal" data-act="approve">Approve for voting</button>
-          <button class="danger" data-act="reject">Reject</button>
-        </div></div>`;
       if(status==='pending') return `<div class="q" data-id="${d.id}">${head}
         <label>Topic</label>
         <select data-field="topic">
@@ -177,6 +251,24 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   }
 
   el('list').addEventListener('click',async e=>{
+    const sbtn=e.target.closest('button[data-save]');
+    if(sbtn){
+      const card=sbtn.closest('.q'), kind=sbtn.dataset.save, data={};
+      card.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
+      sbtn.disabled=true;
+      try{ await updateDoc(doc(db,card.dataset.path),data); sbtn.textContent='Saved ✓';
+           setTimeout(()=>sbtn.textContent='Save changes',2500); }
+      catch(err){alert('Save failed: '+err.message);}
+      sbtn.disabled=false; return;
+    }
+    const dbtn=e.target.closest('button[data-del]');
+    if(dbtn){
+      const card=dbtn.closest('.q');
+      if(confirm('Delete this permanently?')){
+        try{ await deleteDoc(doc(db,card.dataset.path)); }catch(err){alert('Delete failed: '+err.message);}
+      }
+      return;
+    }
     const cbtn=e.target.closest('button[data-cact]');
     if(cbtn){
       const card=cbtn.closest('.q');
