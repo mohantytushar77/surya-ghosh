@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Admin</title>
-<!-- BUILD: full-platform-v4 -->
+<!-- BUILD: platform-v5 -->
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
 <style>
 :root{--cream:#FAF7F0;--teal:#0A3D4C;--forest:#1E5631;--gold:#C9A14D;--ink:#1B2B31;--muted:#5D6E73;--card:#fff;--line:rgba(10,61,76,.14)}
@@ -43,7 +43,7 @@ button:hover{transform:translateY(-1px)}
 <body>
 <div class="wrap">
   <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
-  <p class="sub">Review questions, approve them for public voting, and publish Sunday's answers. <span style="font-size:12px;color:var(--muted)">build full-platform-v4</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build platform-v5</span></p>
 
   <div class="warn" id="configWarn">⚠ Firebase is not configured yet. Open this file and paste your Firebase config into the script at the bottom, then set your admin email in <b>firestore.rules</b>. See FIREBASE-SETUP.md.</div>
 
@@ -145,7 +145,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   /* ---------- Blog / Courses / Books: create + edit + delete ---------- */
   const FIELDS={
     posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
-    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['summary','Summary','textarea'],['content','Contents / what\'s inside','textarea']],
+    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['videoUrl','Video link — paste a YouTube or Vimeo URL','input'],['summary','Summary','textarea'],['content','Contents / what\'s inside','textarea']],
     books:[['title','Book title','input'],['author','Author','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
   };
   const LABEL={posts:'blog post',courses:'course',books:'book summary'};
@@ -159,10 +159,15 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     }).join('');
   }
 
+  const HELP={
+    courses:`<div class="warn" style="margin:14px 0 0">🎬 <b>Adding a video:</b> upload the video to YouTube (you can set it to <b>Unlisted</b> so only people with the link can watch), then copy the link from the address bar and paste it above. Vimeo links work too. The video then plays right inside the course card on the website.<br><br>Direct video-file uploads are not used here on purpose: Firebase charges for video storage and bandwidth, while YouTube hosts and streams for free.</div>`,
+    posts:'', books:''
+  };
   function showCreator(kind){
     el('creator').innerHTML=`<div class="panel">
       <h2 style="font-size:19px;font-weight:700">Add a new ${LABEL[kind]}</h2>
       ${fieldHTML(kind)}
+      ${HELP[kind]||''}
       <div style="margin-top:16px"><button class="gold" data-new="${kind}">Publish ${LABEL[kind]}</button></div>
       <p class="msg" id="newMsg"></p>
     </div>`;
