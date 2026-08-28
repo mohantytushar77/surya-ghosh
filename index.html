@@ -4,535 +4,550 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: platform-v5 -->
+<!-- BUILD: meridian-v8 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* ============================================================
+   SURYA FINANCE FREEDOM — "Meridian" design system
+   Navy & white. One accent. Calm, premium, uncluttered.
+   ============================================================ */
 :root{
-  --cream:#FAF7F0;
-  --cream-2:#F3EEE2;
-  --teal:#0A3D4C;
-  --teal-deep:#072A35;
-  --forest:#1E5631;
-  --gold:#C9A14D;
-  --gold-soft:#E4C98A;
-  --ink:#1B2B31;
-  --muted:#5D6E73;
-  --card:#FFFFFF;
-  --line:rgba(10,61,76,.12);
-  --shadow:0 18px 50px -18px rgba(10,61,76,.22);
-  --sky-a:#FAF3E3; --sky-b:#F4DFB7; --sky-c:#E8C58A;
-  --ridge-1:#0A3D4C; --ridge-2:#14526A; --ridge-3:#2C6E86;
-  --sun:#C9A14D;
-  --radius:20px;
+  /* Dark (default): deep navy field */
+  --bg:#071528;
+  --bg-2:#0B1F38;
+  --surface:#0E2743;
+  --surface-2:#123052;
+  --line:rgba(198,218,244,.16);
+  --line-strong:rgba(198,218,244,.28);
+  --ink:#EEF4FC;
+  --ink-2:#9FB4CE;
+  --accent:#4C8DFF;
+  --accent-soft:#8FB8FF;
+  --accent-ink:#04101F;
+  --ok:#5FD3A6;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.75);
+  --shadow-sm:0 10px 28px -16px rgba(0,0,0,.6);
+  --r:14px;
+  --r-lg:22px;
+  --maxw:1140px;
+  --sp:clamp(72px,8vw,116px);
 }
-[data-theme="dark"]{
-  --cream:#071E26;
-  --cream-2:#0A2733;
-  --teal:#0A3D4C;
-  --teal-deep:#04141A;
-  --forest:#7FBF95;
-  --ink:#F2EDE1;
-  --muted:#9FB3B8;
-  --card:#0D3040;
-  --line:rgba(250,247,240,.14);
-  --shadow:0 18px 50px -18px rgba(0,0,0,.55);
-  --sky-a:#0A2733; --sky-b:#0E3A4A; --sky-c:#1B5468;
-  --ridge-1:#04141A; --ridge-2:#072A35; --ridge-3:#0D3949;
-  --sun:#E4C98A;
-  --gold:#D9B966;
-  --gold-soft:#EAD49B;
+[data-theme="light"]{
+  --bg:#FFFFFF;
+  --bg-2:#F4F7FC;
+  --surface:#FFFFFF;
+  --surface-2:#F4F7FC;
+  --line:rgba(11,31,58,.12);
+  --line-strong:rgba(11,31,58,.22);
+  --ink:#0B1F3A;
+  --ink-2:#5C7089;
+  --accent:#1B57C4;
+  --accent-soft:#4C8DFF;
+  --accent-ink:#FFFFFF;
+  --ok:#0E7A56;
+  --shadow:0 24px 60px -34px rgba(11,31,58,.28);
+  --shadow-sm:0 10px 28px -20px rgba(11,31,58,.22);
 }
+
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{
-  font-family:'Newsreader',Georgia,serif;
-  background:var(--cream);
-  color:var(--ink);
-  line-height:1.65;
-  font-size:17.5px;
-  transition:background .4s ease,color .4s ease;
+  font-family:'Manrope',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:16.5px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  transition:background .45s ease,color .45s ease;
 }
-h1,h2,h3,h4,.btn,nav,.eyebrow,.stat b,.card h3,.num{font-family:'Bricolage Grotesque',system-ui,sans-serif}
+h1,h2,h3,h4,.num,.stat b,.rrow b,.v-count,.price{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.025em}
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
-.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+::selection{background:var(--accent);color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+section{padding:var(--sp) 0}
+
+/* ---- shared type ---- */
 .eyebrow{
   display:inline-flex;align-items:center;gap:10px;
-  font-size:12.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--gold);
+  font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);
 }
-.eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);border-radius:2px}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent);opacity:.7}
+.section-head{max-width:620px;margin-bottom:52px}
+.section-head h2{font-size:clamp(28px,3.4vw,42px);font-weight:600;line-height:1.14;margin:14px 0 12px}
+.section-head p{color:var(--ink-2);font-size:17px;max-width:56ch}
+.calc-note{font-size:13.5px;color:var(--ink-2);margin-top:16px;line-height:1.6}
 
-/* ---------- NAV ---------- */
+/* ---- header ---- */
 header{
-  position:sticky;top:0;z-index:50;
-  background:color-mix(in srgb,var(--cream) 82%,transparent);
-  backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb,var(--bg) 84%,transparent);
+  backdrop-filter:blur(16px) saturate(140%);
   border-bottom:1px solid var(--line);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
-.logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-family:'Sora',sans-serif;font-weight:600;font-size:17px;flex:none}
 .logo .sunmark{
-  width:34px;height:34px;border-radius:50%;
-  background:radial-gradient(circle at 50% 42%,var(--gold-soft),var(--gold) 68%);
-  position:relative;flex:none;
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 18%,transparent);
+  width:28px;height:28px;border-radius:50%;flex:none;position:relative;
+  background:conic-gradient(from 180deg,var(--accent),var(--accent-soft),var(--accent));
 }
 .logo .sunmark::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:46%;
-  background:var(--teal);border-radius:0 0 17px 17px;
+  content:"";position:absolute;left:2px;right:2px;bottom:2px;height:46%;
+  background:var(--bg);border-radius:0 0 14px 14px;
 }
-[data-theme="dark"] .logo .sunmark::after{background:var(--teal-deep)}
-.logo small{display:block;font-weight:500;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.nav-links{display:flex;gap:34px;font-size:15px;font-weight:500}
-.nav-links a{position:relative;padding:6px 0;color:var(--ink);opacity:.85}
-.nav-links a:hover{opacity:1}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .25s}
+.logo small{display:block;font-family:'Manrope',sans-serif;font-weight:500;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.nav-links{display:flex;gap:28px;font-size:14.5px;font-weight:500}
+.nav-links a{position:relative;padding:6px 0;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--accent);transition:width .28s cubic-bezier(.4,0,.2,1)}
 .nav-links a:hover::after{width:100%}
-.nav-cta{display:flex;align-items:center;gap:14px}
-.theme-toggle{
-  width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
-  background:var(--card);cursor:pointer;font-size:18px;line-height:1;
-  display:grid;place-items:center;transition:transform .2s;color:var(--ink);
+.nav-cta{display:flex;align-items:center;gap:10px;flex:none}
+.theme-toggle,.hamburger{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+  background:transparent;color:var(--ink);cursor:pointer;font-size:15px;
+  display:grid;place-items:center;transition:border-color .2s,background .2s;
 }
-.theme-toggle:hover{transform:rotate(20deg)}
-.hamburger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;font-size:20px;color:var(--ink)}
+.theme-toggle:hover,.hamburger:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.hamburger{display:none}
 
-/* ---------- BUTTONS ---------- */
+/* ---- buttons ---- */
 .btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:15px 30px;border-radius:999px;font-weight:600;font-size:15.5px;
-  border:none;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
-  letter-spacing:.01em;
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 26px;border-radius:999px;cursor:pointer;border:1px solid transparent;
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:14.5px;letter-spacing:.01em;
+  transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .2s,background .2s,border-color .2s;
 }
-.btn-gold{
-  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-  color:#2B2005;
-  box-shadow:0 10px 30px -8px color-mix(in srgb,var(--gold) 65%,transparent);
-}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 38px -8px color-mix(in srgb,var(--gold) 75%,transparent)}
-.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.btn-teal{background:var(--teal);color:#FAF7F0}
-[data-theme="dark"] .btn-teal{background:var(--gold);color:#2B2005}
-.btn-teal:hover{transform:translateY(-2px)}
+.btn-gold,.btn-teal{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 24px -12px var(--accent)}
+.btn-gold:hover,.btn-teal:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px var(--accent)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-/* ---------- HERO ---------- */
-.hero{position:relative;overflow:hidden;min-height:88vh;display:flex;align-items:center}
+/* ---- hero ---- */
+.hero{position:relative;overflow:hidden;min-height:min(84vh,720px);display:flex;align-items:center;padding:0}
 .horizon{position:absolute;inset:0;z-index:0}
 .horizon svg{width:100%;height:100%;display:block}
-.hero-inner{position:relative;z-index:2;padding:110px 0 160px;max-width:720px}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,var(--bg) 8%,color-mix(in srgb,var(--bg) 62%,transparent) 52%,transparent 88%);
+}
+.hero-inner{position:relative;z-index:3;padding:120px 0 130px;max-width:660px}
 .hero h1{
-  font-size:clamp(40px,6vw,76px);
-  font-weight:800;line-height:1.04;letter-spacing:-.028em;
-  margin:22px 0 24px;
+  font-size:clamp(36px,5.4vw,64px);font-weight:600;line-height:1.06;
+  letter-spacing:-.035em;margin:20px 0 22px;
 }
-.hero h1 .accent{color:var(--gold);font-style:normal}
-.hero p.sub{
-  font-size:clamp(17px,1.6vw,21px);color:var(--muted);
-  max-width:560px;font-weight:400;
-}
-.hero .cta-row{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap}
-.hero-stats{display:flex;gap:44px;margin-top:56px;flex-wrap:wrap}
-.stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em}
-.stat span{font-size:13.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-family:'Bricolage Grotesque',sans-serif;font-weight:500}
+.hero h1 .accent{color:var(--accent);font-style:normal}
+.hero p.sub{font-size:clamp(16px,1.5vw,19px);color:var(--ink-2);max-width:50ch}
+.hero .cta-row{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:0;margin-top:54px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
+.stat{padding-right:38px;margin-right:38px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0;margin-right:0;padding-right:0}
+.stat b{display:block;font-size:22px;font-weight:600}
+.stat span{font-size:12px;color:var(--ink-2);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 .sun-orb{
-  position:absolute;z-index:1;right:8%;top:16%;
-  width:min(320px,26vw);aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle at 42% 38%,var(--gold-soft),var(--sun) 62%,transparent 74%);
-  filter:blur(1px);
-  box-shadow:0 0 120px 40px color-mix(in srgb,var(--sun) 32%,transparent);
-  animation:rise 2.4s ease-out both;
+  position:absolute;z-index:2;right:9%;top:18%;
+  width:min(260px,22vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--accent) 34%,transparent),transparent 68%);
+  animation:rise 1.6s cubic-bezier(.2,.8,.2,1) both;
 }
-@keyframes rise{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.arc-divider{display:none}
 
-/* ---------- SECTIONS ---------- */
-section{padding:104px 0}
-.section-head{max-width:640px;margin-bottom:58px}
-.section-head h2{font-size:clamp(30px,3.6vw,46px);font-weight:700;letter-spacing:-.025em;line-height:1.12;margin:16px 0 14px}
-.section-head p{color:var(--muted);font-size:18px}
-.arc-divider{height:70px;overflow:hidden}
-.arc-divider svg{width:100%;height:100%;display:block}
-
-/* ---------- FEATURE CARDS ---------- */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.card{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:36px 32px;box-shadow:var(--shadow);
-  transition:transform .25s ease,border-color .25s ease;
-  position:relative;overflow:hidden;
+/* ---- cards (one system, used everywhere) ---- */
+.card,.course,.book,.post,.ama-panel,.calc-panel,.pending,.qa,.c-item,.story{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
 }
-.card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{padding:30px 28px;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
 .card .glyph{
-  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
-  font-size:26px;margin-bottom:22px;
-  background:color-mix(in srgb,var(--gold) 14%,transparent);
+  width:42px;height:42px;border-radius:11px;display:grid;place-items:center;
+  font-size:19px;margin-bottom:18px;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
 }
-.card h3{font-size:21px;font-weight:700;letter-spacing:-.015em;margin-bottom:10px}
-.card p{color:var(--muted);font-size:16px}
-.card .link{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;color:var(--gold)}
-.card .link:hover{gap:12px}
-.card .link{transition:gap .2s}
+.card h3{font-size:18.5px;font-weight:600;margin-bottom:8px}
+.card p{color:var(--ink-2);font-size:15.5px}
+.card .link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-weight:700;font-size:14px;color:var(--accent);transition:gap .2s}
+.card .link:hover{gap:11px}
 
-/* ---------- CALCULATOR ---------- */
-.calc-section{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.calc-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start}
-.calc-panel{
-  background:var(--card);border:1px solid var(--line);border-radius:24px;
-  padding:38px;box-shadow:var(--shadow);
-}
-.field{margin-bottom:26px}
-.field label{
-  display:flex;justify-content:space-between;align-items:baseline;
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;
-  margin-bottom:10px;letter-spacing:.02em;
-}
-.field label output{color:var(--gold);font-size:16px;font-variant-numeric:tabular-nums}
+/* ---- calculator ---- */
+.calc-section{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.calc-panel{padding:34px}
+.field{margin-bottom:24px}
+.field label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:14px;margin-bottom:11px;color:var(--ink-2)}
+.field label output{color:var(--ink);font-family:'Sora',sans-serif;font-size:16px;font-variant-numeric:tabular-nums;font-weight:600}
 input[type=range]{
-  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
-  background:linear-gradient(to right,var(--gold) var(--fill,50%),var(--line) var(--fill,50%));
-  outline-offset:6px;cursor:pointer;
+  -webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;cursor:pointer;
+  background:linear-gradient(to right,var(--accent) var(--fill,50%),var(--line-strong) var(--fill,50%));
 }
 input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
-  background:var(--card);border:3.5px solid var(--gold);
-  box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:grab;
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--accent);border:3px solid var(--surface);
+  box-shadow:0 0 0 1px var(--accent),0 2px 8px rgba(0,0,0,.3);
 }
 input[type=range]::-moz-range-thumb{
-  width:22px;height:22px;border-radius:50%;background:var(--card);
-  border:3.5px solid var(--gold);box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:grab;
+  width:18px;height:18px;border-radius:50%;background:var(--accent);
+  border:3px solid var(--surface);box-shadow:0 0 0 1px var(--accent);
 }
-.result-panel{position:sticky;top:100px}
+.result-panel{position:sticky;top:96px}
 .result-hero{
-  background:linear-gradient(160deg,var(--teal),var(--teal-deep));
-  color:#FAF7F0;border-radius:24px;padding:40px 38px;box-shadow:var(--shadow);
-  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--surface-2),var(--surface));
+  border:1px solid var(--line-strong);border-radius:var(--r);
+  padding:34px;position:relative;overflow:hidden;
 }
-.result-hero::before{
-  content:"";position:absolute;right:-70px;top:-70px;width:230px;height:230px;border-radius:50%;
-  background:radial-gradient(circle,color-mix(in srgb,var(--gold) 55%,transparent),transparent 70%);
-}
-.result-hero .eyebrow{color:var(--gold-soft)}
-.num{font-size:clamp(40px,4.4vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;margin:10px 0 4px}
-.result-hero .when{font-size:16px;opacity:.85;font-style:italic}
-.result-rows{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
-.rrow{background:rgba(250,247,240,.08);border:1px solid rgba(250,247,240,.16);border-radius:14px;padding:16px 18px}
-.rrow b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-variant-numeric:tabular-nums}
-.rrow span{font-size:12.5px;opacity:.75;letter-spacing:.08em;text-transform:uppercase;font-family:'Bricolage Grotesque',sans-serif}
-.progress-arc{margin-top:30px}
+[data-theme="light"] .result-hero{background:linear-gradient(165deg,#0B1F3A,#123052);color:#EEF4FC}
+[data-theme="light"] .result-hero .eyebrow{color:var(--accent-soft)}
+[data-theme="light"] .result-hero .when,[data-theme="light"] .result-hero .rrow span{color:rgba(238,244,252,.7)}
+.num{font-size:clamp(34px,4vw,50px);font-weight:600;line-height:1.02;font-variant-numeric:tabular-nums;margin:10px 0 4px}
+.when{font-size:15px;color:var(--ink-2)}
+.result-rows{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:26px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rrow{background:var(--surface);padding:15px 17px}
+[data-theme="light"] .rrow{background:#0E2743}
+.rrow b{display:block;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.rrow span{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.progress-arc{margin-top:24px}
 .progress-arc svg{width:100%;display:block}
-.calc-note{font-size:13.5px;color:var(--muted);margin-top:18px;font-style:italic}
 
-/* ---------- COURSES ---------- */
-.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.course{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
-  transition:transform .25s;
-}
-.course:hover{transform:translateY(-6px)}
+/* ---- courses ---- */
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.course{overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
+.course:hover{border-color:var(--line-strong);transform:translateY(-3px)}
 .course .banner{
-  height:120px;position:relative;
-  background:linear-gradient(140deg,var(--teal),var(--forest));
-  display:flex;align-items:flex-end;padding:18px 24px;
+  height:92px;display:flex;align-items:flex-end;padding:16px 22px;
+  background:linear-gradient(150deg,var(--surface-2),var(--surface));
+  border-bottom:1px solid var(--line);
 }
-.course:nth-child(2) .banner{background:linear-gradient(140deg,var(--forest),var(--teal))}
-.course:nth-child(3) .banner{background:linear-gradient(140deg,var(--teal-deep),var(--teal))}
-.course:nth-child(4) .banner{background:linear-gradient(140deg,#5A3E1B,var(--gold))}
-.course:nth-child(5) .banner{background:linear-gradient(140deg,var(--teal),#134B3A)}
-.course:nth-child(6) .banner{background:linear-gradient(140deg,#123240,var(--forest))}
-.course .level{
-  font-family:'Bricolage Grotesque',sans-serif;font-size:11.5px;font-weight:700;
-  letter-spacing:.16em;text-transform:uppercase;color:#FAF7F0;
-  background:rgba(0,0,0,.28);padding:6px 12px;border-radius:999px;
+.course-video{position:relative;width:100%;aspect-ratio:16/9;background:var(--surface-2)}
+.course-video iframe,.course-video video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.level{
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 24%,transparent);
+  padding:5px 11px;border-radius:999px;
 }
-.course .body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
-.course h3{font-size:19.5px;font-weight:700;letter-spacing:-.015em;margin-bottom:8px}
-.course p{color:var(--muted);font-size:15.5px;flex:1}
-.course .meta{
-  display:flex;justify-content:space-between;align-items:center;margin-top:22px;
-  font-family:'Bricolage Grotesque',sans-serif;
-}
-.course .price{font-weight:800;font-size:19px;color:var(--gold)}
-.course .lessons{font-size:13px;color:var(--muted);font-weight:500}
+.level-inline{display:inline-block;margin-bottom:12px}
+.course .body{padding:24px 22px 26px;display:flex;flex-direction:column;flex:1}
+.course h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.course p{color:var(--ink-2);font-size:15px;flex:1}
+.course .meta{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.price{font-weight:600;font-size:17px;color:var(--ink)}
+.lessons{font-size:12.5px;color:var(--ink-2);font-weight:500}
 
-/* ---------- ASK ME ANYTHING ---------- */
-.stories{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.ama-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start}
-.ama-panel{
-  background:var(--card);border:1px solid var(--line);border-radius:24px;
-  padding:36px;box-shadow:var(--shadow);
+/* ---- books ---- */
+.book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.book{display:flex;overflow:hidden;transition:border-color .25s,transform .25s}
+.book:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.book-spine{width:4px;flex:none;background:var(--accent)}
+.book-body{padding:26px 24px}
+.book-body h3{font-size:17.5px;font-weight:600}
+.book-author{font-size:13px;color:var(--accent);font-weight:600;margin:4px 0 12px;letter-spacing:.02em}
+.book-sum{font-size:15px;color:var(--ink-2)}
+.book-more{margin-top:14px}
+.book-more summary,.post-full summary{
+  cursor:pointer;font-weight:700;font-size:13.5px;color:var(--accent);list-style:none;
+  display:inline-flex;align-items:center;gap:6px;
 }
-.ama-label{
-  display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;
-  font-size:14.5px;letter-spacing:.02em;margin-bottom:10px;
-}
-.ama-panel textarea,.ama-panel input[type=text]{
-  width:100%;border:1.5px solid var(--line);border-radius:14px;
-  background:var(--cream);color:var(--ink);
-  font-family:'Newsreader',Georgia,serif;font-size:17px;line-height:1.55;
-  padding:16px 18px;resize:vertical;transition:border-color .2s;
-}
-.ama-panel textarea:focus,.ama-panel input[type=text]:focus{outline:none;border-color:var(--gold)}
-.ama-panel ::placeholder{color:var(--muted);font-style:italic}
-.ama-row{display:flex;gap:14px;margin-top:16px;align-items:stretch}
-.ama-row input{flex:1}
-.ama-sent{
-  margin-top:14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;
-  font-size:14.5px;color:var(--forest);min-height:1.4em;
-}
-.ama-side-title{
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;
-  margin-bottom:14px;color:var(--muted);letter-spacing:.02em;
-}
-.ama-chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{
-  font-family:'Newsreader',Georgia,serif;font-size:15.5px;font-style:italic;
-  background:var(--card);color:var(--ink);border:1.5px solid var(--line);
-  border-radius:999px;padding:10px 18px;cursor:pointer;
-  transition:border-color .2s,transform .15s;text-align:left;
-}
-.chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
-.ama-promise{
-  margin-top:28px;border-left:3px solid var(--gold);padding:6px 0 6px 18px;
-}
-.ama-promise b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;margin-bottom:6px}
-.ama-promise span{font-size:15.5px;color:var(--muted);font-style:italic}
+.book-more summary::-webkit-details-marker,.post-full summary::-webkit-details-marker{display:none}
+.book-more summary::after,.post-full summary::after{content:"↓";transition:transform .25s;display:inline-block}
+details[open]>summary::after{transform:rotate(180deg)}
+.book-more p{margin-top:12px;font-size:14.5px;color:var(--ink-2);padding-left:14px;border-left:1px solid var(--line-strong)}
 
-/* Sunday badge */
+/* ---- blog ---- */
+.blog-list{display:flex;flex-direction:column;gap:16px}
+.post{padding:30px 32px;transition:border-color .25s}
+.post:hover{border-color:var(--line-strong)}
+.post-tag{
+  display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 24%,transparent);padding:5px 11px;border-radius:999px;
+}
+.post h3{font-size:clamp(19px,2vw,24px);font-weight:600;margin:12px 0 6px;line-height:1.22}
+.post-meta{font-size:12.5px;color:var(--ink-2);font-weight:500}
+.post-excerpt{margin-top:12px;font-size:16px;color:var(--ink-2)}
+.post-full{margin-top:14px}
+.post-body{margin-top:16px;padding-left:20px;border-left:2px solid var(--accent)}
+.post-body p{margin-bottom:14px;font-size:16px;line-height:1.75;color:var(--ink-2)}
+.post-comments{margin-top:22px;border-top:1px solid var(--line);padding-top:8px}
+
+/* ---- ask me anything ---- */
+.stories{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .sunday-badge{
-  display:inline-block;margin-top:20px;
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;
-  color:#2B2005;background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-  padding:10px 20px;border-radius:999px;letter-spacing:.02em;
-  box-shadow:0 8px 24px -8px color-mix(in srgb,var(--gold) 60%,transparent);
+  display:inline-block;margin-top:18px;font-size:12.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);
+  padding:8px 16px;border-radius:999px;
 }
-
-/* Pending questions with votes */
-.pending-list{display:flex;flex-direction:column;gap:12px}
-.pending{
-  display:flex;gap:16px;align-items:flex-start;
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:16px 18px;box-shadow:var(--shadow);transition:transform .35s ease;
+.ama-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+.ama-panel{padding:32px}
+.ama-label{display:block;font-weight:600;font-size:14px;margin-bottom:10px;color:var(--ink-2)}
+textarea,input[type=text],input[type=email],input[type=password]{
+  width:100%;border:1px solid var(--line-strong);border-radius:10px;
+  background:var(--bg);color:var(--ink);
+  font-family:'Manrope',sans-serif;font-size:15.5px;line-height:1.55;
+  padding:13px 15px;resize:vertical;transition:border-color .2s,box-shadow .2s;
 }
-.pending p{font-size:16px;line-height:1.55;padding-top:4px}
+textarea:focus,input[type=text]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+::placeholder{color:var(--ink-2);opacity:.75}
+.ama-row{display:flex;gap:10px;margin-top:12px}
+.ama-row input{flex:1}
+.ama-sent{margin-top:12px;font-size:14px;font-weight:600;min-height:1.3em;color:var(--ok)}
+.ama-side-title{font-weight:600;font-size:14px;margin-bottom:12px;color:var(--ink-2)}
+.pending-list{display:flex;flex-direction:column;gap:10px}
+.pending{display:flex;gap:14px;align-items:flex-start;padding:15px 17px;transition:border-color .25s}
+.pending:hover{border-color:var(--line-strong)}
+.pending p{font-size:15px;line-height:1.55;padding-top:3px}
 .vote{
-  flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;
-  min-width:52px;padding:8px 6px;border-radius:12px;cursor:pointer;
-  border:1.5px solid var(--line);background:var(--cream);color:var(--ink);
-  font-family:'Bricolage Grotesque',sans-serif;transition:border-color .2s,background .2s;
+  flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;
+  min-width:46px;padding:7px 5px;border-radius:9px;cursor:pointer;
+  border:1px solid var(--line-strong);background:transparent;color:var(--ink);
+  font-family:'Sora',sans-serif;transition:border-color .2s,background .2s,transform .15s;
 }
-.vote .v-arrow{font-size:13px;color:var(--gold)}
-.vote .v-count{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
-.vote:hover{border-color:var(--gold)}
-.vote[aria-pressed="true"]{
-  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-  border-color:var(--gold);color:#2B2005;
-}
-.vote[aria-pressed="true"] .v-arrow{color:#2B2005}
-.vote-note{font-size:12px;color:var(--muted)}
+.vote:hover{border-color:var(--accent);transform:translateY(-1px)}
+.vote .v-arrow{font-size:10px;color:var(--accent)}
+.vote .v-count{font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
+.vote[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.vote[aria-pressed="true"] .v-arrow{color:var(--accent-ink)}
+.ama-promise{margin-top:24px;padding-left:16px;border-left:2px solid var(--accent)}
+.ama-promise b{display:block;font-family:'Sora',sans-serif;font-size:15px;font-weight:600;margin-bottom:5px}
+.ama-promise span{font-size:14.5px;color:var(--ink-2)}
 
-/* Answer library */
-.library{margin-top:64px}
-.library-head h3{font-size:clamp(24px,2.6vw,32px);font-weight:700;letter-spacing:-.02em}
-.library-head p{color:var(--muted);margin:8px 0 26px}
-.topic-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+/* ---- answer library ---- */
+.library{margin-top:56px}
+.library-head h3{font-size:clamp(21px,2.4vw,28px);font-weight:600}
+.library-head p{color:var(--ink-2);margin:6px 0 22px;font-size:16px}
+.topic-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .tchip{
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;
-  padding:9px 18px;border-radius:999px;cursor:pointer;letter-spacing:.02em;
-  border:1.5px solid var(--line);background:var(--card);color:var(--ink);
-  transition:border-color .2s,background .2s;
+  font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;
+  padding:8px 16px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);
+  transition:border-color .2s,color .2s,background .2s;
 }
-.tchip:hover{border-color:var(--gold)}
-.tchip.active{background:var(--teal);border-color:var(--teal);color:#FAF7F0}
-[data-theme="dark"] .tchip.active{background:var(--gold);border-color:var(--gold);color:#2B2005}
-.qa-list{display:flex;flex-direction:column;gap:12px}
-.qa{
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  box-shadow:var(--shadow);overflow:hidden;
-}
-.qa[open]{border-color:color-mix(in srgb,var(--gold) 50%,var(--line))}
+.tchip:hover{border-color:var(--accent);color:var(--ink)}
+.tchip.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.qa-list{display:flex;flex-direction:column;gap:10px}
+.qa{overflow:hidden;transition:border-color .25s}
+.qa[open]{border-color:var(--line-strong)}
 .qa summary{
-  list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;
-  padding:20px 24px;font-family:'Bricolage Grotesque',sans-serif;
-  font-weight:600;font-size:16.5px;letter-spacing:-.01em;
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+  padding:18px 22px;font-family:'Sora',sans-serif;font-weight:500;font-size:16px;
 }
 .qa summary::-webkit-details-marker{display:none}
 .qa-topic{
-  flex:none;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--forest);background:color-mix(in srgb,var(--forest) 12%,transparent);
-  padding:5px 11px;border-radius:999px;
+  flex:none;font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line-strong);
+  padding:4px 10px;border-radius:999px;
 }
-[data-theme="dark"] .qa-topic{color:var(--gold-soft);background:color-mix(in srgb,var(--gold) 14%,transparent)}
-.qa-caret{margin-left:auto;color:var(--gold);transition:transform .25s}
+.qa-caret{margin-left:auto;color:var(--accent);transition:transform .25s;font-size:12px}
 .qa[open] .qa-caret{transform:rotate(180deg)}
-.qa-answer{
-  margin:0 24px 22px;padding:20px 22px;border-radius:14px;
-  background:var(--cream);border-left:3px solid var(--gold);
-}
-.qa-answer p{font-size:16.5px;line-height:1.7}
-.qa-byline{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px}
-.qa-byline span:last-child{color:var(--muted)}
-.qa-mark{
-  width:22px;height:22px;border-radius:50%;flex:none;
-  background:radial-gradient(circle at 45% 40%,var(--gold-soft),var(--gold));
-}
+.qa-answer{margin:0 22px 20px;padding:18px 20px;border-radius:10px;background:var(--bg-2);border-left:2px solid var(--accent)}
+.qa-answer p{font-size:15.5px;line-height:1.72;color:var(--ink-2)}
+.qa-byline{display:flex;align-items:center;gap:9px;margin-bottom:10px;font-size:13px;font-weight:600}
+.qa-byline span:last-child{color:var(--ink-2);font-weight:500}
+.qa-mark{width:18px;height:18px;border-radius:50%;flex:none;background:var(--accent)}
 .qa.hide{display:none}
 
-.course-video{position:relative;width:100%;aspect-ratio:16/9;background:var(--teal-deep)}
-.course-video iframe,.course-video video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-.level-inline{display:inline-block;margin-bottom:10px;background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
-
-/* ---------- BOOKS ---------- */
-.book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.book{display:flex;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s}
-.book:hover{transform:translateY(-6px)}
-.book-spine{width:10px;flex:none;background:linear-gradient(180deg,var(--gold),var(--teal))}
-.book:nth-child(2) .book-spine{background:linear-gradient(180deg,var(--forest),var(--gold))}
-.book:nth-child(3) .book-spine{background:linear-gradient(180deg,var(--teal),var(--forest))}
-.book-body{padding:26px 24px}
-.book-body h3{font-size:19px;font-weight:700;letter-spacing:-.015em}
-.book-author{font-size:14px;color:var(--gold);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;margin:4px 0 12px}
-.book-sum{font-size:15.5px;color:var(--muted)}
-.book-more{margin-top:14px}
-.book-more summary{cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;color:var(--gold);list-style:none}
-.book-more summary::-webkit-details-marker{display:none}
-.book-more p{margin-top:10px;font-size:15px;padding-left:14px;border-left:2px solid var(--line)}
-
-/* ---------- BLOG ---------- */
-.blog-list{display:flex;flex-direction:column;gap:22px}
-.post{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px 34px;box-shadow:var(--shadow)}
-.post-tag{display:inline-block;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,transparent);padding:5px 12px;border-radius:999px}
-.post h3{font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.02em;margin:12px 0 6px;line-height:1.2}
-.post-meta{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;color:var(--muted)}
-.post-excerpt{margin-top:14px;font-size:17px;color:var(--muted)}
-.post-full{margin-top:14px}
-.post-full summary{cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;color:var(--gold);list-style:none}
-.post-full summary::-webkit-details-marker{display:none}
-.post-body{margin-top:16px;border-left:3px solid var(--gold);padding-left:20px}
-.post-body p{margin-bottom:14px;font-size:17px;line-height:1.72}
-.post-comments{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}
-@media (max-width:1000px){.book-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.book-grid{grid-template-columns:1fr}.post{padding:24px 20px}}
-
-/* Comments under answers */
-.comments{margin:0 24px 22px;padding-top:6px}
+/* ---- comments ---- */
+.comments{margin:0 22px 20px;padding-top:4px}
 .post-comments .comments{margin:0}
-.c-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.c-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.c-item{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
-.c-item b{font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px}
-.c-item .c-when{font-size:12px;color:var(--muted);margin-left:8px;font-family:'Bricolage Grotesque',sans-serif}
-.c-item p{font-size:15.5px;line-height:1.55;margin-top:4px}
-.c-empty{font-size:14.5px;color:var(--muted);font-style:italic}
-.c-form{display:flex;flex-direction:column;gap:10px}
-.c-form input,.c-form textarea{
-  border:1.5px solid var(--line);border-radius:12px;background:var(--cream);color:var(--ink);
-  font-family:'Newsreader',Georgia,serif;font-size:15.5px;padding:11px 14px;resize:vertical;
-}
-.c-form input:focus,.c-form textarea:focus{outline:none;border-color:var(--gold)}
-.c-form .c-row{display:flex;gap:10px}
+.c-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
+.c-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.c-item{padding:12px 15px;background:var(--bg-2)}
+.c-item b{font-family:'Sora',sans-serif;font-size:13.5px;font-weight:600}
+.c-item .c-when{font-size:11.5px;color:var(--ink-2);margin-left:8px}
+.c-item p{font-size:14.5px;line-height:1.55;margin-top:3px;color:var(--ink-2)}
+.c-empty{font-size:14px;color:var(--ink-2)}
+.c-form{display:flex;flex-direction:column;gap:9px}
+.c-form .c-row{display:flex;gap:9px}
 .c-form .c-row input{flex:1}
 .c-post{
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:13.5px;
   border:none;border-radius:999px;padding:11px 22px;cursor:pointer;
-  background:var(--teal);color:#FAF7F0;transition:transform .15s;
+  background:var(--accent);color:var(--accent-ink);transition:transform .18s;
 }
-[data-theme="dark"] .c-post{background:var(--gold);color:#2B2005}
 .c-post:hover{transform:translateY(-1px)}
-.c-note{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:8px}
-@media (max-width:680px){.comments{margin:0 14px 16px}.c-form .c-row{flex-direction:column}}
+.c-note{font-size:12px;color:var(--ink-2);margin-top:8px}
 
-/* ---------- ABOUT ---------- */
-.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+/* ---- about ---- */
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center}
 .portrait{
-  aspect-ratio:4/5;border-radius:26px;position:relative;overflow:hidden;
-  background:linear-gradient(165deg,var(--sky-b),var(--sky-c) 55%,var(--teal) 56%);
-  box-shadow:var(--shadow);
+  aspect-ratio:4/5;border-radius:var(--r-lg);position:relative;overflow:hidden;
+  background:linear-gradient(170deg,var(--surface-2),var(--bg));
+  border:1px solid var(--line);
 }
-.portrait .p-sun{position:absolute;left:50%;top:34%;transform:translateX(-50%);width:34%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 45% 40%,var(--gold-soft),var(--gold));box-shadow:0 0 60px 18px color-mix(in srgb,var(--gold) 40%,transparent)}
-.portrait .p-fig{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:14%;aspect-ratio:1/2.6;background:var(--teal-deep);border-radius:40px 40px 8px 8px}
-.portrait .p-fig::before{content:"";position:absolute;top:-16%;left:50%;transform:translateX(-50%);width:64%;aspect-ratio:1;border-radius:50%;background:var(--teal-deep)}
-.portrait .p-ridge{position:absolute;left:0;right:0;bottom:0;height:26%;background:var(--teal);border-radius:100% 100% 0 0 / 55% 55% 0 0}
+.portrait .p-sun{
+  position:absolute;left:50%;top:32%;transform:translateX(-50%);
+  width:38%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 40%,transparent),transparent 70%);
+}
+.portrait .p-fig{position:absolute;left:50%;bottom:17%;transform:translateX(-50%);width:12%;aspect-ratio:1/2.6;background:var(--bg);border-radius:40px 40px 6px 6px}
+.portrait .p-fig::before{content:"";position:absolute;top:-15%;left:50%;transform:translateX(-50%);width:64%;aspect-ratio:1;border-radius:50%;background:var(--bg)}
+.portrait .p-ridge{position:absolute;left:0;right:0;bottom:0;height:24%;background:var(--bg);border-radius:100% 100% 0 0/60% 60% 0 0;border-top:1px solid var(--line-strong)}
 .portrait figcaption{
-  position:absolute;left:20px;bottom:20px;z-index:2;
-  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:14px;padding:12px 18px;
-  font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;font-weight:600;
+  position:absolute;left:18px;bottom:18px;z-index:2;
+  background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:10px;padding:10px 15px;font-size:12.5px;font-weight:600;
 }
-.about-copy h2{font-size:clamp(30px,3.4vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.14;margin:16px 0 20px}
-.about-copy p{color:var(--muted);margin-bottom:16px}
-.about-copy .pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 32px}
-.pillar{border-left:3px solid var(--gold);padding:4px 0 4px 16px}
-.pillar b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:15.5px}
-.pillar span{font-size:14px;color:var(--muted)}
+.about-copy h2{font-size:clamp(27px,3.2vw,40px);font-weight:600;line-height:1.16;margin:14px 0 18px}
+.about-copy p{color:var(--ink-2);margin-bottom:14px;font-size:16.5px}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 28px}
+.pillar{padding-left:15px;border-left:2px solid var(--accent)}
+.pillar b{display:block;font-family:'Sora',sans-serif;font-size:15px;font-weight:600}
+.pillar span{font-size:14px;color:var(--ink-2)}
 
-/* ---------- CTA BAND ---------- */
+/* ---- cta band ---- */
 .cta-band{
-  background:linear-gradient(150deg,var(--teal),var(--teal-deep));
-  border-radius:30px;padding:74px 60px;text-align:center;color:#FAF7F0;
-  position:relative;overflow:hidden;box-shadow:var(--shadow);
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:var(--r-lg);padding:66px 52px;text-align:center;position:relative;overflow:hidden;
 }
 .cta-band::before{
-  content:"";position:absolute;left:50%;bottom:-140px;transform:translateX(-50%);
-  width:480px;height:280px;border-radius:50% 50% 0 0;
-  background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--gold) 50%,transparent),transparent 70%);
+  content:"";position:absolute;left:50%;bottom:-180px;transform:translateX(-50%);
+  width:520px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent),transparent 68%);
 }
-.cta-band h2{font-size:clamp(28px,3.6vw,44px);font-weight:800;letter-spacing:-.025em;line-height:1.12;position:relative}
-.cta-band p{opacity:.85;max-width:520px;margin:16px auto 34px;position:relative}
+.cta-band h2{font-size:clamp(26px,3.4vw,40px);font-weight:600;line-height:1.14;position:relative}
+.cta-band p{color:var(--ink-2);max-width:50ch;margin:14px auto 30px;position:relative;font-size:16.5px}
 .cta-band .btn{position:relative}
 
-/* ---------- FOOTER ---------- */
-footer{padding:70px 0 44px;border-top:1px solid var(--line)}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;margin-bottom:50px}
-.foot-grid h4{font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;color:var(--muted)}
-.foot-grid a{display:block;font-size:15.5px;margin-bottom:11px;color:var(--ink);opacity:.8}
-.foot-grid a:hover{opacity:1;color:var(--gold)}
-.foot-brand p{color:var(--muted);font-size:15px;margin-top:16px;max-width:300px}
-.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);flex-wrap:wrap;gap:12px}
+/* ---- footer ---- */
+footer{padding:64px 0 36px;border-top:1px solid var(--line)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.foot-grid h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;color:var(--ink-2)}
+.foot-grid a{display:block;font-size:14.5px;margin-bottom:10px;color:var(--ink-2);transition:color .2s}
+.foot-grid a:hover{color:var(--accent)}
+.foot-brand p{color:var(--ink-2);font-size:14.5px;margin-top:14px;max-width:34ch}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-2);flex-wrap:wrap;gap:10px}
 
-/* ---------- REVEAL ---------- */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+
+/* ============ DEPTH & MOTION LAYER ============ */
+/* Scroll progress rail */
+#scrollRail{position:fixed;top:0;left:0;height:2px;z-index:80;width:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+  transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+
+/* Header condenses on scroll */
+header{transition:height .3s,background .3s,border-color .3s}
+header.shrunk{box-shadow:0 8px 30px -18px rgba(0,0,0,.55)}
+header.shrunk .nav{height:58px}
+.nav{transition:height .3s cubic-bezier(.4,0,.2,1)}
+
+/* 3D tilt scene */
+.tilt-scene{perspective:1100px}
+.tilt{
+  transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .3s;
+  will-change:transform;position:relative;
+}
+.tilt.is-tilting{transition:transform .12s linear}
+.tilt>*{transform:translateZ(0.01px)}
+/* cursor spotlight inside cards */
+.tilt::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  opacity:0;transition:opacity .35s;z-index:0;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+    color-mix(in srgb,var(--accent) 14%,transparent),transparent 62%);
+}
+.tilt:hover::before{opacity:1}
+.card .glyph,.card h3,.card p,.card .link,
+.course .body,.book-body,.pending p,.vote{position:relative;z-index:1}
+
+/* Hero parallax layers */
+.horizon svg{will-change:transform}
+.hero-inner{will-change:transform}
+.pl{transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+
+/* Depth on the featured result panel */
+.result-hero{transform-style:preserve-3d}
+.result-hero .num{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.result-hero:hover .num{transform:translateZ(26px) scale(1.015)}
+
+/* Animated counter shimmer while updating */
+.num.ticking{color:var(--accent)}
+
+/* Buttons: magnetic pull + sheen */
+.btn{position:relative;overflow:hidden;will-change:transform}
+.btn-gold::after,.btn-teal::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-18deg);transition:left .6s cubic-bezier(.4,0,.2,1);
+}
+.btn-gold:hover::after,.btn-teal:hover::after{left:130%}
+
+/* Staggered reveal */
+.reveal{transition-delay:var(--d,0ms)}
+
+/* Section headings: underline draws in on reveal */
+.section-head h2{position:relative;display:inline-block}
+.section-head h2::after{
+  content:"";position:absolute;left:0;bottom:-10px;height:2px;width:0;
+  background:var(--accent);transition:width .9s cubic-bezier(.2,.8,.2,1) .25s;
+}
+.reveal.in .section-head h2::after,.section-head.in h2::after{width:52px}
+
+/* Vote press feedback */
+.vote:active{transform:scale(.93)}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+.v-count.popped{animation:pop .34s cubic-bezier(.3,1.4,.5,1)}
+
+/* Course video hover lift */
+.course-video{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.course:hover .course-video{transform:scale(1.02)}
+
+@media (prefers-reduced-motion:reduce){
+  .tilt,.pl,.hero-inner,.horizon svg{transform:none!important}
+  #scrollRail{display:none}
+}
+@media (max-width:900px){
+  .tilt{transform:none!important}
+  .tilt::before{display:none}
+}
+
+/* ---- reveal ---- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
-/* ---------- RESPONSIVE ---------- */
+/* ---- responsive ---- */
 @media (max-width:1000px){
-  .cards,.course-grid{grid-template-columns:1fr 1fr}
-  .ama-grid{grid-template-columns:1fr}
-  .calc-grid{grid-template-columns:1fr}
+  .cards,.course-grid,.book-grid{grid-template-columns:1fr 1fr}
+  .calc-grid,.ama-grid,.about-grid{grid-template-columns:1fr}
   .result-panel{position:static}
-  .about-grid{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr 1fr}
-  .sun-orb{right:-6%;top:8%}
+  .sun-orb{right:-4%;top:10%}
 }
-@media (max-width:680px){
-  .nav-links{display:none;position:absolute;top:74px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--line);flex-direction:column;gap:0;padding:10px 28px 20px}
+@media (max-width:700px){
+  body{font-size:16px}
+  .nav-links{
+    display:none;position:absolute;top:70px;left:0;right:0;
+    background:var(--bg);border-bottom:1px solid var(--line);
+    flex-direction:column;gap:0;padding:6px 26px 18px;
+  }
   .nav-links.open{display:flex}
-  .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:17px}
-  .hamburger{display:block}
+  .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .hamburger{display:grid}
   .nav-cta .btn{display:none}
-  .cards,.course-grid,.foot-grid{grid-template-columns:1fr}
-  .ama-panel{padding:26px 20px}
-  .ama-row{flex-direction:column}
-  .qa summary{flex-wrap:wrap;font-size:15.5px;padding:16px 18px}
-  .qa-answer{margin:0 14px 16px;padding:16px}
-  .library{margin-top:44px}
-  section{padding:72px 0}
-  .hero-inner{padding:80px 0 130px}
-  .hero-stats{gap:26px}
-  .calc-panel,.result-hero{padding:28px 22px}
-  .cta-band{padding:56px 26px}
-  .result-rows{grid-template-columns:1fr 1fr}
+  .cards,.course-grid,.book-grid,.foot-grid,.pillars,.result-rows{grid-template-columns:1fr}
+  .hero-inner{padding:80px 0 100px}
+  .hero-stats{gap:18px;flex-direction:column;align-items:flex-start}
+  .stat{border-right:0;padding-right:0;margin-right:0}
+  .stat b{font-size:20px}
+  .calc-panel,.ama-panel,.result-hero{padding:24px 20px}
+  .post{padding:24px 20px}
+  .cta-band{padding:48px 24px}
+  .qa summary{flex-wrap:wrap;font-size:15px;padding:16px 18px}
+  .qa-answer,.comments{margin:0 14px 16px}
+  .ama-row,.c-form .c-row{flex-direction:column}
+  .library{margin-top:40px}
 }
+
 </style>
 </head>
 <body>
 
 <!-- ============ NAV ============ -->
+<div id="scrollRail" aria-hidden="true"></div>
 <header>
   <div class="wrap nav">
     <a class="logo" href="#top" aria-label="Surya Finance Freedom home">
@@ -563,15 +578,15 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice">
       <defs>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  style="stop-color:var(--sky-a)"/>
-          <stop offset="55%" style="stop-color:var(--sky-b)"/>
-          <stop offset="100%" style="stop-color:var(--sky-c)"/>
+          <stop offset="0%"  style="stop-color:var(--bg)"/>
+          <stop offset="55%" style="stop-color:var(--bg-2)"/>
+          <stop offset="100%" style="stop-color:var(--surface-2)"/>
         </linearGradient>
       </defs>
       <rect width="1440" height="810" fill="url(#sky)"/>
-      <path d="M0,560 Q240,470 480,540 T900,520 T1440,470 V810 H0 Z" style="fill:var(--ridge-3)" opacity=".55"/>
-      <path d="M0,620 Q300,520 640,610 T1140,580 T1440,610 V810 H0 Z" style="fill:var(--ridge-2)" opacity=".8"/>
-      <path d="M0,700 Q360,600 760,690 T1440,660 V810 H0 Z" style="fill:var(--ridge-1)"/>
+      <path d="M0,560 Q240,470 480,540 T900,520 T1440,470 V810 H0 Z" style="fill:var(--surface)" opacity=".7"/>
+      <path d="M0,620 Q300,520 640,610 T1140,580 T1440,610 V810 H0 Z" style="fill:var(--bg-2)" opacity=".9"/>
+      <path d="M0,700 Q360,600 760,690 T1440,660 V810 H0 Z" style="fill:var(--bg)"/>
     </svg>
   </div>
   <div class="sun-orb" aria-hidden="true"></div>
@@ -579,7 +594,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="hero-inner">
       <span class="eyebrow">India's path to financial independence</span>
       <h1>Master Your Money. Design the Life You <em class="accent">Actually Want.</em></h1>
-      <p class="sub">Practical personal finance for financial independence and early retirement — so you can travel, follow your passions, be present with family, and live free on your own terms.</p>
+      <p class="sub">Financial independence, taught plainly. So your time becomes yours.</p>
       <div class="cta-row">
         <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
         <a href="#learn" class="btn btn-ghost">Explore Courses</a>
@@ -599,25 +614,25 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Everything you need</span>
       <h2>One clear path from paycheque to freedom</h2>
-      <p>No jargon, no get-rich-quick noise. Just the systems, tools, and habits that quietly build wealth — designed for Indian incomes, taxes, and family life.</p>
+      <p>No jargon. No tips. Just what quietly builds wealth in India.</p>
     </div>
-    <div class="cards">
+    <div class="tilt-scene cards">
       <article class="card reveal">
-        <div class="glyph">🧮</div>
+        <div class="glyph">◧</div>
         <h3>FIRE Calculator</h3>
-        <p>Find your exact freedom number in ₹ and the year you can walk away from mandatory work — based on your real expenses and SIPs.</p>
+        <p>Know your number. Know your year.</p>
         <a class="link" href="#tools">Calculate my number →</a>
       </article>
       <article class="card reveal">
-        <div class="glyph">☕</div>
+        <div class="glyph">◈</div>
         <h3>Daily Money Mastery</h3>
-        <p>Budgeting that survives weddings, festivals, and family obligations. Automate savings, kill EMIs, and make every rupee work.</p>
+        <p>Budgets that survive weddings, festivals and EMIs.</p>
         <a class="link" href="#learn">See the course →</a>
       </article>
       <article class="card reveal">
-        <div class="glyph">🙋</div>
+        <div class="glyph">◍</div>
         <h3>Ask Surya Anything</h3>
-        <p>A brand-new platform built on complete honesty. Bring any money question — in English, Hindi, Bengali, or Odia — and get a straight answer.</p>
+        <p>Any money question. A straight answer.</p>
         <a class="link" href="#ask">Ask a question →</a>
       </article>
     </div>
@@ -630,7 +645,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Free tool</span>
       <h2>What's your freedom number?</h2>
-      <p>Move the sliders. Watch your sunrise get closer. This is Surya's own formula — your future yearly expense, inflation-adjusted, times twenty-five.</p>
+      <p>Move the sliders. Watch your freedom date move.</p>
     </div>
     <div class="calc-grid">
       <div class="calc-panel reveal" aria-label="FIRE calculator inputs">
@@ -650,7 +665,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
           <label for="infl">Rate of inflation (R) <output id="inflOut">6%</output></label>
           <input type="range" id="infl" min="3" max="10" step="0.5" value="6">
         </div>
-        <p class="calc-note"><b>Surya's FIRE formula:</b> 25 × P × (1 + R⁄100)<sup>T</sup> — where P is your yearly expense today (monthly × 12), R is inflation, and T is the years until you retire. Educational estimate — not investment advice.</p>
+        <p class="calc-note">Inflation-adjusted estimate. Educational only — not investment advice.</p>
       </div>
 
       <div class="result-panel reveal">
@@ -660,21 +675,21 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
           <div class="when" id="fireWhen">Freedom at age 35 — the year 2031</div>
           <div class="progress-arc" aria-hidden="true">
             <svg viewBox="0 0 400 130">
-              <path d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="rgba(250,247,240,.18)" stroke-width="10" stroke-linecap="round"/>
-              <path id="arcFill" d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="#C9A14D" stroke-width="10" stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="480"/>
-              <circle id="arcSun" cx="20" cy="120" r="13" fill="#E4C98A"/>
-              <text id="arcPct" x="200" y="105" text-anchor="middle" fill="#FAF7F0" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="30">5</text>
-              <text x="200" y="126" text-anchor="middle" fill="rgba(250,247,240,.7)" font-family="Bricolage Grotesque,sans-serif" font-size="11" letter-spacing="2">YEARS TO YOUR SUNRISE</text>
+              <path d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="var(--line-strong)" stroke-width="10" stroke-linecap="round"/>
+              <path id="arcFill" d="M20,120 A180,180 0 0 1 380,120" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="480"/>
+              <circle id="arcSun" cx="20" cy="120" r="13" fill="var(--accent)"/>
+              <text id="arcPct" x="200" y="105" text-anchor="middle" fill="var(--ink)" font-family="Sora,sans-serif" font-weight="600" font-size="30">5</text>
+              <text x="200" y="126" text-anchor="middle" fill="var(--ink-2)" font-family="Manrope,sans-serif" font-size="11" letter-spacing="2">YEARS TO YOUR SUNRISE</text>
             </svg>
           </div>
           <div class="result-rows">
-            <div class="rrow"><b id="yearsTo">5 yrs</b><span>Years to freedom (T)</span></div>
-            <div class="rrow"><b id="yearlyNow">₹3 L</b><span>Yearly expense today (P)</span></div>
+            <div class="rrow"><b id="yearsTo">5 yrs</b><span>Years to freedom</span></div>
+            <div class="rrow"><b id="yearlyNow">₹3 L</b><span>Yearly expense today</span></div>
             <div class="rrow"><b id="yearlyThen">₹4 L</b><span>Yearly expense at retirement</span></div>
             <div class="rrow"><b id="monthlyIncome">₹33.5 K</b><span>Monthly income it provides</span></div>
           </div>
         </div>
-        <p class="calc-note">Want the full plan behind this number — asset allocation, tax shields (PPF · NPS · ELSS), and withdrawal strategy? That's what Surya teaches in the courses below.</p>
+        <p class="calc-note">The plan behind the number is what Surya teaches.</p>
       </div>
     </div>
   </div>
@@ -686,10 +701,10 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Learn · Step by step</span>
       <h2>Courses for every stage of the journey</h2>
-      <p>Start where you are. Each course is bite-sized video lessons in simple English &amp; Hindi, with worksheets built for Indian salaries, taxes, and families.</p>
+      <p>Start where you are. Short lessons, real worksheets.</p>
     </div>
-    <div class="course-grid" id="courseGrid">
-      <p class="calc-note" style="grid-column:1/-1">Courses are being prepared — they will appear here as soon as Surya publishes them.</p>
+    <div class="tilt-scene course-grid" id="courseGrid">
+      <p class="calc-note" style="grid-column:1/-1">Courses arrive soon.</p>
     </div>
   </div>
 </section>
@@ -700,17 +715,17 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Read in minutes, not months</span>
       <h2>Summaries of the great finance books</h2>
-      <p>The ideas that shaped how Surya thinks about money — distilled honestly, with what each book gets right and where it needs an Indian lens.</p>
+      <p>The ideas that shaped how Surya thinks about money.</p>
     </div>
-    <div class="book-grid" id="bookGrid">
+    <div class="tilt-scene book-grid" id="bookGrid">
       <article class="book">
         <div class="book-spine"></div>
         <div class="book-body">
           <h3>The Psychology of Money</h3>
           <p class="book-author">Morgan Housel</p>
-          <p class="book-sum">Doing well with money has little to do with intelligence and everything to do with behaviour. Wealth is what you don't see — the restraint, the patience, the unspent.</p>
+          <p class="book-sum">Money is behaviour, not intelligence. Wealth is what you don't see.</p>
           <details class="book-more"><summary>Key takeaways</summary>
-            <p>Saving rate beats returns. Room for error is a feature. Nothing is as good or as bad as it seems.</p>
+            <p>Saving rate beats returns. Room for error is a feature.</p>
           </details>
         </div>
       </article>
@@ -719,9 +734,9 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
         <div class="book-body">
           <h3>The Richest Man in Babylon</h3>
           <p class="book-author">George S. Clason</p>
-          <p class="book-sum">Ancient parables carrying one unbreakable rule: pay yourself first. A tenth of everything you earn is yours to keep — before any expense claims it.</p>
+          <p class="book-sum">One unbreakable rule: pay yourself first. A tenth of everything is yours to keep.</p>
           <details class="book-more"><summary>Key takeaways</summary>
-            <p>Save 10% minimum. Make gold work for you. Guard your capital from schemes promising the impossible.</p>
+            <p>Save a tenth. Make it work. Guard it from the impossible promise.</p>
           </details>
         </div>
       </article>
@@ -730,14 +745,14 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
         <div class="book-body">
           <h3>Let's Talk Money</h3>
           <p class="book-author">Monika Halan</p>
-          <p class="book-sum">Written for Indian households — how to build an emergency fund, buy the right insurance, and stop mixing investment with protection.</p>
+          <p class="book-sum">For Indian households. Never mix investment with protection.</p>
           <details class="book-more"><summary>Key takeaways</summary>
-            <p>Never buy ULIPs for protection. Term insurance plus index funds beats endowment plans. Build cash buffers first.</p>
+            <p>Term insurance plus index funds beats endowment plans.</p>
           </details>
         </div>
       </article>
     </div>
-    <p class="calc-note" style="margin-top:20px">Sample summaries shown — Surya's own summaries appear here as he publishes them.</p>
+    <p class="calc-note" style="margin-top:20px">Samples shown until Surya publishes his own.</p>
   </div>
 </section>
 
@@ -747,7 +762,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Written by Surya</span>
       <h2>Notes on money, markets and freedom</h2>
-      <p>Longer thoughts — how economies move, what the data actually says, and the honest lessons behind the numbers. Read and join the discussion.</p>
+      <p>How economies move, and what it means for you.</p>
     </div>
     <div class="blog-list" id="blogList">
       <article class="post">
@@ -756,18 +771,18 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
           <h3>What "the economy is slowing" actually means for your SIP</h3>
           <p class="post-meta">By Surya Ghosh</p>
         </div>
-        <p class="post-excerpt">Headlines panic every quarter. Your SIP shouldn't. Here's how to read growth numbers without letting them change a plan built for twenty years.</p>
+        <p class="post-excerpt">Headlines panic every quarter. Your SIP shouldn't.</p>
         <details class="post-full"><summary>Read the full post</summary>
           <div class="post-body">
-            <p>When GDP growth slows from 7% to 6%, news channels reach for dramatic language. But consider what that number describes: the pace at which an entire economy expands, measured over a year, revised twice afterwards. Your SIP, meanwhile, buys units every month for the next two decades.</p>
-            <p>The honest position is this: nobody — not me, not any analyst on television — can tell you what markets will do next quarter. What we do know from long historical records is that regular investing through slow periods has generally rewarded the patient more than reacting has. Slowdowns are when units are cheap.</p>
-            <p>So read the macro news for understanding, not for instructions. Understanding builds conviction. Instructions build anxiety.</p>
+            <p>Growth falling from 7% to 6% describes a year, revised twice. Your SIP buys units every month for twenty.</p>
+            <p>Nobody can tell you what markets do next quarter. History says the patient are paid more than the reactive. Slowdowns are when units are cheap.</p>
+            <p>Read macro news for understanding, not instructions. Understanding builds conviction. Instructions build anxiety.</p>
           </div>
         </details>
         <div class="post-comments"></div>
       </article>
     </div>
-    <p class="calc-note" style="margin-top:20px">Sample post shown — Surya's posts appear here as he publishes them from the admin panel.</p>
+    <p class="calc-note" style="margin-top:20px">Sample post shown until Surya publishes.</p>
   </div>
 </section>
 
@@ -777,8 +792,8 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="section-head reveal">
       <span class="eyebrow">Complete honesty · One trusted voice</span>
       <h2>Ask me anything about money.</h2>
-      <p>Anyone can ask. Only Surya answers — so every answer here is one you can trust. Ask in English, Hindi, Bengali, or Odia. No question is too small, and no stock tips, ever.</p>
-      <span class="sunday-badge">☀️ Surya answers as soon as possible</span>
+      <p>Anyone can ask. Only Surya answers. No stock tips, ever.</p>
+      <span class="sunday-badge">Surya answers as soon as possible</span>
     </div>
 
     <div class="ama-grid">
@@ -791,18 +806,18 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
           <button class="btn btn-gold" id="amaSend">Ask Surya →</button>
         </div>
         <p class="ama-sent" id="amaSent" role="status"></p>
-        <p id="sffStatus" style="font-family:'Bricolage Grotesque',sans-serif;font-size:12.5px;margin-top:6px"></p>
-        <p class="calc-note">Questions are answered publicly (anonymously) so everyone learns. Please don't include personal details like PAN, Aadhaar, or account numbers. Education only — never personalised investment advice.</p>
+        <p id="sffStatus" style="font-size:12px;margin-top:6px;font-weight:600"></p>
+        <p class="calc-note">Answered publicly so everyone learns. Never share PAN, Aadhaar or account numbers.</p>
         <div class="ama-promise">
           <b>My promise to you</b>
-          <span>Every answer comes from study and evidence, in plain language, with complete honesty about what I know — and what nobody can predict.</span>
+          <span>Evidence, plain language, and honesty about what nobody can predict.</span>
         </div>
       </div>
 
       <!-- PENDING QUESTIONS -->
       <div class="ama-side reveal">
         <p class="ama-side-title">Waiting for an answer — vote for what Surya answers next</p>
-        <div class="pending-list" id="pendingList">
+        <div class="tilt-scene pending-list" id="pendingList">
           <div class="pending" data-votes="14">
             <button class="vote" aria-pressed="false" aria-label="I have this question too"><span class="v-arrow">▲</span><span class="v-count">14</span></button>
             <p>My parents want me to buy a flat, but rent is much cheaper in my city. How do I think about rent vs buy honestly?</p>
@@ -820,7 +835,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
             <p>Which way do you think the major world economies are moving this year?</p>
           </div>
         </div>
-        <p class="calc-note">Tap ▲ if you have the same question — the most-wanted ones get answered first. <em>(Sample questions shown for design preview.)</em></p>
+        <p class="calc-note">Tap ▲ if you have the same question. Most-wanted gets answered first.</p>
       </div>
     </div>
 
@@ -828,7 +843,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="library reveal">
       <div class="library-head">
         <h3>The Answer Library</h3>
-        <p>Every answer lives here forever, organised by topic. The library grows with each question.</p>
+        <p>Every answer, kept forever, sorted by topic.</p>
       </div>
       <div class="topic-filter" role="tablist" aria-label="Filter answers by topic">
         <button class="tchip active" data-topic="all">All</button>
@@ -891,14 +906,14 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="about-copy reveal">
       <span class="eyebrow">About Surya</span>
       <h2>A researcher's mind. A teacher's heart.</h2>
-      <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. I'm a researcher by profession, and studying is what I do whenever I find time. As a child I read biographies of great lives; today I study money — as a concept, and as the invisible current that quietly runs the world.</p>
-      <p>Why do I teach? Call it a selfish desire: I want everyone around me to be well off — to never have to worry about money. Financial stress has broken too many good people. If money worries weigh on you, I'm here to share everything I know and help you see the bigger picture clearly.</p>
-      <p><strong>One honest promise:</strong> I will never give you stock tips — I can't and I won't. What I <em>can</em> share is how I read the world's major economies, and the patient, evidence-based path to your own freedom.</p>
+      <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. A researcher by profession, a student by habit. I study money: the invisible current that runs the world.</p>
+      <p>Why teach? A selfish desire — I want no one around me to fear money. Financial stress has broken too many good people.</p>
+      <p><strong>One promise:</strong> never a stock tip. Only how I read the world, and the patient path to freedom.</p>
       <div class="pillars">
-        <div class="pillar"><b>Ask me anything</b><span>This platform is a place where no money question is too small.</span></div>
-        <div class="pillar"><b>Four languages, one mission</b><span>Fluent in English, Hindi, Bengali &amp; Odia — currently learning Marathi.</span></div>
-        <div class="pillar"><b>Perspective over tips</b><span>Macro understanding and broad thinking, never hot picks.</span></div>
-        <div class="pillar"><b>Beyond the spreadsheets</b><span>Biography reader, lifelong student — and yes, a Naruto &amp; One Piece fan.</span></div>
+        <div class="pillar"><b>Ask me anything</b><span>No money question is too small.</span></div>
+        <div class="pillar"><b>Four languages, one mission</b><span>English, Hindi, Bengali, Odia. Marathi in progress.</span></div>
+        <div class="pillar"><b>Perspective over tips</b><span>Broad thinking, never hot picks.</span></div>
+        <div class="pillar"><b>Beyond the spreadsheets</b><span>Biography reader, lifelong student, Naruto &amp; One Piece fan.</span></div>
       </div>
       <a href="#learn" class="btn btn-teal">Learn with Surya</a>
     </div>
@@ -910,7 +925,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
   <div class="wrap">
     <div class="cta-band reveal">
       <h2>Your sunrise is closer than you think.</h2>
-      <p>This platform is just beginning — and it starts with complete honesty. Try the free FIRE calculator, ask any money question, and grow with us from day one.</p>
+      <p>New platform. Complete honesty. Start with your number.</p>
       <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
     </div>
   </div>
@@ -923,7 +938,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="logo" href="#top"><span class="sunmark"></span><span>Surya<small>Finance Freedom</small></span></a>
-        <p>Practical personal finance education for financial independence — made in India, for India.</p>
+        <p>Personal finance for financial independence. Made in India.</p>
       </div>
       <div>
         <h4>Learn</h4>
@@ -945,7 +960,7 @@ footer{padding:70px 0 44px;border-top:1px solid var(--line)}
     </div>
     <div class="foot-bottom">
       <span>© 2026 Surya Finance Freedom. Education, not investment advice.</span>
-      <span>Made with ☀️ in India</span>
+      <span>Made in India</span>
     </div>
   </div>
 </footer>
@@ -980,7 +995,7 @@ function inrShort(n){
   return inr(n);
 }
 
-/* ---------- FIRE calculator — Surya's formula: 25 × P × (1+R/100)^T ---------- */
+/* ---------- FIRE calculator ---------- */
 const el=id=>document.getElementById(id);
 const inputs=['expense','age','retAge','infl'].map(el);
 function paintRange(r){
@@ -1010,10 +1025,9 @@ function calc(){
     return;
   }
 
-  // Surya's formula
-  const P=expM*12;                              // yearly expense today
-  const inflated=P*Math.pow(1+R/100,T);         // yearly expense at retirement
-  const fire=25*inflated;                       // FIRE number
+  const P=expM*12;
+  const inflated=P*Math.pow(1+R/100,T);
+  const fire=25*inflated;
   const freeYear=2026+T;
 
   el('fireNumber').textContent=inrShort(fire);
@@ -1043,24 +1057,24 @@ document.getElementById('amaSend').addEventListener('click',async()=>{
   const text=amaInput.value.trim();
   if(!text){
     sent.textContent='Write your question first — anything at all.';
-    sent.style.color='var(--gold)';
+    sent.style.color='var(--accent)';
     return;
   }
   const name=document.getElementById('amaName').value.trim();
   if(window.SFF && window.SFF.live){
-    sent.style.color='var(--muted)';
+    sent.style.color='var(--ink-2)';
     sent.textContent='Sending…';
     try{
       await window.SFF.ask(text,name);
-      sent.style.color='var(--forest)';
+      sent.style.color='var(--ok)';
       sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question is now live below — others can vote on it, and Surya answers as soon as he can.';
       amaInput.value='';document.getElementById('amaName').value='';
     }catch(err){
-      sent.style.color='var(--gold)';
+      sent.style.color='var(--accent)';
       sent.textContent='Could not send right now — please check your connection and try again.';
     }
   }else{
-    sent.style.color='var(--forest)';
+    sent.style.color='var(--ok)';
     sent.textContent=(name?`Thank you, ${name}. `:'Thank you. ')+'Your question is on its way to Surya — answers are shared here and in the newsletter. (Demo mode: connect Firebase to store questions for real.)';
     amaInput.value='';
   }
@@ -1120,7 +1134,7 @@ function mountComments(host,kind,id,label){
       <textarea rows="2" placeholder="Share your experience or a follow-up thought…"></textarea>
       <div class="c-row"><input type="text" placeholder="Name (optional)"><button class="c-post" type="button">Post comment</button></div>
     </div>
-    <p class="c-note">Open to everyone. Please be kind and never share personal financial details. Comments are moderated — Surya may edit or remove them.</p>`;
+    <p class="c-note">Be kind. Never share personal financial details. Moderated by Surya.</p>`;
   host.appendChild(box);
   const listEl=box.querySelector('.c-list');
   if(id && window.SFF && window.SFF.live){
@@ -1178,6 +1192,106 @@ function mountBlogComments(){
 mountBlogComments();
 window.SFF_mountBlogComments=mountBlogComments;
 
+
+/* ============ DEPTH & MOTION ============ */
+(function(){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+
+  /* Scroll progress rail */
+  const rail=document.getElementById('scrollRail');
+  const header=document.querySelector('header');
+  const hero=document.querySelector('.hero');
+  const heroInner=document.querySelector('.hero-inner');
+  const heroSvg=document.querySelector('.horizon svg');
+  const orb=document.querySelector('.sun-orb');
+  let ticking=false;
+
+  function onScroll(){
+    const y=window.scrollY;
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    rail.style.transform='scaleX('+(max>0?y/max:0)+')';
+    header.classList.toggle('shrunk',y>40);
+    if(hero && y<window.innerHeight){
+      if(heroSvg) heroSvg.style.transform='translate3d(0,'+(y*0.22)+'px,0) scale(1.04)';
+      if(heroInner) heroInner.style.transform='translate3d(0,'+(y*0.09)+'px,0)';
+      if(orb) orb.style.transform='translate3d(0,'+(y*0.34)+'px,0)';
+    }
+    ticking=false;
+  }
+  addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(onScroll);ticking=true;} },{passive:true});
+  onScroll();
+
+  /* Hero responds gently to pointer */
+  if(hero){
+    hero.addEventListener('pointermove',e=>{
+      const r=hero.getBoundingClientRect();
+      const dx=(e.clientX-r.width/2)/r.width, dy=(e.clientY-r.top-r.height/2)/r.height;
+      if(orb) orb.style.marginLeft=(dx*22)+'px', orb.style.marginTop=(dy*14)+'px';
+      if(heroInner) heroInner.style.marginLeft=(dx*-8)+'px';
+    });
+  }
+
+  /* 3D tilt + cursor spotlight on cards */
+  function bindTilt(){
+    document.querySelectorAll('.tilt-scene').forEach(scene=>{
+      scene.querySelectorAll(':scope > *').forEach(card=>{
+        if(card.dataset.tilt) return;
+        card.dataset.tilt='1';
+        card.classList.add('tilt');
+        card.addEventListener('pointermove',e=>{
+          const r=card.getBoundingClientRect();
+          const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+          card.style.setProperty('--mx',(px*100)+'%');
+          card.style.setProperty('--my',(py*100)+'%');
+          card.classList.add('is-tilting');
+          card.style.transform='perspective(1100px) rotateY('+((px-.5)*7).toFixed(2)+'deg) rotateX('+((.5-py)*5).toFixed(2)+'deg) translateY(-4px)';
+        });
+        card.addEventListener('pointerleave',()=>{
+          card.classList.remove('is-tilting');
+          card.style.transform='';
+        });
+      });
+    });
+  }
+  bindTilt();
+  window.SFF_bindTilt=bindTilt;
+  new MutationObserver(()=>bindTilt()).observe(document.body,{childList:true,subtree:true});
+
+  /* Magnetic buttons */
+  document.querySelectorAll('.btn').forEach(b=>{
+    b.addEventListener('pointermove',e=>{
+      const r=b.getBoundingClientRect();
+      b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.16).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.22-2).toFixed(1)+'px)';
+    });
+    b.addEventListener('pointerleave',()=>{b.style.transform='';});
+  });
+
+  /* Vote pop */
+  document.addEventListener('click',e=>{
+    const v=e.target.closest('.vote');
+    if(!v) return;
+    const c=v.querySelector('.v-count');
+    c.classList.remove('popped'); void c.offsetWidth; c.classList.add('popped');
+  });
+
+  /* Stagger the reveals */
+  document.querySelectorAll('.cards,.course-grid,.book-grid,.qa-list,.blog-list').forEach(g=>{
+    [...g.children].forEach((c,i)=>c.style.setProperty('--d',(i*70)+'ms'));
+  });
+})();
+
+/* Animate the big number when it changes */
+(function(){
+  const el=document.getElementById('fireNumber');
+  if(!el||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  new MutationObserver(()=>{
+    el.classList.add('ticking');
+    clearTimeout(el._t);
+    el._t=setTimeout(()=>el.classList.remove('ticking'),260);
+  }).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+
 /* ---------- Scroll reveal ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
@@ -1193,12 +1307,12 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
-  authDomain: "surya-finance-freedom.firebaseapp.com",
-  projectId: "surya-finance-freedom",
-  storageBucket: "surya-finance-freedom.firebasestorage.app",
-  messagingSenderId: "385238983487",
-  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
 };
 
 window.SFF = { live:false, ask:null, vote:null };
@@ -1207,10 +1321,10 @@ const setStatus = (msg,color) => { if(statusEl){ statusEl.textContent=msg; statu
 const reportErr = (err,what) => {
   console.error('[SFF] '+what, err);
   const link=(err.message||'').match(/https:\/\/console\.firebase\.google\.com\S+/);
-  setStatus('⚠ '+what+' failed: '+(err.code||err.message)+(link?' → open the browser console (F12) and click the index link.':''),'#B4472F');
+  setStatus('⚠ '+what+' failed: '+(err.code||err.message)+(link?' → open the browser console (F12) and click the index link.':''),'#E0685A');
 };
 if(firebaseConfig.apiKey.startsWith('PASTE')){
-  setStatus('◐ DEMO MODE — Firebase config not pasted yet. Questions and comments are not saved.','#C9A14D');
+  setStatus('◐ Demo mode — Firebase config not added yet. Nothing is saved.','var(--ink-2)');
 }
 if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const app = initializeApp(firebaseConfig);
@@ -1219,9 +1333,9 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build platform-v5) — connected to Firebase.','#1E5631');
+  setStatus('● LIVE (build meridian-v8) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
-    setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#B4472F');
+    setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
 
   window.SFF.ask = (text,name)=> addDoc(questions,{
