@@ -4,46 +4,127 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Admin</title>
-<!-- BUILD: platform-v5 -->
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<!-- BUILD: meridian-v8 -->
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#FAF7F0;--teal:#0A3D4C;--forest:#1E5631;--gold:#C9A14D;--ink:#1B2B31;--muted:#5D6E73;--card:#fff;--line:rgba(10,61,76,.14)}
+:root{
+  --bg:#071528;--bg-2:#0B1F38;--surface:#0E2743;--surface-2:#123052;
+  --line:rgba(198,218,244,.16);--line-strong:rgba(198,218,244,.28);
+  --ink:#EEF4FC;--ink-2:#9FB4CE;--accent:#4C8DFF;--accent-ink:#04101F;--ok:#5FD3A6;
+  --cream:var(--bg);--teal:var(--accent);--forest:var(--ok);--gold:var(--accent);--card:var(--surface);--muted:var(--ink-2);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Newsreader',Georgia,serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:16.5px}
-h1,h2,button,.tab,label,.count{font-family:'Bricolage Grotesque',sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:34px 22px 80px}
-h1{font-size:26px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:12px}
-h1 .dot{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#E4C98A,var(--gold))}
-.sub{color:var(--muted);margin:6px 0 30px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 14px 40px -16px rgba(10,61,76,.18);margin-bottom:20px}
-label{display:block;font-weight:600;font-size:13.5px;margin:14px 0 6px}
-input,textarea,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:16px;background:var(--cream);color:var(--ink)}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
-button{border:none;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .15s}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15.5px;-webkit-font-smoothing:antialiased}
+h1,h2,button,.tab,label,.count,.text b{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.02em}
+.wrap{max-width:900px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:24px;font-weight:600;display:flex;align-items:center;gap:11px}
+h1 .dot{width:24px;height:24px;border-radius:50%;background:var(--accent)}
+.sub{color:var(--ink-2);margin:6px 0 28px;font-size:15px}
+.panel,.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:16px}
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 6px;color:var(--ink-2)}
+input,textarea,select{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;font-family:'Manrope',sans-serif;font-size:15px;background:var(--bg);color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+::placeholder{color:var(--ink-2);opacity:.7}
+button{border:none;border-radius:999px;padding:11px 22px;font-weight:700;font-size:13.5px;cursor:pointer;transition:transform .15s,border-color .2s;font-family:'Manrope',sans-serif}
 button:hover{transform:translateY(-1px)}
-.gold{background:linear-gradient(135deg,#E4C98A,var(--gold));color:#2B2005}
-.teal{background:var(--teal);color:#FAF7F0}
-.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
-.danger{background:transparent;border:1.5px solid rgba(180,60,40,.4);color:#A33C28}
-.tabs{display:flex;gap:10px;margin:26px 0 18px;flex-wrap:wrap}
-.tab{padding:9px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:13.5px;cursor:pointer}
-.tab.active{background:var(--teal);border-color:var(--teal);color:#FAF7F0}
-.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
-.q p.text{font-size:17px}
-.q .meta{font-size:13px;color:var(--muted);margin-top:6px}
-.q .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
-.q textarea{margin-top:12px}
-.count{font-weight:700;color:var(--gold)}
-.msg{margin-top:10px;font-size:14px;color:var(--forest);min-height:1.3em;font-family:'Bricolage Grotesque',sans-serif}
+.gold,.teal{background:var(--accent);color:var(--accent-ink)}
+.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+.ghost:hover{border-color:var(--accent)}
+.danger{background:transparent;border:1px solid rgba(224,104,90,.45);color:#E0685A}
+.tabs{display:flex;gap:8px;margin:24px 0 18px;flex-wrap:wrap}
+.tab{padding:9px 16px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);font-weight:600;font-size:13px}
+.tab:hover{border-color:var(--accent);color:var(--ink)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.q p.text{font-size:16px}
+.q .meta{font-size:12.5px;color:var(--ink-2);margin-top:5px}
+.q .row{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.q textarea{margin-top:10px}
+.count{font-weight:700;color:var(--accent)}
+.msg{margin-top:10px;font-size:13.5px;color:var(--ok);min-height:1.3em;font-weight:600}
 .hidden{display:none}
-.empty{color:var(--muted);font-style:italic;padding:8px 4px}
-.warn{background:#FBF3E2;border:1px solid rgba(201,161,77,.4);border-radius:12px;padding:14px 16px;font-size:14.5px;margin-bottom:22px}
+.empty{color:var(--ink-2);padding:8px 4px;font-size:15px}
+.warn{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:20px;line-height:1.6}
+details summary{cursor:pointer}
+
+/* ============ DEPTH & MOTION ============ */
+#scrollRail{position:fixed;top:0;left:0;height:2px;z-index:80;width:100%;
+  background:linear-gradient(90deg,var(--accent),#8FB8FF);
+  transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+
+.wrap{perspective:1200px}
+
+.panel,.q{
+  position:relative;transform-style:preserve-3d;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;
+  will-change:transform;
+}
+.panel:hover,.q:hover{border-color:var(--line-strong);box-shadow:0 18px 44px -30px rgba(0,0,0,.8)}
+.q.is-tilting{transition:transform .12s linear}
+.panel::before,.q::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  transition:opacity .35s;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),
+    color-mix(in srgb,var(--accent) 11%,transparent),transparent 62%);
+}
+.panel:hover::before,.q:hover::before{opacity:1}
+.q>*,.panel>*{position:relative;z-index:1}
+
+/* Cards enter with a stagger */
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.q{animation:riseIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+
+/* Tabs: sliding active state + press feedback */
+.tab{position:relative;overflow:hidden;transition:color .25s,background .3s,border-color .25s,transform .15s}
+.tab:active{transform:scale(.96)}
+.tab.active{box-shadow:0 8px 22px -12px var(--accent)}
+
+/* Buttons: sheen + magnetism */
+button{position:relative;overflow:hidden;will-change:transform}
+.gold::after,.teal::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.26),transparent);
+  transform:skewX(-18deg);transition:left .6s cubic-bezier(.4,0,.2,1);
+}
+.gold:hover::after,.teal:hover::after{left:130%}
+button:active{transform:scale(.97)}
+
+/* Inputs lift subtly on focus */
+input,textarea,select{transition:border-color .2s,box-shadow .25s,transform .25s}
+input:focus,textarea:focus,select:focus{transform:translateY(-1px)}
+
+/* Live-save confirmation pulse */
+@keyframes okPulse{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.saved{animation:okPulse .4s cubic-bezier(.3,1.4,.5,1);color:var(--ok)!important}
+
+/* Sticky tab bar so navigation stays put while scrolling long lists */
+.tabs{position:sticky;top:0;z-index:40;padding:14px 0;margin-top:18px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px)}
+
+/* Header mark breathes */
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+  50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent)}}
+h1 .dot{animation:breathe 3.4s ease-in-out infinite}
+
+/* Empty states feel intentional */
+.empty{border:1px dashed var(--line-strong);border-radius:14px;padding:26px;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  .q,.panel,button{animation:none!important;transform:none!important}
+  #scrollRail,h1 .dot{animation:none}
+}
+@media (max-width:900px){
+  .panel,.q{transform:none!important}
+  .panel::before,.q::before{display:none}
+}
+
+@media (max-width:640px){.wrap{padding:22px 16px 60px}.panel,.q{padding:18px}}
 </style>
 </head>
 <body>
+<div id="scrollRail" aria-hidden="true"></div>
 <div class="wrap">
   <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build platform-v5</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build meridian-v8</span></p>
 
   <div class="warn" id="configWarn">⚠ Firebase is not configured yet. Open this file and paste your Firebase config into the script at the bottom, then set your admin email in <b>firestore.rules</b>. See FIREBASE-SETUP.md.</div>
 
@@ -80,12 +161,12 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from
 import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
-  authDomain: "surya-finance-freedom.firebaseapp.com",
-  projectId: "surya-finance-freedom",
-  storageBucket: "surya-finance-freedom.firebasestorage.app",
-  messagingSenderId: "385238983487",
-  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
 };
 
 const el=id=>document.getElementById(id);
@@ -201,6 +282,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
       await addDoc(collection(db,kind),{...data,createdAt:serverTimestamp()});
       panel.querySelectorAll('[data-f]').forEach(i=>i.value='');
       el('newMsg').textContent='Published — it is now live on the website.';
+      el('newMsg').classList.add('saved'); setTimeout(()=>el('newMsg').classList.remove('saved'),600);
       setTimeout(()=>el('newMsg').textContent='',4000);
     }catch(err){alert('Could not publish: '+err.message);}
     btn.disabled=false;
@@ -263,7 +345,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
       card.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
       sbtn.disabled=true;
       try{ await updateDoc(doc(db,card.dataset.path),data); sbtn.textContent='Saved ✓';
-           setTimeout(()=>sbtn.textContent='Save changes',2500); }
+           sbtn.classList.add('saved'); setTimeout(()=>{sbtn.textContent='Save changes';sbtn.classList.remove('saved');},2500); }
       catch(err){alert('Save failed: '+err.message);}
       sbtn.disabled=false; return;
     }
@@ -311,6 +393,50 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     btn.disabled=false;
   });
 }
+
+/* ============ DEPTH & MOTION ============ */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rail=document.getElementById('scrollRail');
+  let t=false;
+  addEventListener('scroll',()=>{
+    if(t) return; t=true;
+    requestAnimationFrame(()=>{
+      const max=document.documentElement.scrollHeight-innerHeight;
+      rail.style.transform='scaleX('+(max>0?scrollY/max:0)+')';
+      t=false;
+    });
+  },{passive:true});
+
+  function bind(){
+    document.querySelectorAll('.q,.panel').forEach((card,i)=>{
+      if(!card.style.getPropertyValue('--d')) card.style.setProperty('--d',Math.min(i*60,420)+'ms');
+      if(card.dataset.fx) return;
+      card.dataset.fx='1';
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        card.style.setProperty('--mx',(px*100)+'%');
+        card.style.setProperty('--my',(py*100)+'%');
+        if(innerWidth<900) return;
+        card.classList.add('is-tilting');
+        card.style.transform='perspective(1200px) rotateY('+((px-.5)*3.2).toFixed(2)+'deg) rotateX('+((.5-py)*2.4).toFixed(2)+'deg) translateY(-2px)';
+      });
+      card.addEventListener('pointerleave',()=>{card.classList.remove('is-tilting');card.style.transform='';});
+    });
+    document.querySelectorAll('button').forEach(b=>{
+      if(b.dataset.mag) return; b.dataset.mag='1';
+      b.addEventListener('pointermove',e=>{
+        const r=b.getBoundingClientRect();
+        b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.14).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.2-1).toFixed(1)+'px)';
+      });
+      b.addEventListener('pointerleave',()=>{b.style.transform='';});
+    });
+  }
+  bind();
+  new MutationObserver(()=>bind()).observe(document.body,{childList:true,subtree:true});
+})();
+
 </script>
 </body>
 </html>
