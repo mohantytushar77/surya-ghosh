@@ -1307,14 +1307,13 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
+  authDomain: "surya-finance-freedom.firebaseapp.com",
+  projectId: "surya-finance-freedom",
+  storageBucket: "surya-finance-freedom.firebasestorage.app",
+  messagingSenderId: "385238983487",
+  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
 };
-
 window.SFF = { live:false, ask:null, vote:null };
 const statusEl = document.getElementById('sffStatus');
 const setStatus = (msg,color) => { if(statusEl){ statusEl.textContent=msg; statusEl.style.color=color; } };
