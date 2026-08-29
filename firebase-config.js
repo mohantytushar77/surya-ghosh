@@ -6,11 +6,11 @@
    Get these values from:
    Firebase console → Project settings (gear) → Your apps → Web app
    ============================================================ */
-window.SFF_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
+  authDomain: "surya-finance-freedom.firebaseapp.com",
+  projectId: "surya-finance-freedom",
+  storageBucket: "surya-finance-freedom.firebasestorage.app",
+  messagingSenderId: "385238983487",
+  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
 };
