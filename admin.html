@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Admin</title>
-<!-- BUILD: meridian-v8 -->
+<!-- BUILD: meridian-v9 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -124,9 +124,9 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
 <div id="scrollRail" aria-hidden="true"></div>
 <div class="wrap">
   <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build meridian-v8</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build meridian-v9</span></p>
 
-  <div class="warn" id="configWarn">⚠ Firebase is not configured yet. Open this file and paste your Firebase config into the script at the bottom, then set your admin email in <b>firestore.rules</b>. See FIREBASE-SETUP.md.</div>
+  <div class="warn" id="configWarn">⚠ Not connected yet. Open <b>firebase-config.js</b> and paste your six Firebase values into it — that one file configures both pages. Make sure it sits in the same folder as this page.</div>
 
   <!-- LOGIN -->
   <div class="panel" id="loginPanel">
@@ -155,18 +155,19 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   </div>
 </div>
 
+<script src="firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
-  authDomain: "surya-finance-freedom.firebaseapp.com",
-  projectId: "surya-finance-freedom",
-  storageBucket: "surya-finance-freedom.firebasestorage.app",
-  messagingSenderId: "385238983487",
-  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+const firebaseConfig = window.SFF_CONFIG || {
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
 };
 
 const el=id=>document.getElementById(id);
