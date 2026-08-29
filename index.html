@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surya Finance Freedom — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: meridian-v8 -->
+<!-- BUILD: meridian-v9 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1302,18 +1302,20 @@ document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
 <!-- ================= FIREBASE (LIVE MODE) =================
 Paste your Firebase web-app config below (Project settings → Your apps → Web).
 Until then, the page runs in demo mode with sample content. -->
+<script src="firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
-  authDomain: "surya-finance-freedom.firebaseapp.com",
-  projectId: "surya-finance-freedom",
-  storageBucket: "surya-finance-freedom.firebasestorage.app",
-  messagingSenderId: "385238983487",
-  appId: "1:385238983487:web:2ae9239b368347cfe7e98a",
+const firebaseConfig = window.SFF_CONFIG || {
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
 };
+
 window.SFF = { live:false, ask:null, vote:null };
 const statusEl = document.getElementById('sffStatus');
 const setStatus = (msg,color) => { if(statusEl){ statusEl.textContent=msg; statusEl.style.color=color; } };
@@ -1332,7 +1334,7 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build meridian-v8) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build meridian-v9) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
