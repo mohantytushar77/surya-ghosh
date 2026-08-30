@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Dashboard — AfterSchool Academy</title>
-<!-- BUILD: academy-v17 -->
+<title>Student Sign In — AfterSchool Academy</title>
+<!-- BUILD: academy-v18 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -139,6 +139,7 @@ input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-m
 <!-- AUTH -->
 <div class="authwrap" id="authPanel">
   <div class="authcard">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Student account</p>
     <h2 id="authTitle">Create your free account</h2>
     <p class="lede" id="authLede">Free to join. You only pay when you enrol in a course.</p>
     <div id="nameField">
@@ -245,7 +246,7 @@ if(!cfg.apiKey){
   function setMode(m){
     mode=m;
     const up = m==='signup';
-    el('authTitle').textContent = up?'Create your free account':'Welcome back';
+    el('authTitle').textContent = up?'Create your free account':'Student sign in';
     el('authLede').textContent  = up?'Free to join. You only pay when you enrol in a course.':'Sign in to reach your courses.';
     el('goBtn').textContent     = up?'Create account':'Sign in';
     el('nameField').classList.toggle('hidden',!up);
