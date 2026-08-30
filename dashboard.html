@@ -3,208 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Dashboard — AfterSchool Academy</title>
+<title>AfterSchool Academy — Admin</title>
 <!-- BUILD: academy-v17 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFFFFF;--bg-2:#EEF3FA;--surface:#FFFFFF;--surface-2:#F4F7FC;
-  --line:rgba(11,31,58,.12);--line-strong:rgba(11,31,58,.22);
-  --ink:#0B1F3A;--ink-2:#5C7089;--accent:#1B57C4;--accent-soft:#4C8DFF;
-  --accent-ink:#FFFFFF;--ok:#0E7A56;--r:14px;
-}
-[data-theme="dark"]{
   --bg:#071528;--bg-2:#0B1F38;--surface:#0E2743;--surface-2:#123052;
-  --line:rgba(198,218,244,.16);--line-strong:rgba(198,218,244,.30);
-  --ink:#EEF4FC;--ink-2:#A8BDD6;--accent:#6BA1FF;--accent-soft:#9CC1FF;
-  --accent-ink:#04101F;--ok:#5FD3A6;
+  --line:rgba(198,218,244,.16);--line-strong:rgba(198,218,244,.28);
+  --ink:#EEF4FC;--ink-2:#9FB4CE;--accent:#4C8DFF;--accent-ink:#04101F;--ok:#5FD3A6;
+  --cream:var(--bg);--teal:var(--accent);--forest:var(--ok);--gold:var(--accent);--card:var(--surface);--muted:var(--ink-2);
 }
+[data-theme="light"]{
+  --bg:#FFFFFF;--bg-2:#F4F7FC;--surface:#FFFFFF;--surface-2:#F4F7FC;
+  --line:rgba(11,31,58,.12);--line-strong:rgba(11,31,58,.22);
+  --ink:#0B1F3A;--ink-2:#5C7089;--accent:#1B57C4;--accent-ink:#FFFFFF;--ok:#0E7A56;
+}
+[data-theme="light"] .panel,[data-theme="light"] .q{box-shadow:0 10px 30px -24px rgba(11,31,58,.3)}
+[data-theme="light"] .panel:hover,[data-theme="light"] .q:hover{box-shadow:0 18px 44px -30px rgba(11,31,58,.35)}
+body{transition:background .4s ease,color .4s ease}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);
-  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
-h1,h2,h3,.num{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.03em}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
-
-/* ---------- navy top bar with live finance scene ---------- */
-.topbar{position:relative;background:#071528;color:#EEF4FC;overflow:hidden;border-bottom:1px solid rgba(198,218,244,.16)}
-.topbar canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
-.tb-aurora{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5}
-.tba1{width:34vw;height:34vw;left:-8vw;top:-14vw;background:radial-gradient(circle,#1E4FA8,transparent 68%);animation:tbf 20s ease-in-out infinite}
-.tba2{width:26vw;height:26vw;right:4vw;top:-8vw;background:radial-gradient(circle,#2E6FD8,transparent 66%);animation:tbf 26s ease-in-out infinite reverse}
-@keyframes tbf{0%,100%{transform:translate(0,0)}50%{transform:translate(4vw,3vw) scale(1.1)}}
-.tb-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 24px;
-  height:66px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:16px;color:#EEF4FC}
-.sunmark{width:26px;height:26px;border-radius:50%;position:relative;
-  background:conic-gradient(from 180deg,#4C8DFF,#9CC1FF,#4C8DFF)}
-.sunmark::after{content:"";position:absolute;left:2px;right:2px;bottom:2px;height:46%;background:#071528;border-radius:0 0 13px 13px}
-.logo small{display:block;font-family:'Manrope',sans-serif;font-weight:500;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#8FA8C6}
-.tb-tools{display:flex;align-items:center;gap:9px}
-.iconbtn{width:36px;height:36px;border-radius:10px;border:1px solid rgba(198,218,244,.26);background:transparent;
-  color:#EEF4FC;cursor:pointer;display:grid;place-items:center;font-size:14px;transition:border-color .2s}
-.iconbtn:hover{border-color:#6BA1FF}
-.tb-link{font-size:14px;font-weight:600;color:#B7CBE4;transition:color .2s}
-.tb-link:hover{color:#fff}
-.hello{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:26px 24px 32px}
-.hello h1{font-size:clamp(24px,3.2vw,36px);font-weight:600;color:#fff}
-.hello p{color:#A8BDD6;font-size:15.5px;margin-top:5px}
-
-/* ---------- tabs ---------- */
-.tabwrap{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.tabs{max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;gap:8px;flex-wrap:wrap}
-.tab{font-family:'Manrope',sans-serif;font-weight:600;font-size:13.5px;padding:9px 17px;border-radius:999px;
-  border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);cursor:pointer;transition:.22s}
-.tab:hover{border-color:var(--accent);color:var(--ink)}
-.tab.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 8px 22px -12px var(--accent)}
-
-main{max-width:1080px;margin:0 auto;padding:34px 24px 90px;perspective:1200px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s;position:relative;transform-style:preserve-3d}
-.card:hover{border-color:var(--line-strong)}
-.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;
-  background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 13%,transparent),transparent 62%)}
-.card:hover::before{opacity:1}
-.card>*{position:relative;z-index:1}
-.cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
-.cbody{padding:20px 20px 22px}
-.card h3{font-size:17px;font-weight:600;margin-bottom:6px}
-.card p{color:var(--ink-2);font-size:14.5px}
-.pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);padding:5px 11px;border-radius:999px;margin-bottom:10px}
-.pill.locked{color:var(--ink-2);border-color:var(--line-strong);background:transparent}
-.pill.owned{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent)}
-.go{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:700;font-size:13.5px;color:var(--accent);transition:gap .2s}
-.card:hover .go{gap:11px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;border:none;cursor:pointer;
-  font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;background:var(--accent);color:var(--accent-ink);
-  transition:transform .2s,box-shadow .2s;box-shadow:0 8px 24px -12px var(--accent)}
-.btn:hover{transform:translateY(-2px)}
-.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
-.empty{border:1px dashed var(--line-strong);border-radius:var(--r);padding:38px 26px;text-align:center;color:var(--ink-2)}
-.empty h3{color:var(--ink);margin-bottom:8px}
-.sec-head{margin-bottom:20px}
-.sec-head h2{font-size:22px;font-weight:600}
-.sec-head p{color:var(--ink-2);font-size:15px;margin-top:4px}
-.hidden{display:none}
-
-/* ---------- auth panel ---------- */
-.authwrap{max-width:430px;margin:60px auto;padding:0 24px}
-.authcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:34px;
-  box-shadow:0 30px 70px -44px rgba(11,31,58,.4);position:relative;overflow:hidden}
-.authcard h2{font-size:23px;font-weight:600;margin-bottom:6px}
-.authcard .lede{color:var(--ink-2);font-size:15px;margin-bottom:22px}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15.5px;-webkit-font-smoothing:antialiased}
+h1,h2,button,.tab,label,.count,.text b{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.02em}
+.wrap{max-width:900px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:24px;font-weight:600;display:flex;align-items:center;gap:11px}
+h1 .dot{width:24px;height:24px;border-radius:50%;background:var(--accent)}
+.sub{color:var(--ink-2);margin:6px 0 28px;font-size:15px}
+.panel,.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:16px}
 label{display:block;font-weight:600;font-size:13px;margin:14px 0 6px;color:var(--ink-2)}
-input{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;
-  font-family:'Manrope',sans-serif;font-size:15px;background:var(--bg);color:var(--ink);transition:.2s}
-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
-.authmsg{margin-top:12px;font-size:13.5px;font-weight:600;min-height:1.3em;color:var(--ok)}
-.authmsg.err{color:#D2553F}
-.swap{margin-top:18px;font-size:14px;color:var(--ink-2);text-align:center}
-.swap b{color:var(--accent);cursor:pointer}
-.or{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--ink-2);font-size:12.5px}
-.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
-.gbtn{width:100%;justify-content:center;background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
+input,textarea,select{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;font-family:'Manrope',sans-serif;font-size:15px;background:var(--bg);color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+::placeholder{color:var(--ink-2);opacity:.7}
+button{border:none;border-radius:999px;padding:11px 22px;font-weight:700;font-size:13.5px;cursor:pointer;transition:transform .15s,border-color .2s;font-family:'Manrope',sans-serif}
+button:hover{transform:translateY(-1px)}
+.gold,.teal{background:var(--accent);color:var(--accent-ink)}
+.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+.ghost:hover{border-color:var(--accent)}
+.danger{background:transparent;border:1px solid rgba(224,104,90,.45);color:#E0685A}
+.tabs{display:flex;gap:8px;margin:24px 0 18px;flex-wrap:wrap}
+.tab{padding:9px 16px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);font-weight:600;font-size:13px}
+.tab:hover{border-color:var(--accent);color:var(--ink)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.q p.text{font-size:16px}
+.q .meta{font-size:12.5px;color:var(--ink-2);margin-top:5px}
+.q .row{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.q textarea{margin-top:10px}
+.count{font-weight:700;color:var(--accent)}
+.msg{margin-top:10px;font-size:13.5px;color:var(--ok);min-height:1.3em;font-weight:600}
+.hidden{display:none}
+.empty{color:var(--ink-2);padding:8px 4px;font-size:15px}
+.warn{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:20px;line-height:1.6}
+details summary{cursor:pointer}
 
-/* finance strip in empty states */
-.fin-strip{position:relative;height:70px;margin-top:18px;overflow:hidden}
-@media (max-width:640px){main{padding:26px 18px 70px}.tb-inner{height:58px}.authwrap{margin:34px auto}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ============ DEPTH & MOTION ============ */
+#scrollRail{position:fixed;top:0;left:0;height:2px;z-index:80;width:100%;
+  background:linear-gradient(90deg,var(--accent),#8FB8FF);
+  transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+
+.wrap{perspective:1200px}
+.adminbar{background:#071528;color:#EEF4FC;padding:22px 0;margin-bottom:26px;
+  border-bottom:1px solid rgba(198,218,244,.16)}
+.adminbar .inner{max-width:900px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.adminbar h1{color:#EEF4FC}
+.adminbar .sub{color:#A8BDD6;margin:4px 0 0}
+.adminbar #themeToggle{color:#EEF4FC;border-color:rgba(198,218,244,.26)}
+.adminbar .spark{display:block;height:26px;margin-top:12px;overflow:visible}
+.adminbar .spark path{fill:none;stroke:#6BA1FF;stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 1.8s cubic-bezier(.2,.8,.2,1) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.panel,.q{
+  position:relative;transform-style:preserve-3d;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;
+  will-change:transform;
+}
+.panel:hover,.q:hover{border-color:var(--line-strong);box-shadow:0 18px 44px -30px rgba(0,0,0,.8)}
+.q.is-tilting{transition:transform .12s linear}
+.panel::before,.q::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  transition:opacity .35s;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),
+    color-mix(in srgb,var(--accent) 11%,transparent),transparent 62%);
+}
+.panel:hover::before,.q:hover::before{opacity:1}
+.q>*,.panel>*{position:relative;z-index:1}
+
+/* Cards enter with a stagger */
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.q{animation:riseIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+
+/* Tabs: sliding active state + press feedback */
+.tab{position:relative;overflow:hidden;transition:color .25s,background .3s,border-color .25s,transform .15s}
+.tab:active{transform:scale(.96)}
+.tab.active{box-shadow:0 8px 22px -12px var(--accent)}
+
+/* Buttons: sheen + magnetism */
+button{position:relative;overflow:hidden;will-change:transform}
+.gold::after,.teal::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.26),transparent);
+  transform:skewX(-18deg);transition:left .6s cubic-bezier(.4,0,.2,1);
+}
+.gold:hover::after,.teal:hover::after{left:130%}
+button:active{transform:scale(.97)}
+
+/* Inputs lift subtly on focus */
+input,textarea,select{transition:border-color .2s,box-shadow .25s,transform .25s}
+input:focus,textarea:focus,select:focus{transform:translateY(-1px)}
+
+/* Live-save confirmation pulse */
+@keyframes okPulse{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.saved{animation:okPulse .4s cubic-bezier(.3,1.4,.5,1);color:var(--ok)!important}
+
+/* Sticky tab bar so navigation stays put while scrolling long lists */
+.tabs{position:sticky;top:0;z-index:40;padding:14px 0;margin-top:18px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px)}
+
+/* Header mark breathes */
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+  50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent)}}
+h1 .dot{animation:breathe 3.4s ease-in-out infinite}
+
+/* Empty states feel intentional */
+.empty{border:1px dashed var(--line-strong);border-radius:14px;padding:26px;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  .q,.panel,button{animation:none!important;transform:none!important}
+  #scrollRail,h1 .dot{animation:none}
+}
+@media (max-width:900px){
+  .panel,.q{transform:none!important}
+  .panel::before,.q::before{display:none}
+}
+
+@media (max-width:640px){.wrap{padding:22px 16px 60px}.panel,.q{padding:18px}}
 </style>
 </head>
 <body>
-
-<div class="topbar">
-  <div class="tb-aurora tba1"></div><div class="tb-aurora tba2"></div>
-  <canvas id="tbCanvas" aria-hidden="true"></canvas>
-  <div class="tb-inner">
-    <a class="logo" href="index.html"><span class="sunmark"></span><span>AfterSchool<small>Academy</small></span></a>
-    <div class="tb-tools">
-      <a class="tb-link" href="index.html">← Website</a>
-      <button class="iconbtn" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">☀️</button>
-      <button class="iconbtn hidden" id="signOut" aria-label="Sign out" title="Sign out">⎋</button>
+<div id="scrollRail" aria-hidden="true"></div>
+<div class="adminbar">
+  <div class="inner">
+    <div>
+      <h1><span class="dot"></span>AfterSchool Academy — Admin</h1>
+      <svg class="spark" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,22 L60,18 L120,23 L180,11 L240,15 L300,6 L400,2"/>
+      </svg>
     </div>
-  </div>
-  <div class="hello" id="hello">
-    <h1>Your learning dashboard</h1>
-    <p>Sign in to see your courses. Blog, book summaries and Ask Surya stay free for everyone.</p>
+    <button id="themeToggle" class="ghost" aria-label="Switch to light mode" title="Switch to light mode"
+      style="width:40px;height:40px;border-radius:10px;padding:0;display:grid;place-items:center;font-size:15px">☀️</button>
   </div>
 </div>
+<div class="wrap">
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v17</span></p>
 
-<!-- AUTH -->
-<div class="authwrap" id="authPanel">
-  <div class="authcard">
-    <h2 id="authTitle">Create your free account</h2>
-    <p class="lede" id="authLede">Free to join. You only pay when you enrol in a course.</p>
-    <div id="nameField">
-      <label for="name">Your name</label>
-      <input id="name" type="text" autocomplete="name" placeholder="Surya's student">
-    </div>
-    <label for="email">Email</label>
-    <input id="email" type="email" autocomplete="email">
+  <div class="warn" id="configWarn">⚠ Not connected. <b>firebase-config.js</b> was not found next to this page, or its values are missing. Every page reads that one file — fill it in once and nothing else needs changing.</div>
+
+  <!-- LOGIN -->
+  <div class="panel" id="loginPanel">
+    <h2 style="font-size:19px;font-weight:700">Sign in</h2>
+    <label for="email">Admin email</label>
+    <input id="email" type="email" autocomplete="username">
     <label for="pass">Password</label>
-    <input id="pass" type="password" autocomplete="current-password" placeholder="At least 6 characters">
-    <div style="margin-top:20px"><button class="btn" id="goBtn" style="width:100%;justify-content:center">Create account</button></div>
-    <div class="or">or</div>
-    <button class="btn gbtn" id="googleBtn">Continue with Google</button>
-    <p class="authmsg" id="authMsg"></p>
-    <p class="swap" id="swap">Already have an account? <b id="swapBtn">Sign in</b></p>
+    <input id="pass" type="password" autocomplete="current-password">
+    <div style="margin-top:16px"><button class="gold" id="loginBtn">Sign in</button></div>
+    <p class="msg" id="loginMsg"></p>
+  </div>
+
+  <!-- APP -->
+  <div id="app" class="hidden">
+    <div class="tabs">
+      <button class="tab active" data-status="pending">❓ Questions</button>
+      <button class="tab" data-status="answered">✅ Answered</button>
+      <button class="tab" data-status="comments">💬 Comments</button>
+      <button class="tab" data-status="posts">✍️ Blog</button>
+      <button class="tab" data-status="courses">🎓 Courses</button>
+      <button class="tab" data-status="books">📚 Book summaries</button>
+      <button class="tab" data-status="students">👥 Students &amp; access</button>
+      <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
+    </div>
+    <div id="creator"></div>
+    <div id="list"></div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="app" class="hidden">
-  <div class="tabwrap"><div class="tabs">
-    <button class="tab active" data-t="courses">🎓 My courses</button>
-    <button class="tab" data-t="ask">💬 Ask Surya</button>
-    <button class="tab" data-t="blog">✍️ Blog</button>
-    <button class="tab" data-t="books">📚 Book summaries</button>
-  </div></div>
-  <main id="view"></main>
-</div>
 
 <script>
 (function(){
   var root=document.documentElement, btn=document.getElementById('themeToggle');
-  try{var s=localStorage.getItem('asa-theme'); if(s) root.setAttribute('data-theme',s);}catch(e){}
-  function paint(){var d=root.getAttribute('data-theme')==='dark';btn.textContent=d?'🌙':'☀️';
-    var l=d?'Switch to light mode':'Switch to dark mode';btn.setAttribute('aria-label',l);btn.setAttribute('title',l);}
-  paint();
-  btn.addEventListener('click',function(){var d=root.getAttribute('data-theme')==='dark';
-    root.setAttribute('data-theme',d?'light':'dark');
-    try{localStorage.setItem('asa-theme',d?'light':'dark');}catch(e){} paint();});
-
-  /* animated market line in the top bar */
-  var cv=document.getElementById('tbCanvas');
-  if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    var ctx=cv.getContext('2d'),W,H,dpr=Math.min(devicePixelRatio||1,2),t=0;
-    function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;
-      cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
-    size();addEventListener('resize',size,{passive:true});
-    var pts=26,ser=Array.from({length:pts},function(_,i){return{v:i/pts*.6+Math.sin(i*.8)*.08,o:Math.random()*6.3};});
-    (function loop(){
-      t+=.011;ctx.clearRect(0,0,W,H);
-      if(W>10){
-        for(var L=2;L>=0;L--){
-          ctx.globalAlpha=L===0?.85:.12*(3-L);ctx.lineWidth=L===0?2.2:1.6;ctx.strokeStyle='#6BA1FF';
-          ctx.beginPath();
-          ser.forEach(function(p,i){
-            var x=W*.04+(i/(pts-1))*W*.92-L*4;
-            var y=H*.82-(p.v+Math.sin(t*1.3+p.o)*.03)*H*.55+L*5;
-            i?ctx.lineTo(x,y):ctx.moveTo(x,y);
-          });
-          ctx.stroke();
-        }
-        ctx.globalAlpha=1;
-      }
-      requestAnimationFrame(loop);
-    })();
+  try{ var saved=localStorage.getItem('asa-admin-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){}
+  function paint(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    btn.textContent=dark?'🌙':'☀️';
+    var label=dark?'Switch to light mode':'Switch to dark mode';
+    btn.setAttribute('aria-label',label); btn.setAttribute('title',label);
   }
+  paint();
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    root.setAttribute('data-theme',dark?'light':'dark');
+    try{ localStorage.setItem('asa-admin-theme',dark?'light':'dark'); }catch(e){}
+    paint();
+  });
 })();
 </script>
 <script>window.__cfgLoaded=false;</script>
@@ -218,201 +216,389 @@ input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-m
     : (window.__cfgLoaded ? 'wrongvar' : 'notfound');
 })();
 </script>
-<script src="./transitions.js" defer></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup,
-         GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile }
-  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, collection, doc, setDoc, getDocs, query, where, orderBy, onSnapshot, serverTimestamp }
-  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const cfg = window.SFF_CONFIG || {};
-const el = id => document.getElementById(id);
-const esc = t => { const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; };
+const firebaseConfig = window.SFF_CONFIG;
+if(!firebaseConfig || !firebaseConfig.apiKey || String(firebaseConfig.apiKey).startsWith('PASTE')){
+  console.error('[ASA] firebase-config.js missing or not filled in.');
+}
 
-if(!cfg.apiKey){
-  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">'+
-    (window.__cfgProblem==='wrongvar'
-      ? 'firebase-config.js loaded, but its first line must be exactly <code>window.SFF_CONFIG = {</code> — not <code>const firebaseConfig = {</code>. Rename that one line and push again.'
-      : 'firebase-config.js was not found next to this page. Make sure it sits in the same folder as dashboard.html on GitHub.')+
-    '</p></div>';
-} else {
-  const app=initializeApp(cfg), auth=getAuth(app), db=getFirestore(app);
-  let mode='signup', me=null, myCourses=new Set();
+const el=id=>document.getElementById(id);
+const esc=t=>{const d=document.createElement('div');d.textContent=t||'';return d.innerHTML;};
 
-  /* ---------- auth UI ---------- */
-  function setMode(m){
-    mode=m;
-    const up = m==='signup';
-    el('authTitle').textContent = up?'Create your free account':'Welcome back';
-    el('authLede').textContent  = up?'Free to join. You only pay when you enrol in a course.':'Sign in to reach your courses.';
-    el('goBtn').textContent     = up?'Create account':'Sign in';
-    el('nameField').classList.toggle('hidden',!up);
-    el('swap').innerHTML = up ? 'Already have an account? <b id="swapBtn">Sign in</b>'
-                              : 'New here? <b id="swapBtn">Create an account</b>';
-    el('swapBtn').onclick=()=>setMode(up?'signin':'signup');
-    el('pass').setAttribute('autocomplete', up?'new-password':'current-password');
-  }
-  el('swapBtn').onclick=()=>setMode('signin');
-  setMode('signup');
+if(!firebaseConfig || !firebaseConfig.apiKey){
+  el('loginPanel').classList.add('hidden');
+  el('configWarn').innerHTML = (window.__cfgProblem==='wrongvar')
+    ? '⚠ <b>firebase-config.js loaded, but the variable name is wrong.</b> Its first line must be exactly <code>window.SFF_CONFIG = {</code> — not <code>const firebaseConfig = {</code>. Change that one line and push again.'
+    : '⚠ <b>firebase-config.js was not found next to this page.</b> Put it in the same folder as admin.html on GitHub and push.';
+}else{
+  el('configWarn').classList.add('hidden');
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app);
+  const db=getFirestore(app);
+  const questions=collection(db,'questions');
+  let currentTab='pending', unsub=null;
 
-  function msg(text,isErr){
-    const m=el('authMsg'); m.textContent=text; m.classList.toggle('err',!!isErr);
-  }
-  const friendly = c => ({
-    'auth/invalid-email':'That email address does not look right.',
-    'auth/weak-password':'Password needs at least 6 characters.',
-    'auth/email-already-in-use':'That email already has an account — try signing in.',
-    'auth/invalid-credential':'Email or password is incorrect.',
-    'auth/wrong-password':'Email or password is incorrect.',
-    'auth/user-not-found':'No account with that email yet.',
-    'auth/popup-closed-by-user':'Sign-in window closed.',
-    'auth/unauthorized-domain':'This domain is not authorised in Firebase Authentication settings.'
-  }[c] || c);
-
-  el('goBtn').addEventListener('click', async ()=>{
-    const email=el('email').value.trim(), pass=el('pass').value;
-    if(!email||!pass){ msg('Enter your email and password.',true); return; }
-    el('goBtn').disabled=true; msg('Please wait…');
-    try{
-      if(mode==='signup'){
-        const cred=await createUserWithEmailAndPassword(auth,email,pass);
-        const nm=el('name').value.trim();
-        if(nm) await updateProfile(cred.user,{displayName:nm});
-        await setDoc(doc(db,'users',cred.user.uid),{
-          name:nm||'', email, createdAt:serverTimestamp()
-        },{merge:true});
-      } else {
-        await signInWithEmailAndPassword(auth,email,pass);
-      }
-      msg('');
-    }catch(err){ msg(friendly(err.code||err.message),true); }
-    el('goBtn').disabled=false;
+  el('loginBtn').addEventListener('click',async()=>{
+    el('loginMsg').textContent='Signing in…';
+    try{ await signInWithEmailAndPassword(auth,el('email').value.trim(),el('pass').value); }
+    catch(e){ el('loginMsg').textContent='Sign-in failed: '+(e.code||'check email and password.'); }
   });
+  el('logoutBtn').addEventListener('click',()=>signOut(auth));
 
-  el('googleBtn').addEventListener('click', async ()=>{
-    msg('Opening Google…');
-    try{
-      const cred=await signInWithPopup(auth,new GoogleAuthProvider());
-      await setDoc(doc(db,'users',cred.user.uid),{
-        name:cred.user.displayName||'', email:cred.user.email||'', createdAt:serverTimestamp()
-      },{merge:true});
-      msg('');
-    }catch(err){ msg(friendly(err.code||err.message),true); }
-  });
-
-  el('signOut').addEventListener('click',()=>signOut(auth));
-
-  onAuthStateChanged(auth, async user=>{
-    me=user;
-    el('authPanel').classList.toggle('hidden',!!user);
+  onAuthStateChanged(auth,user=>{
+    el('loginPanel').classList.toggle('hidden',!!user);
     el('app').classList.toggle('hidden',!user);
-    el('signOut').classList.toggle('hidden',!user);
-    if(user){
-      const first=(user.displayName||user.email||'').split(' ')[0].split('@')[0];
-      el('hello').innerHTML=`<h1>Welcome back, ${esc(first)}</h1>
-        <p>Your courses live here. Blog, book summaries and Ask Surya are always free.</p>`;
-      await loadEnrolments(user.uid);
-      show('courses');
-    } else {
-      el('hello').innerHTML=`<h1>Your learning dashboard</h1>
-        <p>Sign in to see your courses. Blog, book summaries and Ask Surya stay free for everyone.</p>`;
-    }
+    if(user) load(currentTab); else if(unsub){unsub();unsub=null;}
   });
 
-  async function loadEnrolments(uid){
-    myCourses=new Set();
-    try{
-      const snap=await getDocs(query(collection(db,'enrollments'),where('uid','==',uid)));
-      snap.forEach(d=>myCourses.add(d.data().courseId));
-    }catch(e){ console.warn('enrolments',e); }
-  }
-
-  /* ---------- tabs ---------- */
   document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active'); show(t.dataset.t);
+    t.classList.add('active');
+    currentTab=t.dataset.status;
+    load(currentTab);
   }));
 
-  let unsub=null;
-  function show(tab){
-    if(unsub){unsub();unsub=null;}
-    const view=el('view');
-    if(tab==='ask'){
-      view.innerHTML=`<div class="sec-head"><h2>Ask Surya</h2>
-        <p>Members' questions go to the top of the queue. Always free.</p></div>
-        <div class="empty"><h3>Ask anything about money</h3>
-        <p>Your question opens on the main site, where everyone can vote and learn from the answer.</p>
-        <div style="margin-top:18px"><a class="btn" href="index.html#ask">Open Ask Surya →</a></div>
-        <div class="fin-strip"></div></div>`;
+  function load(status){
+    if(unsub) unsub();
+    el('creator').innerHTML='';
+    if(status==='comments'){
+      el('list').innerHTML='<p class="empty">Loading comments…</p>';
+      const q=query(collectionGroup(db,'comments'),orderBy('createdAt','desc'),limit(60));
+      unsub=onSnapshot(q,snap=>renderComments(snap),err=>showError(err,'comments'));
       return;
     }
-    view.innerHTML='<p class="empty">Loading…</p>';
-    const col = tab==='courses' ? 'courses' : tab==='blog' ? 'posts' : 'books';
-    unsub=onSnapshot(query(collection(db,col),orderBy('createdAt','desc')),snap=>{
-      if(snap.empty){ view.innerHTML=emptyFor(tab); return; }
-      view.innerHTML=`<div class="sec-head">${headFor(tab)}</div><div class="grid">`+
-        snap.docs.map(d=>cardFor(tab,d)).join('')+`</div>`;
-      bindTilt();
-    },err=>{ view.innerHTML=`<div class="empty"><h3>Could not load</h3><p>${esc(err.code||err.message)}</p></div>`; });
+    if(status==='students'){ showStudents(); return; }
+    if(['posts','courses','books'].includes(status)){
+      showCreator(status);
+      const q=query(collection(db,status),orderBy('createdAt','desc'));
+      unsub=onSnapshot(q,snap=>renderContent(status,snap),err=>showError(err,status));
+      return;
+    }
+    const q = status==='pending'
+      ? query(questions,where('status','==','pending'),orderBy('votes','desc'))
+      : query(questions,where('status','==','answered'),orderBy('answeredAt','desc'));
+    unsub=onSnapshot(q,snap=>render(status,snap),err=>showError(err,status));
   }
 
-  const headFor = t => ({
-    courses:'<h2>My courses</h2><p>Courses you have access to. Locked ones show how to enrol.</p>',
-    blog:'<h2>Blog</h2><p>Notes on money, markets and freedom. Free to read.</p>',
-    books:'<h2>Book summaries</h2><p>The great finance books, distilled. Free to read.</p>'
-  }[t]);
 
-  const emptyFor = t => `<div class="empty"><h3>Nothing here yet</h3>
-    <p>${t==='courses'?'Surya has not published any courses yet.':'Nothing published yet — check back soon.'}</p>
-    <div class="fin-strip"></div></div>`;
+  /* ---------- Students & course access ---------- */
+  async function showStudents(){
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">Grant course access</h2>
+      <div class="warn" style="margin:14px 0">💳 <b>How this works:</b> when a student pays you (Razorpay link, UPI, bank transfer), find them below and grant the course. Access is enforced by the database — lesson videos and content stay unreadable until you grant it, even if someone inspects the page source.</div>
+      <label>Student</label>
+      <select id="stuPick"><option value="">Loading students…</option></select>
+      <label>Course</label>
+      <select id="crsPick"><option value="">Loading courses…</option></select>
+      <div style="margin-top:16px"><button class="gold" id="grantBtn">Grant access</button></div>
+      <p class="msg" id="grantMsg"></p>
+    </div>`;
 
-  function cardFor(tab,d){
-    const v=d.data();
-    const cover=v.coverUrl?`<img class="cover" src="${esc(v.coverUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'';
-    if(tab==='courses'){
-      const owned=myCourses.has(d.id);
-      return `<a class="card" href="view.html?type=courses&id=${d.id}">
-        ${cover}<div class="cbody">
-          <span class="pill ${owned?'owned':'locked'}">${owned?'✓ Enrolled':'🔒 '+esc(v.price||'Locked')}</span>
-          <h3>${esc(v.title||'')}</h3>
-          <p>${esc((v.summary||'').slice(0,110))}${(v.summary||'').length>110?'…':''}</p>
-          <span class="go">${owned?'Continue learning →':'View & enrol →'}</span>
-        </div></a>`;
-    }
-    if(tab==='blog'){
-      return `<a class="card" href="view.html?type=posts&id=${d.id}">
-        ${cover}<div class="cbody">
-          ${v.tag?`<span class="pill">${esc(v.tag)}</span>`:''}
-          <h3>${esc(v.title||'')}</h3>
-          <p>${esc((v.excerpt||'').slice(0,110))}</p>
-          <span class="go">Read post →</span>
-        </div></a>`;
-    }
-    return `<a class="card" href="view.html?type=books&id=${d.id}">
-      ${cover}<div class="cbody">
-        <span class="pill">${esc(v.author||'Summary')}</span>
-        <h3>${esc(v.title||'')}</h3>
-        <p>${esc((v.summary||'').slice(0,110))}${(v.summary||'').length>110?'…':''}</p>
-        <span class="go">Read summary →</span>
-      </div></a>`;
+    const [stu,crs]=await Promise.all([
+      getDocs(query(collection(db,'users'),orderBy('createdAt','desc'))).catch(()=>({docs:[]})),
+      getDocs(query(collection(db,'courses'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}))
+    ]);
+    el('stuPick').innerHTML = stu.docs.length
+      ? stu.docs.map(d=>`<option value="${d.id}">${esc(d.data().name||'—')} · ${esc(d.data().email||'')}</option>`).join('')
+      : '<option value="">No students have signed up yet</option>';
+    el('crsPick').innerHTML = crs.docs.length
+      ? crs.docs.map(d=>`<option value="${d.id}">${esc(d.data().title||'Untitled')}</option>`).join('')
+      : '<option value="">No courses published yet</option>';
+
+    el('grantBtn').addEventListener('click',async ()=>{
+      const uid=el('stuPick').value, cid=el('crsPick').value;
+      if(!uid||!cid){ alert('Pick a student and a course.'); return; }
+      const su=stu.docs.find(d=>d.id===uid), cu=crs.docs.find(d=>d.id===cid);
+      el('grantBtn').disabled=true;
+      try{
+        await setDoc(doc(db,'enrollments',uid+'_'+cid),{
+          uid, courseId:cid,
+          email:(su&&su.data().email)||'', name:(su&&su.data().name)||'',
+          courseTitle:(cu&&cu.data().title)||'',
+          grantedAt:serverTimestamp()
+        });
+        el('grantMsg').textContent='Access granted — it appears in their dashboard immediately.';
+        el('grantMsg').classList.add('saved');
+        setTimeout(()=>{el('grantMsg').textContent='';el('grantMsg').classList.remove('saved');},4000);
+      }catch(err){ alert('Could not grant: '+err.message); }
+      el('grantBtn').disabled=false;
+    });
+
+    // current enrolments
+    if(unsub) unsub();
+    unsub=onSnapshot(query(collection(db,'enrollments'),orderBy('grantedAt','desc')),snap=>{
+      el('list').innerHTML = snap.empty
+        ? '<p class="empty">No one has been granted course access yet.</p>'
+        : snap.docs.map(d=>{
+            const e=d.data();
+            return `<div class="q" data-path="${d.ref.path}">
+              <p class="text"><b>${esc(e.name||e.email||'Student')}</b></p>
+              <p class="meta">${esc(e.email||'')} · ${esc(e.courseTitle||e.courseId)} · granted ${e.grantedAt&&e.grantedAt.toDate?e.grantedAt.toDate().toLocaleDateString('en-IN'):''}</p>
+              <div class="row"><button class="danger" data-del="1">Revoke access</button></div></div>`;
+          }).join('');
+    },err=>showError(err,'enrolments'));
   }
 
-  function bindTilt(){
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches || innerWidth<900) return;
-    document.querySelectorAll('.card').forEach(c=>{
-      if(c.dataset.fx) return; c.dataset.fx='1';
-      c.addEventListener('pointermove',e=>{
-        const r=c.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
-        c.style.setProperty('--mx',(px*100)+'%'); c.style.setProperty('--my',(py*100)+'%');
-        c.style.transition='transform .12s linear';
-        c.style.transform=`perspective(1000px) rotateY(${((px-.5)*6).toFixed(2)}deg) rotateX(${((.5-py)*4.5).toFixed(2)}deg) translateY(-4px)`;
+  /* ---------- Blog / Courses / Books: create + edit + delete ---------- */
+  const FIELDS={
+    posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['coverUrl','Cover image link (https://…)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
+    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['coverUrl','Cover image link (https://…)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['enrolUrl','Payment link (Razorpay / UPI) — optional','input'],['summary','Public summary (everyone sees this)','textarea'],['videoUrl','🔒 Video link — only enrolled students see this','input'],['content','🔒 Lesson content — only enrolled students see this','textarea']],
+    books:[['title','Book title','input'],['author','Author','input'],['coverUrl','Cover image link (https://…)','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
+  };
+  const LABEL={posts:'blog post',courses:'course',books:'book summary'};
+
+  function fieldHTML(kind,vals={},prefix=''){
+    return FIELDS[kind].map(([k,label,type])=>{
+      const v=esc(vals[k]||'');
+      return `<label>${label}</label>`+(type==='textarea'
+        ? `<textarea rows="${k==='body'||k==='content'?6:3}" data-f="${k}">${v}</textarea>`
+        : `<input type="text" data-f="${k}" value="${v}">`);
+    }).join('');
+  }
+
+  const IMGHELP=`<div class="warn" style="margin:14px 0 0">🖼️ <b>Cover image:</b> paste a direct image link ending in .jpg, .png or .webp. Free sources: <b>Unsplash</b> or <b>Pexels</b> (right-click an image → Copy image address), or upload to <b>imgbb.com</b> / <b>Cloudinary</b> free tier and copy the link. A preview appears below once the link is valid. Recommended size 1200×675.</div>`;
+  const HELP={
+    courses:IMGHELP+`<div class="warn" style="margin:14px 0 0">🎬 <b>Adding a video:</b> upload the video to YouTube (you can set it to <b>Unlisted</b> so only people with the link can watch), then copy the link from the address bar and paste it above. Vimeo links work too. The video then plays right inside the course card on the website.<br><br>Direct video-file uploads are not used here on purpose: Firebase charges for video storage and bandwidth, while YouTube hosts and streams for free.</div>`,
+    posts:IMGHELP, books:IMGHELP
+  };
+  function showCreator(kind){
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">Add a new ${LABEL[kind]}</h2>
+      ${fieldHTML(kind)}
+      <div id="coverPreview" style="margin-top:14px"></div>
+      ${HELP[kind]||''}
+      <div style="margin-top:16px"><button class="gold" data-new="${kind}">Publish ${LABEL[kind]}</button></div>
+      <p class="msg" id="newMsg"></p>
+    </div>`;
+  }
+
+  async function fillPrivate(kind,list){
+    if(kind!=='courses') return;
+    for(const card of list.querySelectorAll('.q[data-path]')){
+      const cid=card.dataset.path.split('/')[1];
+      try{
+        const p=await getDoc(doc(db,'courses',cid,'private','lesson'));
+        if(p.exists()){
+          const v=p.data();
+          const vi=card.querySelector('[data-f="videoUrl"]'); if(vi) vi.value=v.videoUrl||'';
+          const ci=card.querySelector('[data-f="content"]');  if(ci) ci.value=v.content||'';
+        }
+      }catch(e){}
+    }
+  }
+
+  function renderContent(kind,snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML=`<p class="empty">No ${LABEL[kind]}s yet — add your first one above.</p>`;return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const v=d.data();
+      return `<div class="q" data-path="${d.ref.path}">
+        ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:cover;border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
+        <p class="text"><b>${esc(v.title||'Untitled')}</b></p>
+        <p class="meta">${v.createdAt&&v.createdAt.toDate?v.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>
+        <details style="margin-top:10px"><summary style="cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;color:var(--gold)">Edit</summary>
+          <div style="margin-top:8px">${fieldHTML(kind,v)}</div>
+          <div class="row"><button class="teal" data-save="${kind}">Save changes</button>
+          <button class="danger" data-del="1">Delete</button></div>
+        </details></div>`;
+    }).join('');
+    fillPrivate(kind,list);
+  }
+
+  // Live cover preview
+  el('creator').addEventListener('input',e=>{
+    if(e.target.dataset.f!=='coverUrl') return;
+    const box=document.getElementById('coverPreview'); if(!box) return;
+    const u=e.target.value.trim();
+    box.innerHTML = /^https:\/\//.test(u)
+      ? `<img src="${esc(u)}" alt="Cover preview" style="width:100%;max-height:190px;object-fit:cover;border-radius:10px;border:1px solid var(--line)" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'empty',textContent:'That link did not load an image.'}))">`
+      : '';
+  });
+
+  // Create new content
+  el('creator').addEventListener('click',async e=>{
+    const btn=e.target.closest('button[data-new]');
+    if(!btn) return;
+    const kind=btn.dataset.new, panel=btn.closest('.panel'), data={};
+    panel.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
+    if(!data.title){alert('A title is required.');return;}
+    btn.disabled=true;
+    try{
+      let priv=null;
+      if(kind==='courses'){
+        priv={videoUrl:data.videoUrl||'', content:data.content||''};
+        delete data.videoUrl; delete data.content;
+      }
+      const ref=await addDoc(collection(db,kind),{...data,createdAt:serverTimestamp()});
+      if(priv) await setDoc(doc(db,'courses',ref.id,'private','lesson'),priv);
+      panel.querySelectorAll('[data-f]').forEach(i=>i.value='');
+      el('newMsg').textContent='Published — it is now live on the website.';
+      el('newMsg').classList.add('saved'); setTimeout(()=>el('newMsg').classList.remove('saved'),600);
+      setTimeout(()=>el('newMsg').textContent='',4000);
+    }catch(err){alert('Could not publish: '+err.message);}
+    btn.disabled=false;
+  });
+
+  function showError(err,where){
+    console.error(err);
+    const link=(err.message||'').match(/https:\/\/console\.firebase\.google\.com\S+/);
+    el('list').innerHTML=`<div class="q" style="border-color:rgba(180,60,40,.4)">
+      <p class="text"><b>Could not load ${where}.</b></p>
+      <p class="meta">${esc(err.code||'')} — ${esc(err.message||'')}</p>
+      ${link?`<div class="row"><a class="teal" style="text-decoration:none;padding:11px 22px;border-radius:999px;display:inline-block" href="${link[0]}" target="_blank">Create the missing index →</a></div>`:''}
+      ${(err.code||'').includes('permission')?'<p class="meta">Permission denied usually means the admin email in firestore.rules does not exactly match your login email. Re-check and re-publish the rules.</p>':''}
+    </div>`;
+  }
+
+  function renderComments(snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML='<p class="empty">No comments yet.</p>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const c=d.data();
+      return `<div class="q" data-path="${d.ref.path}">
+        <p class="meta">On: “${esc(c.qtext)||'—'}”</p>
+        <p class="text"><b>${esc(c.name)||'Anonymous'}</b> · <span style="color:var(--muted);font-size:13px">${c.createdAt&&c.createdAt.toDate?c.createdAt.toDate().toLocaleString('en-IN'):''}</span></p>
+        <textarea rows="2" data-field="ctext">${esc(c.text)}</textarea>
+        <div class="row">
+          <button class="teal" data-cact="save">Save edit</button>
+          <button class="danger" data-cact="delete">Delete comment</button>
+        </div></div>`;
+    }).join('');
+  }
+
+  function render(status,snap){
+    const list=el('list');
+    if(snap.empty){list.innerHTML='<p class="empty">Nothing here right now.</p>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const q=d.data();
+      const head=`<p class="text">${esc(q.text)}</p>
+        <p class="meta">${q.name?esc(q.name)+' · ':''}${status!=='submitted'?'<span class="count">▲ '+(q.votes||0)+'</span> · ':''}${q.createdAt&&q.createdAt.toDate?q.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>`;
+      if(status==='pending') return `<div class="q" data-id="${d.id}">${head}
+        <label>Topic</label>
+        <select data-field="topic">
+          <option value="general">General</option><option value="start">Getting started</option>
+          <option value="invest">SIP &amp; investing</option><option value="tax">Tax</option><option value="fire">FIRE</option>
+        </select>
+        <label>Surya's answer</label>
+        <textarea rows="5" data-field="answer" placeholder="Write the honest answer…"></textarea>
+        <div class="row"><button class="gold" data-act="publish">Publish answer</button>
+        <button class="danger" data-act="reject">Remove</button></div></div>`;
+      return `<div class="q" data-id="${d.id}">${head}
+        <p style="margin-top:10px;border-left:3px solid var(--gold);padding-left:14px">${esc(q.answer)}</p>
+        <div class="row"><button class="danger" data-act="reject">Unpublish &amp; delete</button></div></div>`;
+    }).join('');
+  }
+
+  el('list').addEventListener('click',async e=>{
+    const sbtn=e.target.closest('button[data-save]');
+    if(sbtn){
+      const card=sbtn.closest('.q'), kind=sbtn.dataset.save, data={};
+      card.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
+      sbtn.disabled=true;
+      try{
+        if(kind==='courses'){
+          const cid=card.dataset.path.split('/')[1];
+          await setDoc(doc(db,'courses',cid,'private','lesson'),
+            {videoUrl:data.videoUrl||'', content:data.content||''},{merge:true});
+          delete data.videoUrl; delete data.content;
+        }
+        await updateDoc(doc(db,card.dataset.path),data); sbtn.textContent='Saved ✓';
+           sbtn.classList.add('saved'); setTimeout(()=>{sbtn.textContent='Save changes';sbtn.classList.remove('saved');},2500); }
+      catch(err){alert('Save failed: '+err.message);}
+      sbtn.disabled=false; return;
+    }
+    const dbtn=e.target.closest('button[data-del]');
+    if(dbtn){
+      const card=dbtn.closest('.q');
+      if(confirm('Delete this permanently?')){
+        try{ await deleteDoc(doc(db,card.dataset.path)); }catch(err){alert('Delete failed: '+err.message);}
+      }
+      return;
+    }
+    const cbtn=e.target.closest('button[data-cact]');
+    if(cbtn){
+      const card=cbtn.closest('.q');
+      const ref=doc(db,card.dataset.path);
+      cbtn.disabled=true;
+      try{
+        if(cbtn.dataset.cact==='save'){
+          const t=card.querySelector('[data-field="ctext"]').value.trim();
+          if(!t){alert('Comment text cannot be empty — use Delete instead.');}
+          else await updateDoc(ref,{text:t});
+        }
+        if(cbtn.dataset.cact==='delete'){
+          if(confirm('Delete this comment permanently?')) await deleteDoc(ref);
+        }
+      }catch(err){alert('Action failed: '+err.message);}
+      cbtn.disabled=false;
+      return;
+    }
+    const btn=e.target.closest('button[data-act]');
+    if(!btn) return;
+    const card=btn.closest('.q'), id=card.dataset.id, ref=doc(db,'questions',id);
+    const act=btn.dataset.act;
+    btn.disabled=true;
+    try{
+      if(act==='approve') await updateDoc(ref,{status:'pending'});
+      if(act==='reject'){ if(confirm('Delete this question permanently?')) await deleteDoc(ref); }
+      if(act==='publish'){
+        const answer=card.querySelector('[data-field="answer"]').value.trim();
+        const topic=card.querySelector('[data-field="topic"]').value;
+        if(!answer){alert('Write the answer first.');btn.disabled=false;return;}
+        await updateDoc(ref,{answer,topic,status:'answered',answeredAt:serverTimestamp()});
+      }
+    }catch(err){alert('Action failed: '+err.message);}
+    btn.disabled=false;
+  });
+}
+
+/* ============ DEPTH & MOTION ============ */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rail=document.getElementById('scrollRail');
+  let t=false;
+  addEventListener('scroll',()=>{
+    if(t) return; t=true;
+    requestAnimationFrame(()=>{
+      const max=document.documentElement.scrollHeight-innerHeight;
+      rail.style.transform='scaleX('+(max>0?scrollY/max:0)+')';
+      t=false;
+    });
+  },{passive:true});
+
+  function bind(){
+    document.querySelectorAll('.q,.panel').forEach((card,i)=>{
+      if(!card.style.getPropertyValue('--d')) card.style.setProperty('--d',Math.min(i*60,420)+'ms');
+      if(card.dataset.fx) return;
+      card.dataset.fx='1';
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        card.style.setProperty('--mx',(px*100)+'%');
+        card.style.setProperty('--my',(py*100)+'%');
+        if(innerWidth<900) return;
+        card.classList.add('is-tilting');
+        card.style.transform='perspective(1200px) rotateY('+((px-.5)*3.2).toFixed(2)+'deg) rotateX('+((.5-py)*2.4).toFixed(2)+'deg) translateY(-2px)';
       });
-      c.addEventListener('pointerleave',()=>{c.style.transition='transform .5s cubic-bezier(.2,.8,.2,1)';c.style.transform='';});
+      card.addEventListener('pointerleave',()=>{card.classList.remove('is-tilting');card.style.transform='';});
+    });
+    document.querySelectorAll('button').forEach(b=>{
+      if(b.dataset.mag) return; b.dataset.mag='1';
+      b.addEventListener('pointermove',e=>{
+        const r=b.getBoundingClientRect();
+        b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.14).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.2-1).toFixed(1)+'px)';
+      });
+      b.addEventListener('pointerleave',()=>{b.style.transform='';});
     });
   }
-}
+  bind();
+  new MutationObserver(()=>bind()).observe(document.body,{childList:true,subtree:true});
+})();
+
 </script>
 </body>
 </html>
