@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy</title>
-<!-- BUILD: academy-v17 -->
+<!-- BUILD: academy-v18 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -121,7 +121,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--accent);box-shadow:0 
     <a class="logo" href="index.html"><span class="sunmark"></span><span>AfterSchool<small>Academy</small></span></a>
     <div class="tools">
       <a class="back" href="index.html" id="backLink">← Back</a>
-      <a class="back" href="dashboard.html">My dashboard</a>
+      <a class="back" href="login.html">My dashboard</a>
       <button class="iconbtn" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">☀️</button>
     </div>
   </div>
@@ -296,7 +296,7 @@ if(!VALID.includes(type) || !id){
           <h2>🔒 This course is for enrolled students</h2>
           <p>Sign in to check your access, or enrol to start learning. Blog posts, book summaries and Ask Surya remain free for everyone.</p>
           <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="cta" href="dashboard.html">Sign in / Create account</a>
+            <a class="cta" href="login.html">Sign in / Create account</a>
             ${v.enrolUrl?`<a class="cta" style="background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none" href="${esc(v.enrolUrl)}" target="_blank" rel="noopener">Enrol · ${esc(v.price||'')}</a>`:''}
           </div></div>`;
         return;
@@ -319,7 +319,7 @@ if(!VALID.includes(type) || !id){
           <p>You are signed in, but this course has not been unlocked for your account. After payment, Surya grants access and it appears here straight away.</p>
           <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
             ${v.enrolUrl?`<a class="cta" href="${esc(v.enrolUrl)}" target="_blank" rel="noopener">Enrol · ${esc(v.price||'')}</a>`:''}
-            <a class="cta" style="background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none" href="dashboard.html">My dashboard</a>
+            <a class="cta" style="background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none" href="login.html">My dashboard</a>
           </div></div>`;
       }
     });
