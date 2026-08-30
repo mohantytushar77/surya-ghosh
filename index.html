@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v16 -->
+<!-- BUILD: academy-v17 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1892,7 +1892,17 @@ document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
 Paste your Firebase web-app config below (Project settings → Your apps → Web).
 Until then, the page runs in demo mode with sample content. -->
 <script src="./transitions.js" defer></script>
-<script src="./firebase-config.js"></script>
+<script>window.__cfgLoaded=false;</script>
+<script src="./firebase-config.js" onload="window.__cfgLoaded=true" onerror="window.__cfg404=true"></script>
+<script>
+/* Accept every reasonable way the config might have been written */
+(function(){
+  var c = window.SFF_CONFIG || window.firebaseConfig || window.FIREBASE_CONFIG || null;
+  if(c && c.apiKey) { window.SFF_CONFIG = c; return; }
+  window.__cfgProblem = window.__cfg404 ? 'notfound'
+    : (window.__cfgLoaded ? 'wrongvar' : 'notfound');
+})();
+</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -1912,7 +1922,9 @@ const reportErr = (err,what) => {
 };
 
 if(!firebaseConfig || !firebaseConfig.apiKey){
-  setStatus('◐ Demo mode — firebase-config.js was not found or is not filled in. Check it sits beside this page.','var(--ink-2)');
+  setStatus(window.__cfgProblem==='wrongvar'
+    ? '◐ Demo mode — firebase-config.js loaded but its first line must be: window.SFF_CONFIG = {'
+    : '◐ Demo mode — firebase-config.js was not found beside this page.','var(--ink-2)');
 }
 if(firebaseConfig && firebaseConfig.apiKey){
   const app = initializeApp(firebaseConfig);
@@ -1921,7 +1933,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v16) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v17) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
