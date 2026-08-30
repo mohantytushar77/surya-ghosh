@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surya Finance Freedom — Admin</title>
-<!-- BUILD: meridian-v9 -->
+<title>AfterSchool Academy — Admin</title>
+<!-- BUILD: academy-v15 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -13,6 +13,14 @@
   --ink:#EEF4FC;--ink-2:#9FB4CE;--accent:#4C8DFF;--accent-ink:#04101F;--ok:#5FD3A6;
   --cream:var(--bg);--teal:var(--accent);--forest:var(--ok);--gold:var(--accent);--card:var(--surface);--muted:var(--ink-2);
 }
+[data-theme="light"]{
+  --bg:#FFFFFF;--bg-2:#F4F7FC;--surface:#FFFFFF;--surface-2:#F4F7FC;
+  --line:rgba(11,31,58,.12);--line-strong:rgba(11,31,58,.22);
+  --ink:#0B1F3A;--ink-2:#5C7089;--accent:#1B57C4;--accent-ink:#FFFFFF;--ok:#0E7A56;
+}
+[data-theme="light"] .panel,[data-theme="light"] .q{box-shadow:0 10px 30px -24px rgba(11,31,58,.3)}
+[data-theme="light"] .panel:hover,[data-theme="light"] .q:hover{box-shadow:0 18px 44px -30px rgba(11,31,58,.35)}
+body{transition:background .4s ease,color .4s ease}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15.5px;-webkit-font-smoothing:antialiased}
 h1,h2,button,.tab,label,.count,.text b{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.02em}
@@ -52,6 +60,16 @@ details summary{cursor:pointer}
   transform:scaleX(0);transform-origin:0 50%;will-change:transform}
 
 .wrap{perspective:1200px}
+.adminbar{background:#071528;color:#EEF4FC;padding:22px 0;margin-bottom:26px;
+  border-bottom:1px solid rgba(198,218,244,.16)}
+.adminbar .inner{max-width:900px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.adminbar h1{color:#EEF4FC}
+.adminbar .sub{color:#A8BDD6;margin:4px 0 0}
+.adminbar #themeToggle{color:#EEF4FC;border-color:rgba(198,218,244,.26)}
+.adminbar .spark{display:block;height:26px;margin-top:12px;overflow:visible}
+.adminbar .spark path{fill:none;stroke:#6BA1FF;stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 1.8s cubic-bezier(.2,.8,.2,1) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
 
 .panel,.q{
   position:relative;transform-style:preserve-3d;
@@ -122,9 +140,20 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
 </head>
 <body>
 <div id="scrollRail" aria-hidden="true"></div>
+<div class="adminbar">
+  <div class="inner">
+    <div>
+      <h1><span class="dot"></span>AfterSchool Academy — Admin</h1>
+      <svg class="spark" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,22 L60,18 L120,23 L180,11 L240,15 L300,6 L400,2"/>
+      </svg>
+    </div>
+    <button id="themeToggle" class="ghost" aria-label="Switch to light mode" title="Switch to light mode"
+      style="width:40px;height:40px;border-radius:10px;padding:0;display:grid;place-items:center;font-size:15px">☀️</button>
+  </div>
+</div>
 <div class="wrap">
-  <h1><span class="dot"></span>Surya Finance Freedom — Admin</h1>
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build meridian-v9</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v15</span></p>
 
   <div class="warn" id="configWarn">⚠ Not connected yet. Open <b>firebase-config.js</b> and paste your six Firebase values into it — that one file configures both pages. Make sure it sits in the same folder as this page.</div>
 
@@ -148,6 +177,7 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
       <button class="tab" data-status="posts">✍️ Blog</button>
       <button class="tab" data-status="courses">🎓 Courses</button>
       <button class="tab" data-status="books">📚 Book summaries</button>
+      <button class="tab" data-status="students">👥 Students &amp; access</button>
       <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
     </div>
     <div id="creator"></div>
@@ -155,11 +185,31 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   </div>
 </div>
 
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try{ var saved=localStorage.getItem('asa-admin-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){}
+  function paint(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    btn.textContent=dark?'🌙':'☀️';
+    var label=dark?'Switch to light mode':'Switch to dark mode';
+    btn.setAttribute('aria-label',label); btn.setAttribute('title',label);
+  }
+  paint();
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    root.setAttribute('data-theme',dark?'light':'dark');
+    try{ localStorage.setItem('asa-admin-theme',dark?'light':'dark'); }catch(e){}
+    paint();
+  });
+})();
+</script>
 <script src="firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, collection, collectionGroup, query, where, orderBy, limit, onSnapshot, doc, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = window.SFF_CONFIG || {
   apiKey: "PASTE_API_KEY",
@@ -212,6 +262,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
       unsub=onSnapshot(q,snap=>renderComments(snap),err=>showError(err,'comments'));
       return;
     }
+    if(status==='students'){ showStudents(); return; }
     if(['posts','courses','books'].includes(status)){
       showCreator(status);
       const q=query(collection(db,status),orderBy('createdAt','desc'));
@@ -224,11 +275,70 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     unsub=onSnapshot(q,snap=>render(status,snap),err=>showError(err,status));
   }
 
+
+  /* ---------- Students & course access ---------- */
+  async function showStudents(){
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">Grant course access</h2>
+      <div class="warn" style="margin:14px 0">💳 <b>How this works:</b> when a student pays you (Razorpay link, UPI, bank transfer), find them below and grant the course. Access is enforced by the database — lesson videos and content stay unreadable until you grant it, even if someone inspects the page source.</div>
+      <label>Student</label>
+      <select id="stuPick"><option value="">Loading students…</option></select>
+      <label>Course</label>
+      <select id="crsPick"><option value="">Loading courses…</option></select>
+      <div style="margin-top:16px"><button class="gold" id="grantBtn">Grant access</button></div>
+      <p class="msg" id="grantMsg"></p>
+    </div>`;
+
+    const [stu,crs]=await Promise.all([
+      getDocs(query(collection(db,'users'),orderBy('createdAt','desc'))).catch(()=>({docs:[]})),
+      getDocs(query(collection(db,'courses'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}))
+    ]);
+    el('stuPick').innerHTML = stu.docs.length
+      ? stu.docs.map(d=>`<option value="${d.id}">${esc(d.data().name||'—')} · ${esc(d.data().email||'')}</option>`).join('')
+      : '<option value="">No students have signed up yet</option>';
+    el('crsPick').innerHTML = crs.docs.length
+      ? crs.docs.map(d=>`<option value="${d.id}">${esc(d.data().title||'Untitled')}</option>`).join('')
+      : '<option value="">No courses published yet</option>';
+
+    el('grantBtn').addEventListener('click',async ()=>{
+      const uid=el('stuPick').value, cid=el('crsPick').value;
+      if(!uid||!cid){ alert('Pick a student and a course.'); return; }
+      const su=stu.docs.find(d=>d.id===uid), cu=crs.docs.find(d=>d.id===cid);
+      el('grantBtn').disabled=true;
+      try{
+        await setDoc(doc(db,'enrollments',uid+'_'+cid),{
+          uid, courseId:cid,
+          email:(su&&su.data().email)||'', name:(su&&su.data().name)||'',
+          courseTitle:(cu&&cu.data().title)||'',
+          grantedAt:serverTimestamp()
+        });
+        el('grantMsg').textContent='Access granted — it appears in their dashboard immediately.';
+        el('grantMsg').classList.add('saved');
+        setTimeout(()=>{el('grantMsg').textContent='';el('grantMsg').classList.remove('saved');},4000);
+      }catch(err){ alert('Could not grant: '+err.message); }
+      el('grantBtn').disabled=false;
+    });
+
+    // current enrolments
+    if(unsub) unsub();
+    unsub=onSnapshot(query(collection(db,'enrollments'),orderBy('grantedAt','desc')),snap=>{
+      el('list').innerHTML = snap.empty
+        ? '<p class="empty">No one has been granted course access yet.</p>'
+        : snap.docs.map(d=>{
+            const e=d.data();
+            return `<div class="q" data-path="${d.ref.path}">
+              <p class="text"><b>${esc(e.name||e.email||'Student')}</b></p>
+              <p class="meta">${esc(e.email||'')} · ${esc(e.courseTitle||e.courseId)} · granted ${e.grantedAt&&e.grantedAt.toDate?e.grantedAt.toDate().toLocaleDateString('en-IN'):''}</p>
+              <div class="row"><button class="danger" data-del="1">Revoke access</button></div></div>`;
+          }).join('');
+    },err=>showError(err,'enrolments'));
+  }
+
   /* ---------- Blog / Courses / Books: create + edit + delete ---------- */
   const FIELDS={
-    posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
-    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['videoUrl','Video link — paste a YouTube or Vimeo URL','input'],['summary','Summary','textarea'],['content','Contents / what\'s inside','textarea']],
-    books:[['title','Book title','input'],['author','Author','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
+    posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['coverUrl','Cover image link (https://…)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
+    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['coverUrl','Cover image link (https://…)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['enrolUrl','Payment link (Razorpay / UPI) — optional','input'],['summary','Public summary (everyone sees this)','textarea'],['videoUrl','🔒 Video link — only enrolled students see this','input'],['content','🔒 Lesson content — only enrolled students see this','textarea']],
+    books:[['title','Book title','input'],['author','Author','input'],['coverUrl','Cover image link (https://…)','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
   };
   const LABEL={posts:'blog post',courses:'course',books:'book summary'};
 
@@ -241,18 +351,35 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     }).join('');
   }
 
+  const IMGHELP=`<div class="warn" style="margin:14px 0 0">🖼️ <b>Cover image:</b> paste a direct image link ending in .jpg, .png or .webp. Free sources: <b>Unsplash</b> or <b>Pexels</b> (right-click an image → Copy image address), or upload to <b>imgbb.com</b> / <b>Cloudinary</b> free tier and copy the link. A preview appears below once the link is valid. Recommended size 1200×675.</div>`;
   const HELP={
-    courses:`<div class="warn" style="margin:14px 0 0">🎬 <b>Adding a video:</b> upload the video to YouTube (you can set it to <b>Unlisted</b> so only people with the link can watch), then copy the link from the address bar and paste it above. Vimeo links work too. The video then plays right inside the course card on the website.<br><br>Direct video-file uploads are not used here on purpose: Firebase charges for video storage and bandwidth, while YouTube hosts and streams for free.</div>`,
-    posts:'', books:''
+    courses:IMGHELP+`<div class="warn" style="margin:14px 0 0">🎬 <b>Adding a video:</b> upload the video to YouTube (you can set it to <b>Unlisted</b> so only people with the link can watch), then copy the link from the address bar and paste it above. Vimeo links work too. The video then plays right inside the course card on the website.<br><br>Direct video-file uploads are not used here on purpose: Firebase charges for video storage and bandwidth, while YouTube hosts and streams for free.</div>`,
+    posts:IMGHELP, books:IMGHELP
   };
   function showCreator(kind){
     el('creator').innerHTML=`<div class="panel">
       <h2 style="font-size:19px;font-weight:700">Add a new ${LABEL[kind]}</h2>
       ${fieldHTML(kind)}
+      <div id="coverPreview" style="margin-top:14px"></div>
       ${HELP[kind]||''}
       <div style="margin-top:16px"><button class="gold" data-new="${kind}">Publish ${LABEL[kind]}</button></div>
       <p class="msg" id="newMsg"></p>
     </div>`;
+  }
+
+  async function fillPrivate(kind,list){
+    if(kind!=='courses') return;
+    for(const card of list.querySelectorAll('.q[data-path]')){
+      const cid=card.dataset.path.split('/')[1];
+      try{
+        const p=await getDoc(doc(db,'courses',cid,'private','lesson'));
+        if(p.exists()){
+          const v=p.data();
+          const vi=card.querySelector('[data-f="videoUrl"]'); if(vi) vi.value=v.videoUrl||'';
+          const ci=card.querySelector('[data-f="content"]');  if(ci) ci.value=v.content||'';
+        }
+      }catch(e){}
+    }
   }
 
   function renderContent(kind,snap){
@@ -261,6 +388,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     list.innerHTML=snap.docs.map(d=>{
       const v=d.data();
       return `<div class="q" data-path="${d.ref.path}">
+        ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:cover;border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
         <p class="text"><b>${esc(v.title||'Untitled')}</b></p>
         <p class="meta">${v.createdAt&&v.createdAt.toDate?v.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>
         <details style="margin-top:10px"><summary style="cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;color:var(--gold)">Edit</summary>
@@ -269,7 +397,18 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
           <button class="danger" data-del="1">Delete</button></div>
         </details></div>`;
     }).join('');
+    fillPrivate(kind,list);
   }
+
+  // Live cover preview
+  el('creator').addEventListener('input',e=>{
+    if(e.target.dataset.f!=='coverUrl') return;
+    const box=document.getElementById('coverPreview'); if(!box) return;
+    const u=e.target.value.trim();
+    box.innerHTML = /^https:\/\//.test(u)
+      ? `<img src="${esc(u)}" alt="Cover preview" style="width:100%;max-height:190px;object-fit:cover;border-radius:10px;border:1px solid var(--line)" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'empty',textContent:'That link did not load an image.'}))">`
+      : '';
+  });
 
   // Create new content
   el('creator').addEventListener('click',async e=>{
@@ -280,7 +419,13 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     if(!data.title){alert('A title is required.');return;}
     btn.disabled=true;
     try{
-      await addDoc(collection(db,kind),{...data,createdAt:serverTimestamp()});
+      let priv=null;
+      if(kind==='courses'){
+        priv={videoUrl:data.videoUrl||'', content:data.content||''};
+        delete data.videoUrl; delete data.content;
+      }
+      const ref=await addDoc(collection(db,kind),{...data,createdAt:serverTimestamp()});
+      if(priv) await setDoc(doc(db,'courses',ref.id,'private','lesson'),priv);
       panel.querySelectorAll('[data-f]').forEach(i=>i.value='');
       el('newMsg').textContent='Published — it is now live on the website.';
       el('newMsg').classList.add('saved'); setTimeout(()=>el('newMsg').classList.remove('saved'),600);
@@ -345,7 +490,14 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
       const card=sbtn.closest('.q'), kind=sbtn.dataset.save, data={};
       card.querySelectorAll('[data-f]').forEach(i=>data[i.dataset.f]=i.value.trim());
       sbtn.disabled=true;
-      try{ await updateDoc(doc(db,card.dataset.path),data); sbtn.textContent='Saved ✓';
+      try{
+        if(kind==='courses'){
+          const cid=card.dataset.path.split('/')[1];
+          await setDoc(doc(db,'courses',cid,'private','lesson'),
+            {videoUrl:data.videoUrl||'', content:data.content||''},{merge:true});
+          delete data.videoUrl; delete data.content;
+        }
+        await updateDoc(doc(db,card.dataset.path),data); sbtn.textContent='Saved ✓';
            sbtn.classList.add('saved'); setTimeout(()=>{sbtn.textContent='Save changes';sbtn.classList.remove('saved');},2500); }
       catch(err){alert('Save failed: '+err.message);}
       sbtn.disabled=false; return;
