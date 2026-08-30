@@ -6,7 +6,7 @@
    Get these values from:
    Firebase console → Project settings (gear) → Your apps → Web app
    ============================================================ */
-const firebaseConfig = {
+window.SFF_CONFIG = {
   apiKey: "AIzaSyArvAHypgn57tSReWS4Xdq8A3868VGn6Po",
   authDomain: "surya-finance-freedom.firebaseapp.com",
   projectId: "surya-finance-freedom",
