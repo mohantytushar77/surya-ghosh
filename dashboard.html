@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Dashboard — AfterSchool Academy</title>
-<!-- BUILD: academy-v15 -->
+<!-- BUILD: academy-v16 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -207,8 +207,8 @@ input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-m
   }
 })();
 </script>
-<script src="firebase-config.js"></script>
-<script src="transitions.js" defer></script>
+<script src="./firebase-config.js"></script>
+<script src="./transitions.js" defer></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup,
@@ -217,12 +217,12 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { getFirestore, collection, doc, setDoc, getDocs, query, where, orderBy, onSnapshot, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const cfg = window.SFF_CONFIG || { apiKey:'PASTE_API_KEY' };
+const cfg = window.SFF_CONFIG || {};
 const el = id => document.getElementById(id);
 const esc = t => { const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; };
 
-if(String(cfg.apiKey).startsWith('PASTE')){
-  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">Add your Firebase values to firebase-config.js to enable sign-in.</p></div>';
+if(!cfg.apiKey){
+  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">firebase-config.js was not found beside this page, or its values are missing. Fill in that one file and every page connects.</p></div>';
 } else {
   const app=initializeApp(cfg), auth=getAuth(app), db=getFirestore(app);
   let mode='signup', me=null, myCourses=new Set();
