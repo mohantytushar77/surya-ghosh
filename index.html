@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v17 -->
+<!-- BUILD: academy-v18 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -917,11 +917,11 @@ header.shrunk .nav{height:58px}
       <a href="#tools">Tools</a>
       <a href="#ask">Ask Surya</a>
       <a href="#about">About Surya</a>
-      <a href="dashboard.html">My dashboard</a>
+      <a href="login.html">My dashboard</a>
     </nav>
     <div class="nav-cta">
       <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">☀️</button>
-      <a href="dashboard.html" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Sign in</a>
+      <a href="login.html" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Sign in</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -1393,14 +1393,14 @@ header.shrunk .nav{height:58px}
       </div>
       <div>
         <h4>Your account</h4>
-        <a href="dashboard.html">Sign in</a>
-        <a href="dashboard.html">My courses</a>
+        <a href="login.html">Sign in</a>
+        <a href="login.html">My courses</a>
         <a href="#ask">Ask Surya</a>
       </div>
       <div>
         <h4>Company</h4>
         <a href="#about">About Surya</a>
-      <a href="dashboard.html">My dashboard</a>
+      <a href="login.html">My dashboard</a>
         <a href="#ask">Ask Surya</a>
         <a href="#top">Contact</a>
       </div>
@@ -1933,7 +1933,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v17) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v18) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
