@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Admin</title>
-<!-- BUILD: academy-v16 -->
+<!-- BUILD: academy-v18 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -153,13 +153,15 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   </div>
 </div>
 <div class="wrap">
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v16</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v18</span></p>
 
   <div class="warn" id="configWarn">⚠ Not connected. <b>firebase-config.js</b> was not found next to this page, or its values are missing. Every page reads that one file — fill it in once and nothing else needs changing.</div>
 
   <!-- LOGIN -->
   <div class="panel" id="loginPanel">
     <h2 style="font-size:19px;font-weight:700">Sign in</h2>
+    <p style="font-size:13px;color:var(--ink-2);margin-bottom:14px;padding:10px 14px;border:1px solid var(--line-strong);border-radius:10px">
+      🔐 <b>Admin only.</b> Students sign in at <a href="login.html" style="color:var(--accent)">login.html</a>.</p>
     <label for="email">Admin email</label>
     <input id="email" type="email" autocomplete="username">
     <label for="pass">Password</label>
@@ -205,7 +207,17 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   });
 })();
 </script>
-<script src="./firebase-config.js"></script>
+<script>window.__cfgLoaded=false;</script>
+<script src="./firebase-config.js" onload="window.__cfgLoaded=true" onerror="window.__cfg404=true"></script>
+<script>
+/* Accept every reasonable way the config might have been written */
+(function(){
+  var c = window.SFF_CONFIG || window.firebaseConfig || window.FIREBASE_CONFIG || null;
+  if(c && c.apiKey) { window.SFF_CONFIG = c; return; }
+  window.__cfgProblem = window.__cfg404 ? 'notfound'
+    : (window.__cfgLoaded ? 'wrongvar' : 'notfound');
+})();
+</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -221,6 +233,9 @@ const esc=t=>{const d=document.createElement('div');d.textContent=t||'';return d
 
 if(!firebaseConfig || !firebaseConfig.apiKey){
   el('loginPanel').classList.add('hidden');
+  el('configWarn').innerHTML = (window.__cfgProblem==='wrongvar')
+    ? '⚠ <b>firebase-config.js loaded, but the variable name is wrong.</b> Its first line must be exactly <code>window.SFF_CONFIG = {</code> — not <code>const firebaseConfig = {</code>. Change that one line and push again.'
+    : '⚠ <b>firebase-config.js was not found next to this page.</b> Put it in the same folder as admin.html on GitHub and push.';
 }else{
   el('configWarn').classList.add('hidden');
   const app=initializeApp(firebaseConfig);
