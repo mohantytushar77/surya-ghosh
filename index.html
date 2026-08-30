@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surya Finance Freedom — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: meridian-v9 -->
+<title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
+<!-- BUILD: academy-v15 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
 }
 [data-theme="light"]{
   --bg:#FFFFFF;
-  --bg-2:#F4F7FC;
+  --bg-2:#EEF3FA;
   --surface:#FFFFFF;
   --surface-2:#F4F7FC;
   --line:rgba(11,31,58,.12);
@@ -68,6 +68,39 @@ img{max-width:100%}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
 section{padding:var(--sp) 0}
+
+
+/* ============ NAVY BANDS — colour balance ============ */
+/* Sections marked .band-navy are always deep navy in both themes,
+   so light mode alternates white → navy → white and never feels washed out. */
+.band-navy{
+  --bg:#071528;--bg-2:#0B1F38;--surface:#0E2743;--surface-2:#123052;
+  --line:rgba(198,218,244,.16);--line-strong:rgba(198,218,244,.30);
+  --ink:#EEF4FC;--ink-2:#A8BDD6;--accent:#6BA1FF;--accent-soft:#9CC1FF;--accent-ink:#04101F;
+  background:var(--bg);color:var(--ink);
+  border-top:1px solid rgba(198,218,244,.14);
+  border-bottom:1px solid rgba(198,218,244,.14);
+  position:relative;
+}
+.band-navy .card,.band-navy .course,.band-navy .book,.band-navy .post,
+.band-navy .qa,.band-navy .pending,.band-navy .ama-panel,.band-navy .calc-panel,.band-navy .c-item{
+  background:var(--surface);border-color:var(--line);
+}
+.band-navy .rrow,[data-theme="light"] .band-navy .rrow{background:var(--surface-2)}
+.band-navy .result-hero{background:linear-gradient(165deg,var(--surface-2),var(--surface));color:var(--ink)}
+[data-theme="light"] .band-navy .result-hero .when,[data-theme="light"] .band-navy .result-hero .rrow span{color:var(--ink-2)}
+.band-navy textarea,.band-navy input[type=text]{background:var(--bg-2);color:var(--ink);border-color:var(--line-strong)}
+.band-navy .qa-answer{background:var(--bg-2)}
+.band-navy .footer-cta{background:var(--surface)}
+
+/* Section eyebrow numbering makes each block distinct */
+.section-head .sec-no{
+  font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;
+  color:var(--accent);opacity:.75;display:block;margin-bottom:6px;
+}
+/* Clear separation between sections */
+.band-white{background:var(--bg)}
+section+section{position:relative}
 
 /* ---- shared type ---- */
 .eyebrow{
@@ -127,8 +160,8 @@ header{
 
 /* ---- hero ---- */
 .hero{position:relative;overflow:hidden;min-height:min(84vh,720px);display:flex;align-items:center;padding:0}
-.horizon{position:absolute;inset:0;z-index:0}
-.horizon svg{width:100%;height:100%;display:block}
+
+
 .hero::after{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(90deg,var(--bg) 8%,color-mix(in srgb,var(--bg) 62%,transparent) 52%,transparent 88%);
@@ -236,6 +269,21 @@ input[type=range]::-moz-range-thumb{
 .course .meta{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
 .price{font-weight:600;font-size:17px;color:var(--ink)}
 .lessons{font-size:12.5px;color:var(--ink-2);font-weight:500}
+
+
+/* card covers & open links */
+.card-cover,.post-cover{overflow:hidden;background:var(--surface-2)}
+.card-cover{aspect-ratio:16/9;border-bottom:1px solid var(--line)}
+.card-cover.book-cover{aspect-ratio:3/2;border-bottom:0;border-right:1px solid var(--line);width:104px;flex:none;height:auto}
+.post-cover{aspect-ratio:21/8;border-radius:10px;margin-bottom:18px;border:1px solid var(--line)}
+.card-cover img,.post-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.course:hover .card-cover img,.book:hover .card-cover img,.post:hover .post-cover img{transform:scale(1.045)}
+.open-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:700;font-size:13.5px;color:var(--accent);transition:gap .2s}
+.course:hover .open-link,.book:hover .open-link,.post:hover .open-link{gap:11px}
+a.course,a.book,a.post{cursor:pointer;display:flex}
+a.course{flex-direction:column}
+a.post{flex-direction:column}
+@media (max-width:520px){.card-cover.book-cover{display:none}}
 
 /* ---- books ---- */
 .book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -371,26 +419,124 @@ textarea:focus,input[type=text]:focus{outline:none;border-color:var(--accent);bo
 .c-post:hover{transform:translateY(-1px)}
 .c-note{font-size:12px;color:var(--ink-2);margin-top:8px}
 
+
+/* ============ ABOUT — 3D COMPOUNDING SCENE ============ */
+.portrait{
+  aspect-ratio:4/5;border-radius:22px;position:relative;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 8%, #123052 0%, #0B1F38 48%, #071528 100%);
+  border:1px solid rgba(198,218,244,.18);
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.9);
+}
+.fin3d{position:absolute;inset:0;perspective:900px;overflow:hidden}
+
+/* orbiting instruments around a rupee core */
+.orbit-stage{
+  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) rotateX(64deg);
+  width:min(78%,300px);aspect-ratio:1;transform-style:preserve-3d;
+}
+.ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(155,192,255,.26);
+  animation:spinRing linear infinite;
+}
+.r1{inset:0;animation-duration:26s}
+.r2{inset:13%;border-color:rgba(155,192,255,.2);animation-duration:19s;animation-direction:reverse}
+.r3{inset:27%;border-color:rgba(95,211,166,.24);animation-duration:14s}
+@keyframes spinRing{to{transform:rotateZ(360deg)}}
+.core{
+  position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;
+  border-radius:50%;display:grid;place-items:center;
+  transform:rotateX(-64deg) translateZ(24px);
+  background:radial-gradient(circle at 36% 30%,#9CC1FF,#4C8DFF 70%);
+  box-shadow:0 0 44px 6px rgba(76,141,255,.45),inset 0 -6px 14px rgba(0,0,0,.25);
+  animation:pulseCore 3.6s ease-in-out infinite;
+}
+.core span{font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:#04101F}
+@keyframes pulseCore{0%,100%{box-shadow:0 0 40px 4px rgba(76,141,255,.4)}50%{box-shadow:0 0 62px 12px rgba(76,141,255,.6)}}
+.sat{
+  position:absolute;left:50%;top:50%;width:0;height:0;
+  transform-style:preserve-3d;animation:orbit linear infinite;
+}
+.sat i{
+  position:absolute;transform:rotateX(-64deg) translate(-50%,-50%);
+  font-style:normal;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;
+  color:#EEF4FC;background:rgba(14,39,67,.85);border:1px solid rgba(155,192,255,.38);
+  padding:6px 12px;border-radius:999px;white-space:nowrap;backdrop-filter:blur(6px);
+  box-shadow:0 8px 22px -12px rgba(0,0,0,.8);
+}
+.s1{animation-duration:26s;--r:50%}
+.s2{animation-duration:19s;animation-direction:reverse;animation-delay:-6s}
+.s3{animation-duration:14s;animation-delay:-4s}
+.s4{animation-duration:26s;animation-delay:-13s}
+@keyframes orbit{
+  from{transform:rotateZ(0) translateX(var(--rad,120px))}
+  to{transform:rotateZ(360deg) translateX(var(--rad,120px))}
+}
+.s1{--rad:148px}.s2{--rad:122px}.s3{--rad:96px}.s4{--rad:148px}
+
+/* isometric coin stack, rising */
+.stack{position:absolute;left:14%;bottom:20%;transform:rotateX(58deg) rotateZ(-38deg);transform-style:preserve-3d}
+.stack .c{
+  position:absolute;width:52px;height:52px;border-radius:50%;
+  background:radial-gradient(circle at 36% 32%,#9CC1FF,#4C8DFF 74%);
+  border:1px solid rgba(155,192,255,.5);
+  box-shadow:0 6px 16px -8px rgba(0,0,0,.8);
+  animation:stackUp 4.4s cubic-bezier(.2,.8,.2,1) infinite;
+}
+.c1{--i:0}.c2{--i:1}.c3{--i:2}.c4{--i:3}.c5{--i:4}
+.stack .c{transform:translateZ(calc(var(--i) * 9px));animation-delay:calc(var(--i) * .28s)}
+@keyframes stackUp{
+  0%{opacity:0;transform:translateZ(calc(var(--i) * 9px)) translateY(26px)}
+  22%,72%{opacity:1;transform:translateZ(calc(var(--i) * 9px)) translateY(0)}
+  100%{opacity:0;transform:translateZ(calc(var(--i) * 9px)) translateY(-10px)}
+}
+
+/* growth curve across the base */
+.growth{position:absolute;left:0;right:0;bottom:0;width:100%;height:38%;overflow:visible}
+.growth .gl{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;
+  stroke-dasharray:520;stroke-dashoffset:520;animation:drawG 2.6s cubic-bezier(.2,.8,.2,1) .4s forwards}
+.growth .ga{opacity:0;animation:fadeG 1s 2.4s forwards}
+.growth .gd{fill:var(--accent);opacity:0;animation:fadeG .5s 2.7s forwards,pingG 2.6s 3.2s ease-in-out infinite}
+@keyframes drawG{to{stroke-dashoffset:0}}
+@keyframes fadeG{to{opacity:1}}
+@keyframes pingG{0%,100%{r:4}50%{r:7}}
+
+.portrait figcaption,
+[data-theme="light"] .portrait figcaption,
+[data-theme="dark"] .portrait figcaption{
+  position:absolute;left:16px;right:16px;bottom:16px;z-index:20;
+  background:rgba(7,21,40,.92);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border:1px solid rgba(155,192,255,.35);border-radius:10px;
+  padding:11px 16px;text-align:center;
+  font-family:'Sora',system-ui,sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;
+  color:#FFFFFF !important;
+  box-shadow:0 12px 30px -16px rgba(0,0,0,.9);
+  opacity:1 !important;visibility:visible !important;
+}
+/* keep the animated scene clear of the caption strip */
+.growth{bottom:52px}
+.stack{bottom:26%}
+@media (max-width:700px){
+  .stack{left:8%;bottom:24%;transform:rotateX(58deg) rotateZ(-38deg) scale(.8)}
+  .core{width:62px;height:62px;margin:-31px 0 0 -31px}
+  .core span{font-size:25px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ring,.sat,.core,.stack .c,.growth .gl,.growth .ga,.growth .gd{animation:none!important}
+  .growth .gl{stroke-dashoffset:0}.growth .ga,.growth .gd{opacity:1}
+  .stack .c{opacity:1}
+}
+
 /* ---- about ---- */
 .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center}
-.portrait{
-  aspect-ratio:4/5;border-radius:var(--r-lg);position:relative;overflow:hidden;
-  background:linear-gradient(170deg,var(--surface-2),var(--bg));
-  border:1px solid var(--line);
-}
-.portrait .p-sun{
-  position:absolute;left:50%;top:32%;transform:translateX(-50%);
-  width:38%;aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 40%,transparent),transparent 70%);
-}
-.portrait .p-fig{position:absolute;left:50%;bottom:17%;transform:translateX(-50%);width:12%;aspect-ratio:1/2.6;background:var(--bg);border-radius:40px 40px 6px 6px}
-.portrait .p-fig::before{content:"";position:absolute;top:-15%;left:50%;transform:translateX(-50%);width:64%;aspect-ratio:1;border-radius:50%;background:var(--bg)}
-.portrait .p-ridge{position:absolute;left:0;right:0;bottom:0;height:24%;background:var(--bg);border-radius:100% 100% 0 0/60% 60% 0 0;border-top:1px solid var(--line-strong)}
-.portrait figcaption{
-  position:absolute;left:18px;bottom:18px;z-index:2;
-  background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:10px;padding:10px 15px;font-size:12.5px;font-weight:600;
-}
+
+
+
+
+
+
 .about-copy h2{font-size:clamp(27px,3.2vw,40px);font-weight:600;line-height:1.16;margin:14px 0 18px}
 .about-copy p{color:var(--ink-2);margin-bottom:14px;font-size:16.5px}
 .pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 28px}
@@ -505,6 +651,215 @@ header.shrunk .nav{height:58px}
   .tilt::before{display:none}
 }
 
+
+
+/* ============ HERO — the stage ============ */
+.hero{
+  position:relative;overflow:hidden;padding:0;
+  min-height:min(96vh,860px);display:flex;align-items:center;
+}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg #finCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.aurora{
+  position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;
+  will-change:transform;
+}
+.a1{width:52vw;height:52vw;left:-12vw;top:-18vw;background:radial-gradient(circle,#1E4FA8,transparent 68%);animation:float1 22s ease-in-out infinite}
+.a2{width:44vw;height:44vw;right:-8vw;top:6vw;background:radial-gradient(circle,#2E6FD8,transparent 66%);animation:float2 26s ease-in-out infinite}
+.a3{width:38vw;height:38vw;left:34vw;bottom:-16vw;background:radial-gradient(circle,#0E7A8A,transparent 70%);opacity:.4;animation:float3 30s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,4vw) scale(1.12)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,6vw) scale(1.08)}}
+@keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,-5vw) scale(1.15)}}
+.grid-floor{
+  position:absolute;left:-25%;right:-25%;bottom:-6%;height:62%;
+  background-image:linear-gradient(rgba(155,192,255,.16) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(155,192,255,.16) 1px,transparent 1px);
+  background-size:64px 64px;
+  transform:perspective(560px) rotateX(66deg);
+  mask-image:linear-gradient(to top,#000 0%,transparent 78%);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,transparent 78%);
+  animation:floor 18s linear infinite;
+}
+@keyframes floor{from{background-position:0 0}to{background-position:0 64px}}
+
+.hero-grid{position:relative;z-index:3;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:120px 26px 128px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:999px;
+  font-size:12.5px;font-weight:700;letter-spacing:.03em;
+  background:rgba(107,161,255,.12);border:1px solid rgba(107,161,255,.34);color:#9CC1FF;
+}
+.hero-badge i{width:7px;height:7px;border-radius:50%;background:#5FD3A6;box-shadow:0 0 0 0 rgba(95,211,166,.7);animation:blip 2.2s infinite}
+@keyframes blip{0%{box-shadow:0 0 0 0 rgba(95,211,166,.6)}70%{box-shadow:0 0 0 9px rgba(95,211,166,0)}100%{box-shadow:0 0 0 0 rgba(95,211,166,0)}}
+.hero h1{
+  font-size:clamp(38px,5.8vw,72px);font-weight:600;line-height:1.03;
+  letter-spacing:-.04em;margin:22px 0 20px;color:#FFFFFF;
+}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(24px) rotateX(-40deg);
+  animation:wordIn .78s cubic-bezier(.2,.9,.25,1) forwards;transform-origin:bottom}
+@keyframes wordIn{to{opacity:1;transform:none}}
+.hero h1 .grad{
+  background:linear-gradient(100deg,#6BA1FF,#9CC1FF 45%,#5FD3A6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.sub{font-size:clamp(16px,1.55vw,20px);color:#B7CBE4;max-width:44ch}
+.hero .cta-row{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.hero .btn-gold{background:linear-gradient(100deg,#4C8DFF,#6BA1FF);color:#04101F;box-shadow:0 14px 40px -14px #4C8DFF}
+.hero .btn-ghost{color:#EEF4FC;border-color:rgba(198,218,244,.3)}
+.hero-stats{margin-top:44px;border-top:1px solid rgba(198,218,244,.16);padding-top:22px}
+.hero .stat b{color:#FFFFFF}
+.hero .stat span{color:#8FA8C6}
+
+/* floating glass dashboard */
+.hero-visual{position:relative;perspective:1300px;min-height:420px}
+.glass-card{
+  background:rgba(14,39,67,.62);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(198,218,244,.20);border-radius:18px;
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.9);color:#EEF4FC;
+}
+.gc-main{
+  padding:26px 26px 22px;transform:rotateY(-16deg) rotateX(7deg) translateZ(0);
+  transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  animation:cardIn 1s cubic-bezier(.2,.9,.25,1) .3s both;
+}
+@keyframes cardIn{from{opacity:0;transform:rotateY(-30deg) rotateX(12deg) translateY(30px)}}
+.gc-head{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8FA8C6;display:flex;align-items:center;gap:8px}
+.gc-dot{width:7px;height:7px;border-radius:50%;background:#5FD3A6}
+.gc-num{font-family:'Sora',sans-serif;font-size:clamp(32px,3.6vw,44px);font-weight:600;letter-spacing:-.03em;margin:12px 0 4px;color:#fff;font-variant-numeric:tabular-nums}
+.gc-sub{font-size:13.5px;color:#8FA8C6}
+.gc-chart{margin:18px 0 16px}
+.gc-chart svg{width:100%;height:80px;display:block;overflow:visible}
+.hg-line{fill:none;stroke:#6BA1FF;stroke-width:2.4;stroke-linecap:round;
+  stroke-dasharray:420;stroke-dashoffset:420;animation:drawLine 2s cubic-bezier(.2,.8,.2,1) .8s forwards}
+.hg-area{opacity:0;animation:fadeArea .9s 2.2s forwards}
+.hg-dot{fill:#6BA1FF;opacity:0;animation:fadeArea .5s 2.5s forwards,ping 2.6s 3s ease-in-out infinite}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+@keyframes fadeArea{to{opacity:1}}
+@keyframes ping{0%,100%{r:4}50%{r:6.5}}
+.gc-rows{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(198,218,244,.16);
+  border:1px solid rgba(198,218,244,.16);border-radius:12px;overflow:hidden}
+.gc-rows div{background:rgba(11,31,56,.7);padding:12px 14px}
+.gc-rows b{display:block;font-family:'Sora',sans-serif;font-size:16px;font-weight:600}
+.gc-rows span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8FA8C6;font-weight:700}
+.gc-pill{
+  position:absolute;padding:11px 17px;border-radius:999px;font-size:13px;font-weight:500;
+  white-space:nowrap;animation:bob 6s ease-in-out infinite;
+}
+.gc-pill b{font-family:'Sora',sans-serif;font-weight:600;color:#9CC1FF}
+.gc-p1{top:-4%;right:-2%;animation-delay:.4s}
+.gc-p2{bottom:12%;left:-10%;animation-delay:1.4s}
+.gc-p3{bottom:-4%;right:6%;animation-delay:2.4s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+
+/* scroll cue */
+.scroll-cue{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;
+  width:26px;height:42px;border:1.5px solid rgba(198,218,244,.34);border-radius:14px;
+  display:grid;place-items:start center;padding-top:8px;
+}
+.scroll-cue span{width:3px;height:8px;border-radius:2px;background:#6BA1FF;animation:cue 1.9s ease-in-out infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(15px)}}
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;padding:96px 26px 110px;gap:56px}
+  .hero-visual{min-height:340px;max-width:420px}
+  .gc-main{transform:none}
+  .gc-p1{right:0}.gc-p2{left:0}
+}
+@media (max-width:700px){
+  .hero{min-height:auto}
+  .hero-grid{padding:72px 22px 90px}
+  .gc-pill{display:none}
+  .scroll-cue{display:none}
+  .grid-floor{opacity:.5}
+}
+@media (prefers-reduced-motion:reduce){
+  .aurora,.grid-floor,.gc-pill,.hero h1 .w,.gc-main,.hg-line,.hg-area,.hg-dot,.scroll-cue span{animation:none!important}
+  .hero h1 .w{opacity:1;transform:none}
+  .hg-line{stroke-dashoffset:0}.hg-area,.hg-dot{opacity:1}
+}
+
+/* ============ 3D FINANCE SCENE ============ */
+.fin-scene{
+  position:absolute;right:0;top:0;width:52%;height:100%;z-index:2;
+  perspective:1200px;pointer-events:none;
+}
+#finCanvas{width:100%;height:100%;display:block}
+
+/* Floating 3D coins */
+.coin{
+  position:absolute;width:var(--s,54px);height:var(--s,54px);
+  transform-style:preserve-3d;animation:spin var(--sp,9s) linear infinite, drift var(--df,7s) ease-in-out infinite alternate;
+  will-change:transform;
+}
+.coin .face{
+  position:absolute;inset:0;border-radius:50%;
+  display:grid;place-items:center;
+  font-family:'Sora',sans-serif;font-weight:700;color:var(--accent-ink);
+  font-size:calc(var(--s,54px)*.42);
+  background:radial-gradient(circle at 34% 30%,var(--accent-soft),var(--accent) 72%);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent), 0 12px 30px -14px var(--accent);
+  backface-visibility:hidden;
+}
+.coin .face.back{transform:rotateY(180deg)}
+.coin .edge{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--accent) 55%,transparent);
+  transform:translateZ(-3px);
+}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@keyframes drift{from{margin-top:0}to{margin-top:-26px}}
+
+/* Growth bars — 3D isometric */
+.bars{position:absolute;bottom:14%;right:12%;display:flex;align-items:flex-end;gap:10px;
+  transform:rotateX(52deg) rotateZ(-42deg);transform-style:preserve-3d}
+.bar{
+  width:26px;border-radius:3px 3px 0 0;
+  background:linear-gradient(180deg,var(--accent-soft),var(--accent));
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent);
+  transform-origin:bottom;animation:grow 3.4s cubic-bezier(.2,.8,.2,1) infinite alternate;
+}
+@keyframes grow{from{transform:scaleY(.42)}to{transform:scaleY(1)}}
+
+/* Section divider: animated sparkline */
+.spark{display:block;width:100%;height:56px;overflow:visible}
+.spark path{
+  fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1400;stroke-dashoffset:1400;
+}
+.spark.in path{transition:stroke-dashoffset 1.8s cubic-bezier(.2,.8,.2,1);stroke-dashoffset:0}
+.spark circle{fill:var(--accent);opacity:0;transition:opacity .5s .9s}
+.spark.in circle{opacity:1;animation:pulse 2.4s ease-in-out infinite 1.6s}
+@keyframes pulse{0%,100%{r:4}50%{r:6.5}}
+
+/* Ticker strip */
+.ticker{
+  overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--bg-2);padding:13px 0;
+}
+.ticker-track{display:flex;gap:44px;width:max-content;animation:slide 34s linear infinite}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:9px;white-space:nowrap;
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:500;color:var(--ink-2);
+}
+.ticker-item b{color:var(--ink);font-weight:600}
+.ticker-item .up{color:var(--ok);font-size:11px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker:hover .ticker-track{animation-play-state:paused}
+
+/* 3D flip on stat cards */
+.stat{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.stat:hover{transform:translateZ(20px) translateY(-3px)}
+.hero-stats{transform-style:preserve-3d;perspective:800px}
+
+@media (prefers-reduced-motion:reduce){
+  .coin,.bar,.ticker-track,.spark circle{animation:none!important}
+  .spark path{stroke-dashoffset:0}
+}
+@media (max-width:900px){
+  .fin-scene{display:none}
+  .spark{height:40px}
+}
+
 /* ---- reveal ---- */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -550,9 +905,9 @@ header.shrunk .nav{height:58px}
 <div id="scrollRail" aria-hidden="true"></div>
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top" aria-label="Surya Finance Freedom home">
+    <a class="logo" href="#top" aria-label="AfterSchool Academy home">
       <span class="sunmark" aria-hidden="true"></span>
-      <span>Surya<small>Finance Freedom</small></span>
+      <span>AfterSchool<small>Academy</small></span>
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Main">
       <a href="#top">Home</a>
@@ -562,10 +917,11 @@ header.shrunk .nav{height:58px}
       <a href="#tools">Tools</a>
       <a href="#ask">Ask Surya</a>
       <a href="#about">About Surya</a>
+      <a href="dashboard.html">My dashboard</a>
     </nav>
     <div class="nav-cta">
-      <button class="theme-toggle" id="themeToggle" aria-label="Switch to day mode" title="Switch to day mode">🌙</button>
-      <a href="#tools" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Start Learning</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">☀️</button>
+      <a href="dashboard.html" class="btn btn-teal" style="padding:12px 24px;font-size:14px">Sign in</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -573,46 +929,100 @@ header.shrunk .nav{height:58px}
 
 <!-- ============ HERO ============ -->
 <main id="top">
-<section class="hero" style="padding:0">
-  <div class="horizon" aria-hidden="true">
-    <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  style="stop-color:var(--bg)"/>
-          <stop offset="55%" style="stop-color:var(--bg-2)"/>
-          <stop offset="100%" style="stop-color:var(--surface-2)"/>
-        </linearGradient>
-      </defs>
-      <rect width="1440" height="810" fill="url(#sky)"/>
-      <path d="M0,560 Q240,470 480,540 T900,520 T1440,470 V810 H0 Z" style="fill:var(--surface)" opacity=".7"/>
-      <path d="M0,620 Q300,520 640,610 T1140,580 T1440,610 V810 H0 Z" style="fill:var(--bg-2)" opacity=".9"/>
-      <path d="M0,700 Q360,600 760,690 T1440,660 V810 H0 Z" style="fill:var(--bg)"/>
-    </svg>
+<section class="hero band-navy">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+    <div class="grid-floor"></div>
+    <canvas id="finCanvas"></canvas>
   </div>
-  <div class="sun-orb" aria-hidden="true"></div>
-  <div class="wrap">
+
+  <div class="fin-scene" aria-hidden="true">
+    <div class="coin" style="--s:60px;--sp:9s;--df:6s;left:8%;top:16%"><span class="edge"></span><span class="face">₹</span><span class="face back">₹</span></div>
+    <div class="coin" style="--s:34px;--sp:12s;--df:8s;left:72%;top:10%"><span class="edge"></span><span class="face">₹</span><span class="face back">₹</span></div>
+    <div class="coin" style="--s:26px;--sp:15s;--df:9s;left:30%;top:72%"><span class="edge"></span><span class="face">₹</span><span class="face back">₹</span></div>
+  </div>
+
+  <div class="wrap hero-grid">
     <div class="hero-inner">
-      <span class="eyebrow">India's path to financial independence</span>
-      <h1>Master Your Money. Design the Life You <em class="accent">Actually Want.</em></h1>
+      <span class="hero-badge"><i></i>New · Learn free, ask anything</span>
+      <h1>
+        <span class="w">Master</span> <span class="w">your</span> <span class="w">money.</span><br>
+        <span class="w grad">Design</span> <span class="w grad">the</span> <span class="w grad">life</span><br>
+        <span class="w">you</span> <span class="w">actually</span> <span class="w">want.</span>
+      </h1>
       <p class="sub">Financial independence, taught plainly. So your time becomes yours.</p>
       <div class="cta-row">
-        <a href="#tools" class="btn btn-gold">Start Your Freedom Journey →</a>
-        <a href="#learn" class="btn btn-ghost">Explore Courses</a>
+        <a href="#tools" class="btn btn-gold">Find your freedom number →</a>
+        <a href="#learn" class="btn btn-ghost">Explore courses</a>
       </div>
       <div class="hero-stats">
         <div class="stat"><b>4 languages</b><span>English · Hindi · Bengali · Odia</span></div>
         <div class="stat"><b>0 stock tips</b><span>Ever. That's a promise</span></div>
-        <div class="stat"><b>₹0</b><span>Free FIRE calculator</span></div>
+        <div class="stat"><b>₹0</b><span>Free calculator</span></div>
       </div>
     </div>
+
+    <!-- 3D floating dashboard -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="glass-card gc-main">
+        <div class="gc-head"><span class="gc-dot"></span>Your freedom projection</div>
+        <div class="gc-num" id="heroNum">₹1.00 Cr</div>
+        <div class="gc-sub">Freedom at 45 · in 17 years</div>
+        <div class="gc-chart">
+          <svg viewBox="0 0 260 80" preserveAspectRatio="none">
+            <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6BA1FF" stop-opacity=".45"/>
+              <stop offset="100%" stop-color="#6BA1FF" stop-opacity="0"/>
+            </linearGradient></defs>
+            <path class="hg-area" d="M0,74 L36,66 L72,70 L108,48 L144,54 L180,30 L216,34 L260,8 L260,80 L0,80 Z" fill="url(#hg)"/>
+            <path class="hg-line" d="M0,74 L36,66 L72,70 L108,48 L144,54 L180,30 L216,34 L260,8"/>
+            <circle class="hg-dot" cx="260" cy="8" r="4"/>
+          </svg>
+        </div>
+        <div class="gc-rows">
+          <div><b>12%</b><span>Return</span></div>
+          <div><b>6%</b><span>Inflation</span></div>
+          <div><b>25×</b><span>Rule</span></div>
+        </div>
+      </div>
+      <div class="glass-card gc-pill gc-p1"><b>SIP</b> auto-invested ▲</div>
+      <div class="glass-card gc-pill gc-p2"><b>+₹42,000</b> this month</div>
+      <div class="glass-card gc-pill gc-p3">Compounding <b>at work</b></div>
+    </div>
   </div>
+
+  <a class="scroll-cue" href="#features" aria-label="Scroll to content"><span></span></a>
 </section>
 
+
+<div class="ticker band-navy" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item"><b>Compounding</b> · time beats timing</span>
+    <span class="ticker-item"><b>SIP</b> · rupee-cost averaging <span class="up">▲</span></span>
+    <span class="ticker-item"><b>Emergency fund</b> · 6 months of expenses</span>
+    <span class="ticker-item"><b>FIRE</b> · 25× annual expenses</span>
+    <span class="ticker-item"><b>Inflation</b> · the silent 6%</span>
+    <span class="ticker-item"><b>Index funds</b> · own the whole market</span>
+    <span class="ticker-item"><b>Savings rate</b> · matters more than returns <span class="up">▲</span></span>
+    <span class="ticker-item"><b>Term insurance</b> · protection, not investment</span>
+    <span class="ticker-item"><b>Compounding</b> · time beats timing</span>
+    <span class="ticker-item"><b>SIP</b> · rupee-cost averaging <span class="up">▲</span></span>
+    <span class="ticker-item"><b>Emergency fund</b> · 6 months of expenses</span>
+    <span class="ticker-item"><b>FIRE</b> · 25× annual expenses</span>
+    <span class="ticker-item"><b>Inflation</b> · the silent 6%</span>
+    <span class="ticker-item"><b>Index funds</b> · own the whole market</span>
+    <span class="ticker-item"><b>Savings rate</b> · matters more than returns <span class="up">▲</span></span>
+    <span class="ticker-item"><b>Term insurance</b> · protection, not investment</span>
+  </div>
+</div>
+
 <!-- ============ FEATURE CARDS ============ -->
-<section id="features">
+<section id="features" class="band-white">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Everything you need</span>
+      <span class="sec-no">01</span><span class="eyebrow">Everything you need</span>
       <h2>One clear path from paycheque to freedom</h2>
       <p>No jargon. No tips. Just what quietly builds wealth in India.</p>
     </div>
@@ -640,10 +1050,10 @@ header.shrunk .nav{height:58px}
 </section>
 
 <!-- ============ FIRE CALCULATOR ============ -->
-<section class="calc-section" id="tools">
+<section class="calc-section band-navy" id="tools">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Free tool</span>
+      <span class="sec-no">02</span><span class="eyebrow">Free tool</span>
       <h2>What's your freedom number?</h2>
       <p>Move the sliders. Watch your freedom date move.</p>
     </div>
@@ -696,10 +1106,10 @@ header.shrunk .nav{height:58px}
 </section>
 
 <!-- ============ COURSES ============ -->
-<section id="learn">
+<section id="learn" class="band-white">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Learn · Step by step</span>
+      <span class="sec-no">03</span><span class="eyebrow">Learn · Step by step</span>
       <h2>Courses for every stage of the journey</h2>
       <p>Start where you are. Short lessons, real worksheets.</p>
     </div>
@@ -709,11 +1119,15 @@ header.shrunk .nav{height:58px}
   </div>
 </section>
 
+<div class="wrap"><svg class="spark" viewBox="0 0 1000 56" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,44 L120,38 L240,46 L360,26 L480,32 L600,16 L720,22 L840,9 L1000,4"/>
+  <circle cx="1000" cy="4" r="4"/>
+</svg></div>
 <!-- ============ BOOK SUMMARIES ============ -->
-<section id="books" class="calc-section">
+<section id="books" class="band-navy">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Read in minutes, not months</span>
+      <span class="sec-no">04</span><span class="eyebrow">Read in minutes, not months</span>
       <h2>Summaries of the great finance books</h2>
       <p>The ideas that shaped how Surya thinks about money.</p>
     </div>
@@ -756,11 +1170,15 @@ header.shrunk .nav{height:58px}
   </div>
 </section>
 
+<div class="wrap"><svg class="spark" viewBox="0 0 1000 56" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,44 L120,38 L240,46 L360,26 L480,32 L600,16 L720,22 L840,9 L1000,4"/>
+  <circle cx="1000" cy="4" r="4"/>
+</svg></div>
 <!-- ============ BLOG ============ -->
-<section id="blog">
+<section id="blog" class="band-white">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Written by Surya</span>
+      <span class="sec-no">05</span><span class="eyebrow">Written by Surya</span>
       <h2>Notes on money, markets and freedom</h2>
       <p>How economies move, and what it means for you.</p>
     </div>
@@ -787,10 +1205,10 @@ header.shrunk .nav{height:58px}
 </section>
 
 <!-- ============ ASK ME ANYTHING ============ -->
-<section class="stories" id="ask">
+<section class="stories band-navy" id="ask">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Complete honesty · One trusted voice</span>
+      <span class="sec-no">06</span><span class="eyebrow">Complete honesty · One trusted voice</span>
       <h2>Ask me anything about money.</h2>
       <p>Anyone can ask. Only Surya answers. No stock tips, ever.</p>
       <span class="sunday-badge">Surya answers as soon as possible</span>
@@ -895,16 +1313,38 @@ header.shrunk .nav{height:58px}
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section id="about">
+<section id="about" class="band-white">
   <div class="wrap about-grid">
-    <figure class="portrait reveal" aria-label="Illustration of Surya on a mountain ridge at sunrise">
-      <div class="p-sun"></div>
-      <div class="p-ridge"></div>
-      <div class="p-fig"></div>
-      <figcaption>Surya Ghosh · Researcher &amp; Finance Coach · Balasore, Odisha</figcaption>
+    <figure class="portrait reveal" aria-label="Animated illustration of compounding growth">
+      <div class="fin3d">
+        <div class="orbit-stage">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="core"><span>₹</span></div>
+          <div class="sat s1"><i>SIP</i></div>
+          <div class="sat s2"><i>PPF</i></div>
+          <div class="sat s3"><i>NPS</i></div>
+          <div class="sat s4"><i>Index</i></div>
+        </div>
+        <div class="stack" aria-hidden="true">
+          <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span>
+          <span class="c c4"></span><span class="c c5"></span>
+        </div>
+        <svg class="growth" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity=".38"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+          </linearGradient></defs>
+          <path class="ga" d="M0,100 L50,92 L100,96 L150,64 L200,72 L250,36 L300,6 L300,110 L0,110 Z" fill="url(#ga)"/>
+          <path class="gl" d="M0,100 L50,92 L100,96 L150,64 L200,72 L250,36 L300,6"/>
+          <circle class="gd" cx="300" cy="6" r="4"/>
+        </svg>
+      </div>
+      <figcaption>Surya Ghosh · Researcher &amp; Finance Coach</figcaption>
     </figure>
     <div class="about-copy reveal">
-      <span class="eyebrow">About Surya</span>
+      <span class="sec-no">07</span><span class="eyebrow">About Surya</span>
       <h2>A researcher's mind. A teacher's heart.</h2>
       <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. A researcher by profession, a student by habit. I study money: the invisible current that runs the world.</p>
       <p>Why teach? A selfish desire — I want no one around me to fear money. Financial stress has broken too many good people.</p>
@@ -933,11 +1373,11 @@ header.shrunk .nav{height:58px}
 </main>
 
 <!-- ============ FOOTER ============ -->
-<footer>
+<footer class="band-navy">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="logo" href="#top"><span class="sunmark"></span><span>Surya<small>Finance Freedom</small></span></a>
+        <a class="logo" href="#top"><span class="sunmark"></span><span>AfterSchool<small>Academy</small></span></a>
         <p>Personal finance for financial independence. Made in India.</p>
       </div>
       <div>
@@ -952,14 +1392,21 @@ header.shrunk .nav{height:58px}
         <a href="#tools">Budget worksheet</a>
       </div>
       <div>
+        <h4>Your account</h4>
+        <a href="dashboard.html">Sign in</a>
+        <a href="dashboard.html">My courses</a>
+        <a href="#ask">Ask Surya</a>
+      </div>
+      <div>
         <h4>Company</h4>
         <a href="#about">About Surya</a>
+      <a href="dashboard.html">My dashboard</a>
         <a href="#ask">Ask Surya</a>
         <a href="#top">Contact</a>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Surya Finance Freedom. Education, not investment advice.</span>
+      <span>© 2026 AfterSchool Academy. Education, not investment advice.</span>
       <span>Made in India</span>
     </div>
   </div>
@@ -1213,9 +1660,11 @@ window.SFF_mountBlogComments=mountBlogComments;
     rail.style.transform='scaleX('+(max>0?y/max:0)+')';
     header.classList.toggle('shrunk',y>40);
     if(hero && y<window.innerHeight){
-      if(heroSvg) heroSvg.style.transform='translate3d(0,'+(y*0.22)+'px,0) scale(1.04)';
-      if(heroInner) heroInner.style.transform='translate3d(0,'+(y*0.09)+'px,0)';
-      if(orb) orb.style.transform='translate3d(0,'+(y*0.34)+'px,0)';
+      const gf=document.querySelector('.grid-floor');
+      if(gf) gf.style.transform='perspective(560px) rotateX(66deg) translateY('+(y*0.12)+'px)';
+      if(heroInner) heroInner.style.transform='translate3d(0,'+(y*0.07)+'px,0)';
+      const hv=document.querySelector('.hero-visual');
+      if(hv) hv.style.transform='translate3d(0,'+(y*0.16)+'px,0)';
     }
     ticking=false;
   }
@@ -1292,6 +1741,146 @@ window.SFF_mountBlogComments=mountBlogComments;
   }).observe(el,{childList:true,characterData:true,subtree:true});
 })();
 
+
+
+/* ============ HERO CHOREOGRAPHY ============ */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* stagger the headline words */
+  document.querySelectorAll('.hero h1 .w').forEach((w,i)=>{
+    w.style.animationDelay=(0.12+i*0.062)+'s';
+  });
+
+  if(reduce) return;
+
+  /* count the hero number up once */
+  const hn=document.getElementById('heroNum');
+  if(hn){
+    let v=0, target=1.0, t0=null;
+    function step(ts){
+      if(!t0) t0=ts;
+      const p=Math.min((ts-t0)/1600,1);
+      v=target*(1-Math.pow(1-p,3));
+      hn.textContent='₹'+v.toFixed(2)+' Cr';
+      if(p<1) requestAnimationFrame(step);
+    }
+    setTimeout(()=>requestAnimationFrame(step),700);
+  }
+
+  /* pointer-driven depth on the glass dashboard + aurora drift */
+  const hero=document.querySelector('.hero');
+  const card=document.querySelector('.gc-main');
+  const auroras=[...document.querySelectorAll('.aurora')];
+  if(hero){
+    hero.addEventListener('pointermove',e=>{
+      const r=hero.getBoundingClientRect();
+      const dx=(e.clientX-r.left)/r.width-.5, dy=(e.clientY-r.top)/r.height-.5;
+      if(card && innerWidth>960){
+        card.style.transition='transform .18s linear';
+        card.style.transform=`rotateY(${-16+dx*16}deg) rotateX(${7-dy*12}deg) translateZ(20px)`;
+      }
+      auroras.forEach((a,i)=>{
+        const k=(i+1)*9;
+        a.style.marginLeft=(dx*k)+'px';
+        a.style.marginTop=(dy*k*.6)+'px';
+      });
+    });
+    hero.addEventListener('pointerleave',()=>{
+      if(card){card.style.transition='transform .8s cubic-bezier(.2,.8,.2,1)';card.style.transform='';}
+    });
+  }
+})();
+
+/* ============ 3D CANDLESTICK / GROWTH CANVAS ============ */
+(function(){
+  const cv=document.getElementById('finCanvas');
+  if(!cv || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx=cv.getContext('2d');
+  let W=0,H=0,dpr=Math.min(devicePixelRatio||1,2),t=0,mx=0,my=0,raf;
+
+  function size(){
+    const r=cv.getBoundingClientRect();
+    W=r.width;H=r.height;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  size(); addEventListener('resize',size,{passive:true});
+
+  const hero=document.querySelector('.hero');
+  hero&&hero.addEventListener('pointermove',e=>{
+    const r=hero.getBoundingClientRect();
+    mx=(e.clientX-r.left)/r.width-.5; my=(e.clientY-r.top)/r.height-.5;
+  });
+
+  const accent=()=>getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#4C8DFF';
+
+  // A rising line of "market" data, drawn in fake 3D with a depth shadow
+  const pts=28;
+  const series=Array.from({length:pts},(_,i)=>({
+    v: i/pts*0.62 + Math.sin(i*0.7)*0.09 + Math.random()*0.05,
+    o: Math.random()*Math.PI*2
+  }));
+
+  function draw(){
+    t+=0.012;
+    ctx.clearRect(0,0,W,H);
+    if(W<10){raf=requestAnimationFrame(draw);return;}
+    const col=accent();
+    const baseY=H*0.74, amp=H*0.42;
+    const tiltX=mx*18, tiltY=my*12;
+
+    // depth grid (perspective floor)
+    ctx.strokeStyle=col; ctx.globalAlpha=0.10; ctx.lineWidth=1;
+    for(let i=0;i<7;i++){
+      const y=baseY+i*i*3.4+tiltY;
+      ctx.beginPath();ctx.moveTo(W*0.05+tiltX,y);ctx.lineTo(W*0.95+tiltX,y);ctx.stroke();
+    }
+
+    // shadow layer (the "depth" copy behind)
+    for(let layer=2;layer>=0;layer--){
+      const off=layer*7;
+      ctx.globalAlpha=layer===0?0.95:0.12*(3-layer);
+      ctx.lineWidth=layer===0?2.6:2;
+      ctx.strokeStyle=col;
+      ctx.beginPath();
+      series.forEach((p,i)=>{
+        const x=W*0.08+(i/(pts-1))*W*0.84+tiltX-off*0.6;
+        const wob=Math.sin(t*1.2+p.o)*0.02;
+        const y=baseY-(p.v+wob)*amp+tiltY+off;
+        i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+      });
+      ctx.stroke();
+    }
+
+    // glowing head point
+    const last=series[pts-1];
+    const hx=W*0.08+W*0.84+tiltX, hy=baseY-(last.v+Math.sin(t*1.2+last.o)*0.02)*amp+tiltY;
+    const g=ctx.createRadialGradient(hx,hy,0,hx,hy,26);
+    g.addColorStop(0,col); g.addColorStop(1,'transparent');
+    ctx.globalAlpha=0.55+Math.sin(t*2)*0.15; ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(hx,hy,26,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;ctx.fillStyle=col;
+    ctx.beginPath();ctx.arc(hx,hy,3.6,0,Math.PI*2);ctx.fill();
+
+    raf=requestAnimationFrame(draw);
+  }
+  draw();
+
+  // pause when off-screen (saves battery)
+  new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ if(!raf) draw(); }
+    else { cancelAnimationFrame(raf); raf=null; }
+  }),{threshold:0}).observe(cv);
+})();
+
+/* Sparkline dividers draw in on scroll */
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  }),{threshold:.35});
+  document.querySelectorAll('.spark').forEach(n=>io.observe(n));
+})();
+
 /* ---------- Scroll reveal ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
@@ -1302,6 +1891,7 @@ document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
 <!-- ================= FIREBASE (LIVE MODE) =================
 Paste your Firebase web-app config below (Project settings → Your apps → Web).
 Until then, the page runs in demo mode with sample content. -->
+<script src="transitions.js" defer></script>
 <script src="firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -1334,7 +1924,7 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build meridian-v9) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v15) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
@@ -1374,17 +1964,16 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
     if(snap.empty) return;
     document.getElementById('courseGrid').innerHTML=snap.docs.map(d=>{
       const c=d.data();
-      const embed=toEmbed(c.videoUrl||'');
-      return `<article class="course">
-        ${embed?`<div class="course-video"><iframe src="${embed}" title="${esc(c.title||'Course preview')}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`
-                :`<div class="banner"><span class="level">${esc(c.level||'Course')}</span></div>`}
+      const cover=c.coverUrl?`<div class="card-cover"><img src="${esc(c.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      return `<a class="course" href="view.html?type=courses&id=${d.id}">
+        ${cover||`<div class="banner"><span class="level">${esc(c.level||'Course')}</span></div>`}
         <div class="body">
-          ${embed?`<span class="level level-inline">${esc(c.level||'Course')}</span>`:''}
+          ${cover?`<span class="level level-inline">${esc(c.level||'Course')}</span>`:''}
           <h3>${esc(c.title||'')}</h3>
           <p>${esc(c.summary||'')}</p>
-          ${c.content?`<details class="book-more" style="margin-top:12px"><summary>What's inside</summary><p>${nl(c.content)}</p></details>`:''}
           <div class="meta"><span class="price">${esc(c.price||'')}</span><span class="lessons">${esc(c.duration||'')}</span></div>
-        </div></article>`;
+          <span class="open-link">🔒 View &amp; enrol →</span>
+        </div></a>`;
     }).join('');
   }, err=>reportErr(err,'Loading courses'));
 
@@ -1393,13 +1982,15 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
     if(snap.empty) return;
     document.getElementById('bookGrid').innerHTML=snap.docs.map(d=>{
       const b=d.data();
-      return `<article class="book"><div class="book-spine"></div>
+      const cover=b.coverUrl?`<div class="card-cover book-cover"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      return `<a class="book" href="view.html?type=books&id=${d.id}">
+        ${cover||'<div class="book-spine"></div>'}
         <div class="book-body">
           <h3>${esc(b.title||'')}</h3>
           <p class="book-author">${esc(b.author||'')}</p>
-          <p class="book-sum">${nl(b.summary||'')}</p>
-          ${b.takeaways?`<details class="book-more"><summary>Key takeaways</summary><p>${nl(b.takeaways)}</p></details>`:''}
-        </div></article>`;
+          <p class="book-sum">${esc((b.summary||'').slice(0,150))}${(b.summary||'').length>150?'…':''}</p>
+          <span class="open-link">Read summary →</span>
+        </div></a>`;
     }).join('');
   }, err=>reportErr(err,'Loading book summaries'));
 
@@ -1408,20 +1999,18 @@ if(!firebaseConfig.apiKey.startsWith('PASTE')){
     if(snap.empty) return;
     document.getElementById('blogList').innerHTML=snap.docs.map(d=>{
       const b=d.data(), when=b.createdAt&&b.createdAt.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'';
-      return `<article class="post" data-id="${d.id}">
+      const cover=b.coverUrl?`<div class="post-cover"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      return `<a class="post" href="view.html?type=posts&id=${d.id}">
+        ${cover}
         <div class="post-head">
           ${b.tag?`<span class="post-tag">${esc(b.tag)}</span>`:''}
           <h3>${esc(b.title||'')}</h3>
           <p class="post-meta">By Surya Ghosh${when?' · '+when:''}</p>
         </div>
         ${b.excerpt?`<p class="post-excerpt">${esc(b.excerpt)}</p>`:''}
-        <details class="post-full"><summary>Read the full post</summary>
-          <div class="post-body"><p>${nl(b.body||'')}</p></div>
-        </details>
-        <div class="post-comments"></div>
-      </article>`;
+        <span class="open-link">Read the full post →</span>
+      </a>`;
     }).join('');
-    if(window.SFF_mountBlogComments) window.SFF_mountBlogComments();
   }, err=>reportErr(err,'Loading blog posts'));
 
   window.SFF.vote = (id,delta)=>{
