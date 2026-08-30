@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Dashboard — AfterSchool Academy</title>
-<!-- BUILD: academy-v16 -->
+<!-- BUILD: academy-v17 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -207,7 +207,17 @@ input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-m
   }
 })();
 </script>
-<script src="./firebase-config.js"></script>
+<script>window.__cfgLoaded=false;</script>
+<script src="./firebase-config.js" onload="window.__cfgLoaded=true" onerror="window.__cfg404=true"></script>
+<script>
+/* Accept every reasonable way the config might have been written */
+(function(){
+  var c = window.SFF_CONFIG || window.firebaseConfig || window.FIREBASE_CONFIG || null;
+  if(c && c.apiKey) { window.SFF_CONFIG = c; return; }
+  window.__cfgProblem = window.__cfg404 ? 'notfound'
+    : (window.__cfgLoaded ? 'wrongvar' : 'notfound');
+})();
+</script>
 <script src="./transitions.js" defer></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -222,7 +232,11 @@ const el = id => document.getElementById(id);
 const esc = t => { const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; };
 
 if(!cfg.apiKey){
-  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">firebase-config.js was not found beside this page, or its values are missing. Fill in that one file and every page connects.</p></div>';
+  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">'+
+    (window.__cfgProblem==='wrongvar'
+      ? 'firebase-config.js loaded, but its first line must be exactly <code>window.SFF_CONFIG = {</code> — not <code>const firebaseConfig = {</code>. Rename that one line and push again.'
+      : 'firebase-config.js was not found next to this page. Make sure it sits in the same folder as dashboard.html on GitHub.')+
+    '</p></div>';
 } else {
   const app=initializeApp(cfg), auth=getAuth(app), db=getFirestore(app);
   let mode='signup', me=null, myCourses=new Set();
