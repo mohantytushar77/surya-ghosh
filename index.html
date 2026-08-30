@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v15 -->
+<!-- BUILD: academy-v16 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1891,20 +1891,16 @@ document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
 <!-- ================= FIREBASE (LIVE MODE) =================
 Paste your Firebase web-app config below (Project settings → Your apps → Web).
 Until then, the page runs in demo mode with sample content. -->
-<script src="transitions.js" defer></script>
-<script src="firebase-config.js"></script>
+<script src="./transitions.js" defer></script>
+<script src="./firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, limit, onSnapshot, doc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const firebaseConfig = window.SFF_CONFIG || {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
-};
+const firebaseConfig = window.SFF_CONFIG;
+if(!firebaseConfig || !firebaseConfig.apiKey || String(firebaseConfig.apiKey).startsWith('PASTE')){
+  console.error('[ASA] firebase-config.js missing or not filled in.');
+}
 
 window.SFF = { live:false, ask:null, vote:null };
 const statusEl = document.getElementById('sffStatus');
@@ -1914,17 +1910,18 @@ const reportErr = (err,what) => {
   const link=(err.message||'').match(/https:\/\/console\.firebase\.google\.com\S+/);
   setStatus('⚠ '+what+' failed: '+(err.code||err.message)+(link?' → open the browser console (F12) and click the index link.':''),'#E0685A');
 };
-if(firebaseConfig.apiKey.startsWith('PASTE')){
-  setStatus('◐ Demo mode — Firebase config not added yet. Nothing is saved.','var(--ink-2)');
+
+if(!firebaseConfig || !firebaseConfig.apiKey){
+  setStatus('◐ Demo mode — firebase-config.js was not found or is not filled in. Check it sits beside this page.','var(--ink-2)');
 }
-if(!firebaseConfig.apiKey.startsWith('PASTE')){
+if(firebaseConfig && firebaseConfig.apiKey){
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const questions = collection(db,'questions');
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v15) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v16) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
