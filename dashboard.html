@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard — AfterSchool Academy</title>
+<!-- BUILD: academy-v15 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--bg-2:#EEF3FA;--surface:#FFFFFF;--surface-2:#F4F7FC;
+  --line:rgba(11,31,58,.12);--line-strong:rgba(11,31,58,.22);
+  --ink:#0B1F3A;--ink-2:#5C7089;--accent:#1B57C4;--accent-soft:#4C8DFF;
+  --accent-ink:#FFFFFF;--ok:#0E7A56;--r:14px;
+}
+[data-theme="dark"]{
+  --bg:#071528;--bg-2:#0B1F38;--surface:#0E2743;--surface-2:#123052;
+  --line:rgba(198,218,244,.16);--line-strong:rgba(198,218,244,.30);
+  --ink:#EEF4FC;--ink-2:#A8BDD6;--accent:#6BA1FF;--accent-soft:#9CC1FF;
+  --accent-ink:#04101F;--ok:#5FD3A6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+h1,h2,h3,.num{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.03em}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+
+/* ---------- navy top bar with live finance scene ---------- */
+.topbar{position:relative;background:#071528;color:#EEF4FC;overflow:hidden;border-bottom:1px solid rgba(198,218,244,.16)}
+.topbar canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.tb-aurora{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5}
+.tba1{width:34vw;height:34vw;left:-8vw;top:-14vw;background:radial-gradient(circle,#1E4FA8,transparent 68%);animation:tbf 20s ease-in-out infinite}
+.tba2{width:26vw;height:26vw;right:4vw;top:-8vw;background:radial-gradient(circle,#2E6FD8,transparent 66%);animation:tbf 26s ease-in-out infinite reverse}
+@keyframes tbf{0%,100%{transform:translate(0,0)}50%{transform:translate(4vw,3vw) scale(1.1)}}
+.tb-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 24px;
+  height:66px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:16px;color:#EEF4FC}
+.sunmark{width:26px;height:26px;border-radius:50%;position:relative;
+  background:conic-gradient(from 180deg,#4C8DFF,#9CC1FF,#4C8DFF)}
+.sunmark::after{content:"";position:absolute;left:2px;right:2px;bottom:2px;height:46%;background:#071528;border-radius:0 0 13px 13px}
+.logo small{display:block;font-family:'Manrope',sans-serif;font-weight:500;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#8FA8C6}
+.tb-tools{display:flex;align-items:center;gap:9px}
+.iconbtn{width:36px;height:36px;border-radius:10px;border:1px solid rgba(198,218,244,.26);background:transparent;
+  color:#EEF4FC;cursor:pointer;display:grid;place-items:center;font-size:14px;transition:border-color .2s}
+.iconbtn:hover{border-color:#6BA1FF}
+.tb-link{font-size:14px;font-weight:600;color:#B7CBE4;transition:color .2s}
+.tb-link:hover{color:#fff}
+.hello{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:26px 24px 32px}
+.hello h1{font-size:clamp(24px,3.2vw,36px);font-weight:600;color:#fff}
+.hello p{color:#A8BDD6;font-size:15.5px;margin-top:5px}
+
+/* ---------- tabs ---------- */
+.tabwrap{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.tabs{max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;gap:8px;flex-wrap:wrap}
+.tab{font-family:'Manrope',sans-serif;font-weight:600;font-size:13.5px;padding:9px 17px;border-radius:999px;
+  border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);cursor:pointer;transition:.22s}
+.tab:hover{border-color:var(--accent);color:var(--ink)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 8px 22px -12px var(--accent)}
+
+main{max-width:1080px;margin:0 auto;padding:34px 24px 90px;perspective:1200px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s;position:relative;transform-style:preserve-3d}
+.card:hover{border-color:var(--line-strong)}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 13%,transparent),transparent 62%)}
+.card:hover::before{opacity:1}
+.card>*{position:relative;z-index:1}
+.cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+.cbody{padding:20px 20px 22px}
+.card h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.card p{color:var(--ink-2);font-size:14.5px}
+.pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);padding:5px 11px;border-radius:999px;margin-bottom:10px}
+.pill.locked{color:var(--ink-2);border-color:var(--line-strong);background:transparent}
+.pill.owned{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent)}
+.go{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:700;font-size:13.5px;color:var(--accent);transition:gap .2s}
+.card:hover .go{gap:11px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;border:none;cursor:pointer;
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;background:var(--accent);color:var(--accent-ink);
+  transition:transform .2s,box-shadow .2s;box-shadow:0 8px 24px -12px var(--accent)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
+.empty{border:1px dashed var(--line-strong);border-radius:var(--r);padding:38px 26px;text-align:center;color:var(--ink-2)}
+.empty h3{color:var(--ink);margin-bottom:8px}
+.sec-head{margin-bottom:20px}
+.sec-head h2{font-size:22px;font-weight:600}
+.sec-head p{color:var(--ink-2);font-size:15px;margin-top:4px}
+.hidden{display:none}
+
+/* ---------- auth panel ---------- */
+.authwrap{max-width:430px;margin:60px auto;padding:0 24px}
+.authcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:34px;
+  box-shadow:0 30px 70px -44px rgba(11,31,58,.4);position:relative;overflow:hidden}
+.authcard h2{font-size:23px;font-weight:600;margin-bottom:6px}
+.authcard .lede{color:var(--ink-2);font-size:15px;margin-bottom:22px}
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 6px;color:var(--ink-2)}
+input{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;
+  font-family:'Manrope',sans-serif;font-size:15px;background:var(--bg);color:var(--ink);transition:.2s}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.authmsg{margin-top:12px;font-size:13.5px;font-weight:600;min-height:1.3em;color:var(--ok)}
+.authmsg.err{color:#D2553F}
+.swap{margin-top:18px;font-size:14px;color:var(--ink-2);text-align:center}
+.swap b{color:var(--accent);cursor:pointer}
+.or{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--ink-2);font-size:12.5px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.gbtn{width:100%;justify-content:center;background:transparent;color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
+
+/* finance strip in empty states */
+.fin-strip{position:relative;height:70px;margin-top:18px;overflow:hidden}
+@media (max-width:640px){main{padding:26px 18px 70px}.tb-inner{height:58px}.authwrap{margin:34px auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-aurora tba1"></div><div class="tb-aurora tba2"></div>
+  <canvas id="tbCanvas" aria-hidden="true"></canvas>
+  <div class="tb-inner">
+    <a class="logo" href="index.html"><span class="sunmark"></span><span>AfterSchool<small>Academy</small></span></a>
+    <div class="tb-tools">
+      <a class="tb-link" href="index.html">← Website</a>
+      <button class="iconbtn" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">☀️</button>
+      <button class="iconbtn hidden" id="signOut" aria-label="Sign out" title="Sign out">⎋</button>
+    </div>
+  </div>
+  <div class="hello" id="hello">
+    <h1>Your learning dashboard</h1>
+    <p>Sign in to see your courses. Blog, book summaries and Ask Surya stay free for everyone.</p>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div class="authwrap" id="authPanel">
+  <div class="authcard">
+    <h2 id="authTitle">Create your free account</h2>
+    <p class="lede" id="authLede">Free to join. You only pay when you enrol in a course.</p>
+    <div id="nameField">
+      <label for="name">Your name</label>
+      <input id="name" type="text" autocomplete="name" placeholder="Surya's student">
+    </div>
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email">
+    <label for="pass">Password</label>
+    <input id="pass" type="password" autocomplete="current-password" placeholder="At least 6 characters">
+    <div style="margin-top:20px"><button class="btn" id="goBtn" style="width:100%;justify-content:center">Create account</button></div>
+    <div class="or">or</div>
+    <button class="btn gbtn" id="googleBtn">Continue with Google</button>
+    <p class="authmsg" id="authMsg"></p>
+    <p class="swap" id="swap">Already have an account? <b id="swapBtn">Sign in</b></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="app" class="hidden">
+  <div class="tabwrap"><div class="tabs">
+    <button class="tab active" data-t="courses">🎓 My courses</button>
+    <button class="tab" data-t="ask">💬 Ask Surya</button>
+    <button class="tab" data-t="blog">✍️ Blog</button>
+    <button class="tab" data-t="books">📚 Book summaries</button>
+  </div></div>
+  <main id="view"></main>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try{var s=localStorage.getItem('asa-theme'); if(s) root.setAttribute('data-theme',s);}catch(e){}
+  function paint(){var d=root.getAttribute('data-theme')==='dark';btn.textContent=d?'🌙':'☀️';
+    var l=d?'Switch to light mode':'Switch to dark mode';btn.setAttribute('aria-label',l);btn.setAttribute('title',l);}
+  paint();
+  btn.addEventListener('click',function(){var d=root.getAttribute('data-theme')==='dark';
+    root.setAttribute('data-theme',d?'light':'dark');
+    try{localStorage.setItem('asa-theme',d?'light':'dark');}catch(e){} paint();});
+
+  /* animated market line in the top bar */
+  var cv=document.getElementById('tbCanvas');
+  if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var ctx=cv.getContext('2d'),W,H,dpr=Math.min(devicePixelRatio||1,2),t=0;
+    function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;
+      cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size();addEventListener('resize',size,{passive:true});
+    var pts=26,ser=Array.from({length:pts},function(_,i){return{v:i/pts*.6+Math.sin(i*.8)*.08,o:Math.random()*6.3};});
+    (function loop(){
+      t+=.011;ctx.clearRect(0,0,W,H);
+      if(W>10){
+        for(var L=2;L>=0;L--){
+          ctx.globalAlpha=L===0?.85:.12*(3-L);ctx.lineWidth=L===0?2.2:1.6;ctx.strokeStyle='#6BA1FF';
+          ctx.beginPath();
+          ser.forEach(function(p,i){
+            var x=W*.04+(i/(pts-1))*W*.92-L*4;
+            var y=H*.82-(p.v+Math.sin(t*1.3+p.o)*.03)*H*.55+L*5;
+            i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+          });
+          ctx.stroke();
+        }
+        ctx.globalAlpha=1;
+      }
+      requestAnimationFrame(loop);
+    })();
+  }
+})();
+</script>
+<script src="firebase-config.js"></script>
+<script src="transitions.js" defer></script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup,
+         GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, doc, setDoc, getDocs, query, where, orderBy, onSnapshot, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const cfg = window.SFF_CONFIG || { apiKey:'PASTE_API_KEY' };
+const el = id => document.getElementById(id);
+const esc = t => { const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; };
+
+if(String(cfg.apiKey).startsWith('PASTE')){
+  el('authPanel').innerHTML='<div class="authcard"><h2>Not connected</h2><p class="lede">Add your Firebase values to firebase-config.js to enable sign-in.</p></div>';
+} else {
+  const app=initializeApp(cfg), auth=getAuth(app), db=getFirestore(app);
+  let mode='signup', me=null, myCourses=new Set();
+
+  /* ---------- auth UI ---------- */
+  function setMode(m){
+    mode=m;
+    const up = m==='signup';
+    el('authTitle').textContent = up?'Create your free account':'Welcome back';
+    el('authLede').textContent  = up?'Free to join. You only pay when you enrol in a course.':'Sign in to reach your courses.';
+    el('goBtn').textContent     = up?'Create account':'Sign in';
+    el('nameField').classList.toggle('hidden',!up);
+    el('swap').innerHTML = up ? 'Already have an account? <b id="swapBtn">Sign in</b>'
+                              : 'New here? <b id="swapBtn">Create an account</b>';
+    el('swapBtn').onclick=()=>setMode(up?'signin':'signup');
+    el('pass').setAttribute('autocomplete', up?'new-password':'current-password');
+  }
+  el('swapBtn').onclick=()=>setMode('signin');
+  setMode('signup');
+
+  function msg(text,isErr){
+    const m=el('authMsg'); m.textContent=text; m.classList.toggle('err',!!isErr);
+  }
+  const friendly = c => ({
+    'auth/invalid-email':'That email address does not look right.',
+    'auth/weak-password':'Password needs at least 6 characters.',
+    'auth/email-already-in-use':'That email already has an account — try signing in.',
+    'auth/invalid-credential':'Email or password is incorrect.',
+    'auth/wrong-password':'Email or password is incorrect.',
+    'auth/user-not-found':'No account with that email yet.',
+    'auth/popup-closed-by-user':'Sign-in window closed.',
+    'auth/unauthorized-domain':'This domain is not authorised in Firebase Authentication settings.'
+  }[c] || c);
+
+  el('goBtn').addEventListener('click', async ()=>{
+    const email=el('email').value.trim(), pass=el('pass').value;
+    if(!email||!pass){ msg('Enter your email and password.',true); return; }
+    el('goBtn').disabled=true; msg('Please wait…');
+    try{
+      if(mode==='signup'){
+        const cred=await createUserWithEmailAndPassword(auth,email,pass);
+        const nm=el('name').value.trim();
+        if(nm) await updateProfile(cred.user,{displayName:nm});
+        await setDoc(doc(db,'users',cred.user.uid),{
+          name:nm||'', email, createdAt:serverTimestamp()
+        },{merge:true});
+      } else {
+        await signInWithEmailAndPassword(auth,email,pass);
+      }
+      msg('');
+    }catch(err){ msg(friendly(err.code||err.message),true); }
+    el('goBtn').disabled=false;
+  });
+
+  el('googleBtn').addEventListener('click', async ()=>{
+    msg('Opening Google…');
+    try{
+      const cred=await signInWithPopup(auth,new GoogleAuthProvider());
+      await setDoc(doc(db,'users',cred.user.uid),{
+        name:cred.user.displayName||'', email:cred.user.email||'', createdAt:serverTimestamp()
+      },{merge:true});
+      msg('');
+    }catch(err){ msg(friendly(err.code||err.message),true); }
+  });
+
+  el('signOut').addEventListener('click',()=>signOut(auth));
+
+  onAuthStateChanged(auth, async user=>{
+    me=user;
+    el('authPanel').classList.toggle('hidden',!!user);
+    el('app').classList.toggle('hidden',!user);
+    el('signOut').classList.toggle('hidden',!user);
+    if(user){
+      const first=(user.displayName||user.email||'').split(' ')[0].split('@')[0];
+      el('hello').innerHTML=`<h1>Welcome back, ${esc(first)}</h1>
+        <p>Your courses live here. Blog, book summaries and Ask Surya are always free.</p>`;
+      await loadEnrolments(user.uid);
+      show('courses');
+    } else {
+      el('hello').innerHTML=`<h1>Your learning dashboard</h1>
+        <p>Sign in to see your courses. Blog, book summaries and Ask Surya stay free for everyone.</p>`;
+    }
+  });
+
+  async function loadEnrolments(uid){
+    myCourses=new Set();
+    try{
+      const snap=await getDocs(query(collection(db,'enrollments'),where('uid','==',uid)));
+      snap.forEach(d=>myCourses.add(d.data().courseId));
+    }catch(e){ console.warn('enrolments',e); }
+  }
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active'); show(t.dataset.t);
+  }));
+
+  let unsub=null;
+  function show(tab){
+    if(unsub){unsub();unsub=null;}
+    const view=el('view');
+    if(tab==='ask'){
+      view.innerHTML=`<div class="sec-head"><h2>Ask Surya</h2>
+        <p>Members' questions go to the top of the queue. Always free.</p></div>
+        <div class="empty"><h3>Ask anything about money</h3>
+        <p>Your question opens on the main site, where everyone can vote and learn from the answer.</p>
+        <div style="margin-top:18px"><a class="btn" href="index.html#ask">Open Ask Surya →</a></div>
+        <div class="fin-strip"></div></div>`;
+      return;
+    }
+    view.innerHTML='<p class="empty">Loading…</p>';
+    const col = tab==='courses' ? 'courses' : tab==='blog' ? 'posts' : 'books';
+    unsub=onSnapshot(query(collection(db,col),orderBy('createdAt','desc')),snap=>{
+      if(snap.empty){ view.innerHTML=emptyFor(tab); return; }
+      view.innerHTML=`<div class="sec-head">${headFor(tab)}</div><div class="grid">`+
+        snap.docs.map(d=>cardFor(tab,d)).join('')+`</div>`;
+      bindTilt();
+    },err=>{ view.innerHTML=`<div class="empty"><h3>Could not load</h3><p>${esc(err.code||err.message)}</p></div>`; });
+  }
+
+  const headFor = t => ({
+    courses:'<h2>My courses</h2><p>Courses you have access to. Locked ones show how to enrol.</p>',
+    blog:'<h2>Blog</h2><p>Notes on money, markets and freedom. Free to read.</p>',
+    books:'<h2>Book summaries</h2><p>The great finance books, distilled. Free to read.</p>'
+  }[t]);
+
+  const emptyFor = t => `<div class="empty"><h3>Nothing here yet</h3>
+    <p>${t==='courses'?'Surya has not published any courses yet.':'Nothing published yet — check back soon.'}</p>
+    <div class="fin-strip"></div></div>`;
+
+  function cardFor(tab,d){
+    const v=d.data();
+    const cover=v.coverUrl?`<img class="cover" src="${esc(v.coverUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'';
+    if(tab==='courses'){
+      const owned=myCourses.has(d.id);
+      return `<a class="card" href="view.html?type=courses&id=${d.id}">
+        ${cover}<div class="cbody">
+          <span class="pill ${owned?'owned':'locked'}">${owned?'✓ Enrolled':'🔒 '+esc(v.price||'Locked')}</span>
+          <h3>${esc(v.title||'')}</h3>
+          <p>${esc((v.summary||'').slice(0,110))}${(v.summary||'').length>110?'…':''}</p>
+          <span class="go">${owned?'Continue learning →':'View & enrol →'}</span>
+        </div></a>`;
+    }
+    if(tab==='blog'){
+      return `<a class="card" href="view.html?type=posts&id=${d.id}">
+        ${cover}<div class="cbody">
+          ${v.tag?`<span class="pill">${esc(v.tag)}</span>`:''}
+          <h3>${esc(v.title||'')}</h3>
+          <p>${esc((v.excerpt||'').slice(0,110))}</p>
+          <span class="go">Read post →</span>
+        </div></a>`;
+    }
+    return `<a class="card" href="view.html?type=books&id=${d.id}">
+      ${cover}<div class="cbody">
+        <span class="pill">${esc(v.author||'Summary')}</span>
+        <h3>${esc(v.title||'')}</h3>
+        <p>${esc((v.summary||'').slice(0,110))}${(v.summary||'').length>110?'…':''}</p>
+        <span class="go">Read summary →</span>
+      </div></a>`;
+  }
+
+  function bindTilt(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches || innerWidth<900) return;
+    document.querySelectorAll('.card').forEach(c=>{
+      if(c.dataset.fx) return; c.dataset.fx='1';
+      c.addEventListener('pointermove',e=>{
+        const r=c.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        c.style.setProperty('--mx',(px*100)+'%'); c.style.setProperty('--my',(py*100)+'%');
+        c.style.transition='transform .12s linear';
+        c.style.transform=`perspective(1000px) rotateY(${((px-.5)*6).toFixed(2)}deg) rotateX(${((.5-py)*4.5).toFixed(2)}deg) translateY(-4px)`;
+      });
+      c.addEventListener('pointerleave',()=>{c.style.transition='transform .5s cubic-bezier(.2,.8,.2,1)';c.style.transform='';});
+    });
+  }
+}
+</script>
+</body>
+</html>
