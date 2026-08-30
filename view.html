@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy</title>
-<!-- BUILD: academy-v16 -->
+<!-- BUILD: academy-v17 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -148,7 +148,17 @@ textarea:focus,input:focus{outline:none;border-color:var(--accent);box-shadow:0 
 })();
 </script>
 <script src="./transitions.js" defer></script>
-<script src="./firebase-config.js"></script>
+<script>window.__cfgLoaded=false;</script>
+<script src="./firebase-config.js" onload="window.__cfgLoaded=true" onerror="window.__cfg404=true"></script>
+<script>
+/* Accept every reasonable way the config might have been written */
+(function(){
+  var c = window.SFF_CONFIG || window.firebaseConfig || window.FIREBASE_CONFIG || null;
+  if(c && c.apiKey) { window.SFF_CONFIG = c; return; }
+  window.__cfgProblem = window.__cfg404 ? 'notfound'
+    : (window.__cfgLoaded ? 'wrongvar' : 'notfound');
+})();
+</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp }
@@ -185,7 +195,9 @@ if(type && SECTION[type]){
 if(!VALID.includes(type) || !id){
   main.innerHTML='<p class="error">Nothing to show here. <a href="index.html" style="color:var(--accent)">Return to the homepage</a>.</p>';
 } else if(!cfg.apiKey){
-  main.innerHTML='<p class="error">Not connected — firebase-config.js was not found beside this page.</p>';
+  main.innerHTML='<p class="error">'+(window.__cfgProblem==='wrongvar'
+    ? 'firebase-config.js loaded, but its first line must be <code>window.SFF_CONFIG = {</code> — not <code>const firebaseConfig = {</code>.'
+    : 'firebase-config.js was not found next to this page.')+'</p>';
 } else {
   const app=initializeApp(cfg), db=getFirestore(app);
   try{
