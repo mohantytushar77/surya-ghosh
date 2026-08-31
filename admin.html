@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Admin</title>
-<!-- BUILD: academy-v19 -->
+<!-- BUILD: academy-v20 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -171,7 +171,7 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   </div>
 </div>
 <div class="wrap">
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v19</span></p>
+  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v20</span></p>
 
   <div class="warn" id="configWarn">⚠ Not connected. <b>firebase-config.js</b> was not found next to this page, or its values are missing. Every page reads that one file — fill it in once and nothing else needs changing.</div>
 
@@ -198,6 +198,7 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
       <button class="tab" data-status="courses">🎓 Courses</button>
       <button class="tab" data-status="books">📚 Book summaries</button>
       <button class="tab" data-status="students">👥 Students &amp; access</button>
+      <button class="tab" data-status="site">🏠 Homepage text</button>
       <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
     </div>
     <div id="creator"></div>
@@ -291,6 +292,7 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
       unsub=onSnapshot(q,snap=>renderComments(snap),err=>showError(err,'comments'));
       return;
     }
+    if(status==='site'){ showSiteEditor(); return; }
     if(status==='students'){ showStudents(); return; }
     if(['posts','courses','books'].includes(status)){
       showCreator(status);
@@ -304,6 +306,103 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
     unsub=onSnapshot(q,snap=>render(status,snap),err=>showError(err,status));
   }
 
+
+
+  /* ---------- Homepage headline editor ---------- */
+  async function showSiteEditor(){
+    el('list').innerHTML='';
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">Homepage headline</h2>
+      <div class="warn" style="margin:14px 0">✍️ This is the first thing every visitor reads. Keep each line short — the three lines stack on top of each other, and the middle line is highlighted in colour. Changes appear on the website immediately.</div>
+
+      <label>Small badge above the headline</label>
+      <input type="text" data-s="badge" placeholder="New · Learn free, ask anything">
+
+      <label>Headline — line 1</label>
+      <input type="text" data-s="line1" placeholder="Master your money.">
+
+      <label>Headline — line 2 <span style="color:var(--accent)">(shown in colour)</span></label>
+      <input type="text" data-s="line2" placeholder="Design the life">
+
+      <label>Headline — line 3</label>
+      <input type="text" data-s="line3" placeholder="you actually want.">
+
+      <label>Sub-line under the headline</label>
+      <textarea rows="2" data-s="sub" placeholder="Financial independence, taught plainly. So your time becomes yours."></textarea>
+
+      <label>Main button text</label>
+      <input type="text" data-s="cta1" placeholder="Find your freedom number →">
+
+      <label>Second button text</label>
+      <input type="text" data-s="cta2" placeholder="Explore courses">
+
+      <div id="heroPreview" style="margin-top:20px;padding:26px;border-radius:14px;
+        background:linear-gradient(160deg,#0B1F38,#071528);border:1px solid rgba(198,218,244,.2)"></div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="gold" id="saveHero">Save to website</button>
+        <button class="ghost" id="resetHero">Restore original wording</button>
+      </div>
+      <p class="msg" id="heroMsg"></p>
+    </div>`;
+
+    const DEFAULTS={
+      badge:'New · Learn free, ask anything',
+      line1:'Master your money.',
+      line2:'Design the life',
+      line3:'you actually want.',
+      sub:'Financial independence, taught plainly. So your time becomes yours.',
+      cta1:'Find your freedom number →',
+      cta2:'Explore courses'
+    };
+
+    function fields(){ return [...document.querySelectorAll('[data-s]')]; }
+    function values(){ const o={}; fields().forEach(f=>o[f.dataset.s]=f.value.trim()); return o; }
+    function fill(v){ fields().forEach(f=>f.value=v[f.dataset.s]||''); preview(); }
+
+    function preview(){
+      const v=values();
+      el('heroPreview').innerHTML=`
+        <span style="display:inline-block;padding:6px 14px;border-radius:999px;font-size:11.5px;font-weight:700;
+          background:rgba(107,161,255,.14);border:1px solid rgba(107,161,255,.34);color:#9CC1FF">${esc(v.badge||DEFAULTS.badge)}</span>
+        <h3 style="font-family:'Sora',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:600;line-height:1.08;
+          letter-spacing:-.03em;margin:14px 0 10px;color:#fff">
+          ${esc(v.line1||'')}<br>
+          <span style="background:linear-gradient(100deg,#6BA1FF,#9CC1FF 45%,#5FD3A6);-webkit-background-clip:text;background-clip:text;color:transparent">${esc(v.line2||'')}</span><br>
+          ${esc(v.line3||'')}
+        </h3>
+        <p style="color:#B7CBE4;font-size:15px;max-width:44ch">${esc(v.sub||'')}</p>
+        <div style="margin-top:16px;display:flex;gap:9px;flex-wrap:wrap">
+          <span style="padding:10px 20px;border-radius:999px;background:linear-gradient(100deg,#4C8DFF,#6BA1FF);
+            color:#04101F;font-weight:700;font-size:13px">${esc(v.cta1||'')}</span>
+          <span style="padding:10px 20px;border-radius:999px;border:1px solid rgba(198,218,244,.3);
+            color:#EEF4FC;font-weight:700;font-size:13px">${esc(v.cta2||'')}</span>
+        </div>`;
+    }
+
+    document.addEventListener('input',e=>{ if(e.target.dataset && e.target.dataset.s) preview(); });
+
+    // load current values
+    try{
+      const snap=await getDoc(doc(db,'site','hero'));
+      fill(snap.exists()?{...DEFAULTS,...snap.data()}:DEFAULTS);
+    }catch(err){ fill(DEFAULTS); }
+
+    el('saveHero').addEventListener('click',async()=>{
+      const btn=el('saveHero'); btn.disabled=true;
+      try{
+        await setDoc(doc(db,'site','hero'),{...values(),updatedAt:serverTimestamp()},{merge:true});
+        el('heroMsg').textContent='Saved — the website updated instantly.';
+        el('heroMsg').classList.add('saved');
+        setTimeout(()=>{el('heroMsg').textContent='';el('heroMsg').classList.remove('saved');},4000);
+      }catch(err){ alert('Could not save: '+err.message); }
+      btn.disabled=false;
+    });
+
+    el('resetHero').addEventListener('click',()=>{
+      if(confirm('Restore the original wording? You still need to press Save.')) fill(DEFAULTS);
+    });
+  }
 
   /* ---------- Students & course access ---------- */
   async function showStudents(){
