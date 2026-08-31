@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v18 -->
+<!-- BUILD: academy-v20 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -946,16 +946,16 @@ header.shrunk .nav{height:58px}
 
   <div class="wrap hero-grid">
     <div class="hero-inner">
-      <span class="hero-badge"><i></i>New · Learn free, ask anything</span>
-      <h1>
+      <span class="hero-badge"><i></i><span id="hBadge">New · Learn free, ask anything</span></span>
+      <h1 id="hHead">
         <span class="w">Master</span> <span class="w">your</span> <span class="w">money.</span><br>
         <span class="w grad">Design</span> <span class="w grad">the</span> <span class="w grad">life</span><br>
         <span class="w">you</span> <span class="w">actually</span> <span class="w">want.</span>
       </h1>
-      <p class="sub">Financial independence, taught plainly. So your time becomes yours.</p>
+      <p class="sub" id="hSub">Financial independence, taught plainly. So your time becomes yours.</p>
       <div class="cta-row">
-        <a href="#tools" class="btn btn-gold">Find your freedom number →</a>
-        <a href="#learn" class="btn btn-ghost">Explore courses</a>
+        <a href="#tools" class="btn btn-gold" id="hCta1">Find your freedom number →</a>
+        <a href="#learn" class="btn btn-ghost" id="hCta2">Explore courses</a>
       </div>
       <div class="hero-stats">
         <div class="stat"><b>4 languages</b><span>English · Hindi · Bengali · Odia</span></div>
@@ -1933,7 +1933,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v18) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v20) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
@@ -1957,6 +1957,24 @@ if(firebaseConfig && firebaseConfig.apiKey){
   );
 
   const nl = t => esc(t).replace(/\n/g,'<br>');
+
+  /* ---- Live homepage headline (edited from admin → Homepage text) ---- */
+  onSnapshot(doc(db,'site','hero'), snap=>{
+    if(!snap.exists()) return;
+    const v=snap.data();
+    const words=(txt,grad)=>String(txt||'').split(/\s+/).filter(Boolean)
+      .map(w=>`<span class="w${grad?' grad':''}">${esc(w)}</span>`).join(' ');
+    if(v.badge){ const b=document.getElementById('hBadge'); if(b) b.textContent=v.badge; }
+    const h=document.getElementById('hHead');
+    if(h && (v.line1||v.line2||v.line3)){
+      h.innerHTML=[words(v.line1,false),words(v.line2,true),words(v.line3,false)]
+        .filter(Boolean).join('<br>\n');
+      h.querySelectorAll('.w').forEach((w,i)=>w.style.animationDelay=(0.12+i*0.062)+'s');
+    }
+    if(v.sub){ const p=document.getElementById('hSub'); if(p) p.textContent=v.sub; }
+    if(v.cta1){ const c=document.getElementById('hCta1'); if(c) c.textContent=v.cta1; }
+    if(v.cta2){ const c=document.getElementById('hCta2'); if(c) c.textContent=v.cta2; }
+  }, ()=>{});
   const toEmbed = u => {
     if(!u) return '';
     u=String(u).trim();
