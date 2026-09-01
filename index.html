@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v20 -->
+<!-- BUILD: academy-v22 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -272,12 +272,22 @@ input[type=range]::-moz-range-thumb{
 
 
 /* card covers & open links */
-.card-cover,.post-cover{overflow:hidden;background:var(--surface-2)}
+.card-cover,.post-cover{overflow:hidden;background:var(--surface-2);position:relative}
 .card-cover{aspect-ratio:16/9;border-bottom:1px solid var(--line)}
 .card-cover.book-cover{aspect-ratio:3/2;border-bottom:0;border-right:1px solid var(--line);width:104px;flex:none;height:auto}
 .post-cover{aspect-ratio:21/8;border-radius:10px;margin-bottom:18px;border:1px solid var(--line)}
-.card-cover img,.post-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.course:hover .card-cover img,.book:hover .card-cover img,.post:hover .post-cover img{transform:scale(1.045)}
+/* blurred backdrop fills the frame so nothing is cropped */
+.card-cover::before,.post-cover::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--img);background-size:cover;background-position:center;
+  filter:blur(22px) saturate(130%);transform:scale(1.15);opacity:.5;
+}
+.card-cover img,.post-cover img{
+  position:relative;z-index:1;width:100%;height:100%;
+  object-fit:contain;display:block;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.course:hover .card-cover img,.book:hover .card-cover img,.post:hover .post-cover img{transform:scale(1.03)}
 .open-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:700;font-size:13.5px;color:var(--accent);transition:gap .2s}
 .course:hover .open-link,.book:hover .open-link,.post:hover .open-link{gap:11px}
 a.course,a.book,a.post{cursor:pointer;display:flex}
@@ -1933,7 +1943,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v20) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v22) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
@@ -1991,7 +2001,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
     if(snap.empty) return;
     document.getElementById('courseGrid').innerHTML=snap.docs.map(d=>{
       const c=d.data();
-      const cover=c.coverUrl?`<div class="card-cover"><img src="${esc(c.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      const cover=c.coverUrl?`<div class="card-cover" style="--img:url('${esc(c.coverUrl)}')"><img src="${esc(c.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
       return `<a class="course" href="view.html?type=courses&id=${d.id}">
         ${cover||`<div class="banner"><span class="level">${esc(c.level||'Course')}</span></div>`}
         <div class="body">
@@ -2009,7 +2019,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
     if(snap.empty) return;
     document.getElementById('bookGrid').innerHTML=snap.docs.map(d=>{
       const b=d.data();
-      const cover=b.coverUrl?`<div class="card-cover book-cover"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      const cover=b.coverUrl?`<div class="card-cover book-cover" style="--img:url('${esc(b.coverUrl)}')"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
       return `<a class="book" href="view.html?type=books&id=${d.id}">
         ${cover||'<div class="book-spine"></div>'}
         <div class="book-body">
@@ -2026,7 +2036,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
     if(snap.empty) return;
     document.getElementById('blogList').innerHTML=snap.docs.map(d=>{
       const b=d.data(), when=b.createdAt&&b.createdAt.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'';
-      const cover=b.coverUrl?`<div class="post-cover"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
+      const cover=b.coverUrl?`<div class="post-cover" style="--img:url('${esc(b.coverUrl)}')"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
       return `<a class="post" href="view.html?type=posts&id=${d.id}">
         ${cover}
         <div class="post-head">
