@@ -61,7 +61,7 @@ button:hover{transform:translateY(-1px)}
 .uploader .hint{font-size:13px;color:var(--ink-2)}
 .uploader input[type=file]{display:none}
 .up-preview{margin-top:14px;position:relative;display:none}
-.up-preview img{width:100%;max-height:210px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.up-preview img{width:100%;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid var(--line);display:block;background:var(--bg-2)}
 .up-preview .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
 .up-preview .rm{background:transparent;border:1px solid rgba(224,104,90,.45);color:#E0685A;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
 .up-bar{height:3px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:10px;display:none}
@@ -521,7 +521,7 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
         const img=new Image();
         img.onerror=()=>reject(new Error('That image could not be opened.'));
         img.onload=()=>{
-          const MAXW=1280;
+          const MAXW=1600;
           const scale=Math.min(1,MAXW/img.width);
           const w=Math.round(img.width*scale), h=Math.round(img.height*scale);
           const c=document.createElement('canvas'); c.width=w; c.height=h;
@@ -629,7 +629,7 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
     list.innerHTML=snap.docs.map(d=>{
       const v=d.data();
       return `<div class="q" data-path="${d.ref.path}">
-        ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:cover;border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
+        ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:contain;background:var(--bg-2);border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
         <p class="text"><b>${esc(v.title||'Untitled')}</b></p>
         <p class="meta">${v.createdAt&&v.createdAt.toDate?v.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>
         <details style="margin-top:10px"><summary style="cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-size:13.5px;color:var(--gold)">Edit</summary>
