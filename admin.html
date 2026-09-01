@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Admin</title>
-<!-- BUILD: academy-v21 -->
+<!-- BUILD: academy-v22 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -171,7 +171,7 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
   </div>
 </div>
 <div class="wrap">
-  <p class="sub">Review questions, approve them for public voting, and publish answers. <span style="font-size:12px;color:var(--muted)">build academy-v21</span></p>
+  <p class="sub" id="whoami">Manage your questions, courses, blog and students.</p>
 
   <div class="warn" id="configWarn">⚠ Not connected. <b>firebase-config.js</b> was not found next to this page, or its values are missing. Every page reads that one file — fill it in once and nothing else needs changing.</div>
 
@@ -271,23 +271,10 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
   el('logoutBtn').addEventListener('click',()=>signOut(auth));
 
   onAuthStateChanged(auth,user=>{
-    // Identity banner — copy the UID straight into your rules if needed
-    let idbar=document.getElementById('idbar');
-    if(!idbar){
-      idbar=document.createElement('div');
-      idbar.id='idbar'; idbar.className='warn';
-      idbar.style.cssText='margin:0 0 18px;font-family:monospace;font-size:12.5px;word-break:break-all';
-      const w=document.querySelector('.wrap');
-      w.insertBefore(idbar, w.firstChild);
-    }
-    idbar.innerHTML = user
-      ? `🪪 Signed in as <b>${esc(user.email||'(no email)')}</b><br>UID: <b id="uidTxt">${esc(user.uid)}</b>
-         <button class="ghost" id="copyUid" style="margin-left:10px;padding:5px 12px;font-size:11.5px">Copy UID</button>
-         <div style="margin-top:6px;color:var(--ink-2);font-family:'Manrope',sans-serif">
-           This exact email must appear in your Firestore rules. If saving fails, paste the UID into the rules instead — it never has case or spacing problems.</div>`
-      : '🪪 Not signed in.';
-    const cb=document.getElementById('copyUid');
-    if(cb) cb.onclick=()=>{navigator.clipboard.writeText(user.uid);cb.textContent='Copied ✓';};
+    const who=document.getElementById('whoami');
+    if(who) who.textContent = user
+      ? 'Signed in as '+(user.email||'')+' · Manage your questions, courses, blog and students.'
+      : 'Manage your questions, courses, blog and students.';
     el('loginPanel').classList.toggle('hidden',!!user);
     el('app').classList.toggle('hidden',!user);
     if(user) load(currentTab); else if(unsub){unsub();unsub=null;}
@@ -413,10 +400,9 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
         el('heroMsg').classList.add('saved');
         setTimeout(()=>{el('heroMsg').textContent='';el('heroMsg').classList.remove('saved');},4000);
       }catch(err){
-        const who=(auth.currentUser&&auth.currentUser.email)||'not signed in';
-        alert('Could not save.\n\nFirebase said: '+(err.code||err.message)+
-          '\n\nYou are signed in as: '+who+
-          '\n\nThat email (or your UID) must be listed as admin in the Firestore rules, and the rules must be PUBLISHED in the Firebase console.');
+        el('heroMsg').style.color='#E0685A';
+        el('heroMsg').textContent='Could not save right now. Please try again in a moment.';
+        console.error('[ASA] save failed',err);
       }
       btn.disabled=false;
     });
