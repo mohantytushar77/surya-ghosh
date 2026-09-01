@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Sign In — AfterSchool Academy</title>
-<!-- BUILD: academy-v18 -->
+<!-- BUILD: academy-v22 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -70,7 +70,11 @@ main{max-width:1080px;margin:0 auto;padding:34px 24px 90px;perspective:1200px}
   background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 13%,transparent),transparent 62%)}
 .card:hover::before{opacity:1}
 .card>*{position:relative;z-index:1}
-.cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+.coverwrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  border-bottom:1px solid var(--line);background:var(--surface-2)}
+.coverwrap::before{content:"";position:absolute;inset:0;background-image:var(--img);
+  background-size:cover;background-position:center;filter:blur(22px) saturate(130%);transform:scale(1.15);opacity:.5}
+.cover{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;display:block}
 .cbody{padding:20px 20px 22px}
 .card h3{font-size:17px;font-weight:600;margin-bottom:6px}
 .card p{color:var(--ink-2);font-size:14.5px}
@@ -371,7 +375,7 @@ if(!cfg.apiKey){
 
   function cardFor(tab,d){
     const v=d.data();
-    const cover=v.coverUrl?`<img class="cover" src="${esc(v.coverUrl)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'';
+    const cover=v.coverUrl?`<div class="coverwrap" style="--img:url('${esc(v.coverUrl)}')"><img class="cover" src="${esc(v.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
     if(tab==='courses'){
       const owned=myCourses.has(d.id);
       return `<a class="card" href="view.html?type=courses&id=${d.id}">
