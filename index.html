@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v22 -->
+<!-- BUILD: academy-v23 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1351,21 +1351,23 @@ header.shrunk .nav{height:58px}
           <circle class="gd" cx="300" cy="6" r="4"/>
         </svg>
       </div>
-      <figcaption>Surya Ghosh · Researcher &amp; Finance Coach</figcaption>
+      <figcaption id="aCaption">Surya Ghosh · Researcher &amp; Finance Coach</figcaption>
     </figure>
     <div class="about-copy reveal">
       <span class="sec-no">07</span><span class="eyebrow">About Surya</span>
-      <h2>A researcher's mind. A teacher's heart.</h2>
-      <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. A researcher by profession, a student by habit. I study money: the invisible current that runs the world.</p>
-      <p>Why teach? A selfish desire — I want no one around me to fear money. Financial stress has broken too many good people.</p>
-      <p><strong>One promise:</strong> never a stock tip. Only how I read the world, and the patient path to freedom.</p>
-      <div class="pillars">
+      <h2 id="aHead">A researcher's mind. A teacher's heart.</h2>
+      <div id="aBody">
+        <p>Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. A researcher by profession, a student by habit. I study money: the invisible current that runs the world.</p>
+        <p>Why teach? A selfish desire — I want no one around me to fear money. Financial stress has broken too many good people.</p>
+        <p><strong>One promise:</strong> never a stock tip. Only how I read the world, and the patient path to freedom.</p>
+      </div>
+      <div class="pillars" id="aPillars">
         <div class="pillar"><b>Ask me anything</b><span>No money question is too small.</span></div>
         <div class="pillar"><b>Four languages, one mission</b><span>English, Hindi, Bengali, Odia. Marathi in progress.</span></div>
         <div class="pillar"><b>Perspective over tips</b><span>Broad thinking, never hot picks.</span></div>
         <div class="pillar"><b>Beyond the spreadsheets</b><span>Biography reader, lifelong student, Naruto &amp; One Piece fan.</span></div>
       </div>
-      <a href="#learn" class="btn btn-teal">Learn with Surya</a>
+      <a href="#learn" class="btn btn-teal" id="aCta">Learn with Surya</a>
     </div>
   </div>
 </section>
@@ -1943,7 +1945,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v22) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v23) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
@@ -1967,6 +1969,26 @@ if(firebaseConfig && firebaseConfig.apiKey){
   );
 
   const nl = t => esc(t).replace(/\n/g,'<br>');
+
+  /* ---- Live About section (edited from admin → About page) ---- */
+  onSnapshot(doc(db,'site','about'), snap=>{
+    if(!snap.exists()) return;
+    const v=snap.data();
+    if(v.heading){ const h=document.getElementById('aHead'); if(h) h.textContent=v.heading; }
+    if(v.body){
+      const b=document.getElementById('aBody');
+      if(b) b.innerHTML=String(v.body).split(/\n{2,}/).filter(Boolean)
+        .map(par=>`<p>${esc(par).replace(/\n/g,'<br>')}</p>`).join('');
+    }
+    if(v.caption){ const c=document.getElementById('aCaption'); if(c) c.textContent=v.caption; }
+    if(v.cta){ const c=document.getElementById('aCta'); if(c) c.textContent=v.cta; }
+    const pil=[1,2,3,4].map(i=>({t:v['p'+i+'title'],d:v['p'+i+'text']})).filter(x=>x.t);
+    if(pil.length){
+      const box=document.getElementById('aPillars');
+      if(box) box.innerHTML=pil.map(x=>
+        `<div class="pillar"><b>${esc(x.t)}</b><span>${esc(x.d||'')}</span></div>`).join('');
+    }
+  }, ()=>{});
 
   /* ---- Live homepage headline (edited from admin → Homepage text) ---- */
   onSnapshot(doc(db,'site','hero'), snap=>{
