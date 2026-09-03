@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Admin</title>
-<!-- BUILD: academy-v22 -->
+<!-- BUILD: academy-v23 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -199,6 +199,7 @@ h1 .dot{animation:breathe 3.4s ease-in-out infinite}
       <button class="tab" data-status="books">📚 Book summaries</button>
       <button class="tab" data-status="students">👥 Students &amp; access</button>
       <button class="tab" data-status="site">🏠 Homepage text</button>
+      <button class="tab" data-status="about">🙋 About Surya</button>
       <button class="ghost" id="logoutBtn" style="margin-left:auto">Sign out</button>
     </div>
     <div id="creator"></div>
@@ -297,6 +298,7 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
       return;
     }
     if(status==='site'){ showSiteEditor(); return; }
+    if(status==='about'){ showAboutEditor(); return; }
     if(status==='students'){ showStudents(); return; }
     if(['posts','courses','books'].includes(status)){
       showCreator(status);
@@ -311,6 +313,100 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
   }
 
 
+
+
+  /* ---------- About Surya editor ---------- */
+  async function showAboutEditor(){
+    el('list').innerHTML='';
+    el('creator').innerHTML=`<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">About Surya</h2>
+      <div class="warn" style="margin:14px 0">✍️ Write in your own voice — this is where people decide whether to trust you. Leave a blank line between paragraphs. Changes appear on the website immediately.</div>
+
+      <label>Section heading</label>
+      <input type="text" data-a="heading" placeholder="A researcher's mind. A teacher's heart.">
+
+      <label>Your story <span style="color:var(--ink-2);font-weight:500">(blank line = new paragraph)</span></label>
+      <textarea rows="9" data-a="body" placeholder="Namaskar — I'm Surya Ghosh…"></textarea>
+
+      <label>Caption under the animation</label>
+      <input type="text" data-a="caption" placeholder="Surya Ghosh · Researcher &amp; Finance Coach">
+
+      <h3 style="font-family:'Sora',sans-serif;font-size:16px;font-weight:600;margin:24px 0 4px">The four highlights</h3>
+      <div id="pillarFields"></div>
+
+      <label>Button text</label>
+      <input type="text" data-a="cta" placeholder="Learn with Surya">
+
+      <div id="aboutPreview" style="margin-top:20px;padding:24px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line)"></div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="gold" id="saveAbout">Save to website</button>
+        <button class="ghost" id="resetAbout">Restore original wording</button>
+      </div>
+      <p class="msg" id="aboutMsg"></p>
+    </div>`;
+
+    el('pillarFields').innerHTML=[1,2,3,4].map(i=>`
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-bottom:10px">
+        <input type="text" data-a="p${i}title" placeholder="Highlight ${i} title">
+        <input type="text" data-a="p${i}text" placeholder="One short line">
+      </div>`).join('');
+
+    const DEF={
+      heading:"A researcher's mind. A teacher's heart.",
+      body:"Namaskar — I'm Surya Ghosh, born in Balasore, Odisha. A researcher by profession, a student by habit. I study money: the invisible current that runs the world.\n\nWhy teach? A selfish desire — I want no one around me to fear money. Financial stress has broken too many good people.\n\nOne promise: never a stock tip. Only how I read the world, and the patient path to freedom.",
+      caption:"Surya Ghosh · Researcher & Finance Coach",
+      cta:"Learn with Surya",
+      p1title:"Ask me anything", p1text:"No money question is too small.",
+      p2title:"Four languages, one mission", p2text:"English, Hindi, Bengali, Odia. Marathi in progress.",
+      p3title:"Perspective over tips", p3text:"Broad thinking, never hot picks.",
+      p4title:"Beyond the spreadsheets", p4text:"Biography reader, lifelong student, Naruto & One Piece fan."
+    };
+
+    const fields=()=>[...document.querySelectorAll('[data-a]')];
+    const values=()=>{const o={};fields().forEach(f=>o[f.dataset.a]=f.value.trim());return o;};
+    function fill(v){ fields().forEach(f=>f.value=v[f.dataset.a]||''); preview(); }
+
+    function preview(){
+      const v=values();
+      const paras=String(v.body||'').split(/\n{2,}/).filter(Boolean)
+        .map(p=>`<p style="color:var(--ink-2);margin-bottom:10px;font-size:15px">${esc(p)}</p>`).join('');
+      const pil=[1,2,3,4].map(i=>v['p'+i+'title']?`
+        <div style="padding-left:13px;border-left:2px solid var(--accent);margin-bottom:10px">
+          <b style="display:block;font-family:'Sora',sans-serif;font-size:14px">${esc(v['p'+i+'title'])}</b>
+          <span style="font-size:13.5px;color:var(--ink-2)">${esc(v['p'+i+'text']||'')}</span></div>`:'').join('');
+      el('aboutPreview').innerHTML=`
+        <h3 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:600;letter-spacing:-.03em;margin-bottom:12px">${esc(v.heading||'')}</h3>
+        ${paras}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">${pil}</div>
+        <span style="display:inline-block;padding:10px 20px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:13px">${esc(v.cta||'')}</span>`;
+    }
+    document.addEventListener('input',e=>{ if(e.target.dataset && e.target.dataset.a) preview(); });
+
+    try{
+      const snap=await getDoc(doc(db,'site','about'));
+      fill(snap.exists()?{...DEF,...snap.data()}:DEF);
+    }catch(err){ fill(DEF); }
+
+    el('saveAbout').addEventListener('click',async()=>{
+      const b=el('saveAbout'); b.disabled=true;
+      try{
+        await setDoc(doc(db,'site','about'),{...values(),updatedAt:serverTimestamp()},{merge:true});
+        el('aboutMsg').style.color=''; el('aboutMsg').textContent='Saved — the website updated instantly.';
+        el('aboutMsg').classList.add('saved');
+        setTimeout(()=>{el('aboutMsg').textContent='';el('aboutMsg').classList.remove('saved');},4000);
+      }catch(err){
+        el('aboutMsg').style.color='#E0685A';
+        el('aboutMsg').textContent='Could not save right now. Please try again in a moment.';
+        console.error('[ASA] about save failed',err);
+      }
+      b.disabled=false;
+    });
+
+    el('resetAbout').addEventListener('click',()=>{
+      if(confirm('Restore the original wording? You still need to press Save.')) fill(DEF);
+    });
+  }
 
   /* ---------- Homepage headline editor ---------- */
   async function showSiteEditor(){
