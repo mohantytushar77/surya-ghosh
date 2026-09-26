@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Admin</title>
-<!-- BUILD: academy-v23 -->
+<!-- BUILD: academy-v26 -->
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -301,7 +301,8 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
     if(status==='about'){ showAboutEditor(); return; }
     if(status==='students'){ showStudents(); return; }
     if(['posts','courses','books'].includes(status)){
-      showCreator(status);
+      if(status==='courses'||status==='posts'){ loadSections(status).then(()=>showCreator(status)); }
+      else showCreator(status);
       const q=query(collection(db,status),orderBy('createdAt','desc'));
       unsub=onSnapshot(q,snap=>renderContent(status,snap),err=>showError(err,status));
       return;
@@ -568,8 +569,8 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
 
   /* ---------- Blog / Courses / Books: create + edit + delete ---------- */
   const FIELDS={
-    posts:[['title','Title','input'],['tag','Tag (e.g. Macro, Mindset)','input'],['coverUrl','Cover image link (https://…)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
-    courses:[['title','Course name','input'],['level','Category label (e.g. Foundation)','input'],['coverUrl','Cover image link (https://…)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['enrolUrl','Payment link (Razorpay / UPI) — optional','input'],['summary','Public summary (everyone sees this)','textarea'],['videoUrl','🔒 Video link — only enrolled students see this','input'],['content','🔒 Lesson content — only enrolled students see this','textarea']],
+    posts:[['title','Title','input'],['category','Section','input'],['coverUrl','Cover image link (https://…)','input'],['excerpt','Short excerpt','textarea'],['body','Full post','textarea']],
+    courses:[['title','Course name','input'],['category','Category — type finance or psychology','input'],['level','Level label (e.g. Foundation)','input'],['coverUrl','Cover image link (https://…)','input'],['price','Price (e.g. ₹2,999)','input'],['duration','Duration (e.g. 24 lessons · 4 hrs)','input'],['enrolUrl','Payment link (Razorpay / UPI) — optional','input'],['summary','Public summary (everyone sees this)','textarea'],['videoUrl','🔒 Video link — only enrolled students see this','input'],['content','🔒 Lesson content — only enrolled students see this','textarea']],
     books:[['title','Book title','input'],['author','Author','input'],['coverUrl','Cover image link (https://…)','input'],['summary','Summary','textarea'],['takeaways','Key takeaways','textarea']]
   };
   const LABEL={posts:'blog post',courses:'course',books:'book summary'};
@@ -578,6 +579,13 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
   function fieldHTML(kind,vals={},prefix=''){
     return FIELDS[kind].map(([k,label,type])=>{
       const v=esc(vals[k]||'');
+      if(k==='category'){
+        const cur=(vals[k]||(SECTIONS[0]&&SECTIONS[0].id)||'finance');
+        const opts=(SECTIONS.length?SECTIONS:DEFAULT_SECTIONS)
+          .map(x=>`<option value="${esc(x.id)}"${x.id===cur?' selected':''}>${esc(x.name)}</option>`).join('');
+        return `<label>Section <span style="color:var(--ink-2);font-weight:500">(where it appears on the website)</span></label>
+        <select data-f="category">${opts}</select>`;
+      }
       if(k==='coverUrl'){
         const uid='up'+(++upSeq);
         const has=!!(vals[k]);
@@ -694,6 +702,95 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
     courses:IMGHELP+`<div class="warn" style="margin:14px 0 0">🎬 <b>Adding a video:</b> upload the video to YouTube (you can set it to <b>Unlisted</b> so only people with the link can watch), then copy the link from the address bar and paste it above. Vimeo links work too. The video then plays right inside the course card on the website.<br><br>Direct video-file uploads are not used here on purpose: Firebase charges for video storage and bandwidth, while YouTube hosts and streams for free.</div>`,
     posts:IMGHELP, books:IMGHELP
   };
+  /* ---------- Course sections (custom headers) ---------- */
+  let SECTIONS=[];
+  const DEFAULTS_BY_KIND={
+    courses:[
+      {id:'finance',    name:'Finance',    desc:'The money itself — earning, saving, investing, protecting.'},
+      {id:'psychology', name:'Psychology', desc:'The mind that manages it — habits, fear, patience.'}
+    ],
+    posts:[
+      {id:'markets', name:'Markets',  desc:'How economies move, and what it means for you.'},
+      {id:'mindset', name:'Mindset',  desc:'The behaviour behind the numbers.'},
+      {id:'basics',  name:'Basics',   desc:'Plain answers to the questions everyone starts with.'}
+    ]
+  };
+  const SECTION_DOC={courses:'coursesections', posts:'postsections'};
+  let DEFAULT_SECTIONS=DEFAULTS_BY_KIND.courses;
+  const slug = t => String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40) || ('s'+Date.now());
+
+  async function loadSections(kind='courses'){
+    DEFAULT_SECTIONS=DEFAULTS_BY_KIND[kind]||DEFAULTS_BY_KIND.courses;
+    try{
+      const snap=await getDoc(doc(db,'site',SECTION_DOC[kind]||'coursesections'));
+      SECTIONS = (snap.exists() && Array.isArray(snap.data().list) && snap.data().list.length)
+        ? snap.data().list : DEFAULT_SECTIONS.slice();
+    }catch(e){ SECTIONS=DEFAULT_SECTIONS.slice(); }
+    return SECTIONS;
+  }
+
+  function sectionManagerHTML(kind='courses'){
+    const word = kind==='posts' ? 'blog post' : 'course';
+    const eg   = kind==='posts' ? '“Markets”, “Mindset”, “Basics”' : '“Finance”, “Psychology”, “Beginner track”';
+    return `<div class="panel">
+      <h2 style="font-size:19px;font-weight:700">${kind==='posts'?'Blog sections':'Course sections'}</h2>
+      <div class="warn" style="margin:14px 0">🗂️ These are the headers your ${word}s appear under on the website. Add as many as you like — for example ${eg}. Each ${word} is then filed under one of them, and visitors can filter by section.</div>
+      <div id="secRows"></div>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="ghost" id="addSec">+ Add a section</button>
+        <button class="gold" id="saveSecs">Save sections</button>
+      </div>
+      <p class="msg" id="secMsg"></p>
+    </div>`;
+  }
+
+  function drawSecRows(){
+    el('secRows').innerHTML = SECTIONS.map((x,i)=>`
+      <div class="secrow" data-i="${i}" style="display:grid;grid-template-columns:1fr 1.5fr auto auto;gap:9px;margin-bottom:9px;align-items:center">
+        <input type="text" class="s-name" value="${esc(x.name||'')}" placeholder="Section name">
+        <input type="text" class="s-desc" value="${esc(x.desc||'')}" placeholder="One short line (optional)">
+        <button class="ghost s-up" title="Move up" style="padding:9px 13px">↑</button>
+        <button class="danger s-del" title="Remove" style="padding:9px 13px">✕</button>
+      </div>`).join('') || '<p class="empty">No sections yet — add one.</p>';
+  }
+
+  function readSecRows(){
+    return [...document.querySelectorAll('.secrow')].map(r=>{
+      const name=r.querySelector('.s-name').value.trim();
+      const desc=r.querySelector('.s-desc').value.trim();
+      const old=SECTIONS[+r.dataset.i]||{};
+      return name ? {id: old.id || slug(name), name, desc} : null;
+    }).filter(Boolean);
+  }
+
+  function bindSectionManager(kind='courses'){
+    drawSecRows();
+    el('addSec').onclick=()=>{ SECTIONS=readSecRows(); SECTIONS.push({id:slug('section'+(SECTIONS.length+1)),name:'',desc:''}); drawSecRows(); };
+    el('secRows').onclick=e=>{
+      const row=e.target.closest('.secrow'); if(!row) return;
+      const i=+row.dataset.i; SECTIONS=readSecRows();
+      if(e.target.classList.contains('s-del')){ SECTIONS.splice(i,1); drawSecRows(); }
+      if(e.target.classList.contains('s-up') && i>0){ const t=SECTIONS[i-1];SECTIONS[i-1]=SECTIONS[i];SECTIONS[i]=t; drawSecRows(); }
+    };
+    el('saveSecs').onclick=async()=>{
+      SECTIONS=readSecRows();
+      if(!SECTIONS.length){ alert('Keep at least one section.'); return; }
+      const b=el('saveSecs'); b.disabled=true;
+      try{
+        await setDoc(doc(db,'site',SECTION_DOC[kind]||'coursesections'),{list:SECTIONS,updatedAt:serverTimestamp()},{merge:true});
+        el('secMsg').textContent='Sections saved — the website updated instantly.';
+        el('secMsg').classList.add('saved');
+        setTimeout(()=>{el('secMsg').textContent='';el('secMsg').classList.remove('saved');},4000);
+        showCreator(kind);
+      }catch(err){
+        el('secMsg').style.color='#E0685A';
+        el('secMsg').textContent='Could not save right now. Please try again.';
+        console.error('[ASA] sections',err);
+      }
+      b.disabled=false;
+    };
+  }
+
   function showCreator(kind){
     el('creator').innerHTML=`<div class="panel">
       <h2 style="font-size:19px;font-weight:700">Add a new ${LABEL[kind]}</h2>
@@ -702,6 +799,10 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
       <div style="margin-top:16px"><button class="gold" data-new="${kind}">Publish ${LABEL[kind]}</button></div>
       <p class="msg" id="newMsg"></p>
     </div>`;
+    if(kind==='courses'||kind==='posts'){
+      el('creator').insertAdjacentHTML('afterbegin', sectionManagerHTML(kind));
+      bindSectionManager(kind);
+    }
   }
 
   async function fillPrivate(kind,list){
@@ -722,7 +823,23 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
   function renderContent(kind,snap){
     const list=el('list');
     if(snap.empty){list.innerHTML=`<p class="empty">No ${LABEL[kind]}s yet — add your first one above.</p>`;return;}
-    list.innerHTML=snap.docs.map(d=>{
+    let docs=snap.docs;
+    if(kind==='courses'||kind==='posts'){
+      const head=c=>`<h3 style="font-family:'Sora',sans-serif;font-size:15px;font-weight:600;margin:22px 0 10px;color:var(--ink-2);letter-spacing:.04em">${c}</h3>`;
+      const secs=SECTIONS.length?SECTIONS:DEFAULT_SECTIONS;
+      let html='';
+      secs.forEach(sec=>{
+        const inSec=docs.filter(d=>(d.data().category||secs[0].id)===sec.id);
+        if(inSec.length) html+=head(String(sec.name||'').toUpperCase())+inSec.map(d=>courseCard(kind,d)).join('');
+      });
+      const known=new Set(secs.map(x=>x.id));
+      const orphans=docs.filter(d=>!known.has(d.data().category||secs[0].id));
+      if(orphans.length) html+=head('UNFILED')+orphans.map(d=>courseCard(kind,d)).join('');
+      list.innerHTML=html||`<p class="empty">No ${LABEL[kind]}s yet.</p>`;
+      fillPrivate(kind,list);
+      return;
+    }
+    list.innerHTML=docs.map(d=>{
       const v=d.data();
       return `<div class="q" data-path="${d.ref.path}">
         ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:contain;background:var(--bg-2);border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
@@ -735,6 +852,19 @@ if(!firebaseConfig || !firebaseConfig.apiKey){
         </details></div>`;
     }).join('');
     fillPrivate(kind,list);
+  }
+
+  function courseCard(kind,d){
+    const v=d.data();
+    return `<div class="q" data-path="${d.ref.path}">
+      ${v.coverUrl?`<img src="${esc(v.coverUrl)}" alt="" style="width:100%;max-height:150px;object-fit:contain;background:var(--bg-2);border-radius:10px;margin-bottom:12px;border:1px solid var(--line)" onerror="this.style.display='none'">`:''}
+      <p class="text"><b>${esc(v.title||'Untitled')}</b></p>
+      <p class="meta">${esc((SECTIONS.find(x=>x.id===(v.category||''))||{}).name||'Unfiled')}${v.price?' · '+esc(v.price):''}${v.createdAt&&v.createdAt.toDate?' · '+v.createdAt.toDate().toLocaleDateString('en-IN'):''}</p>
+      <details style="margin-top:10px"><summary style="cursor:pointer;font-family:'Sora',sans-serif;font-size:13.5px;color:var(--accent)">Edit</summary>
+        <div style="margin-top:8px">${fieldHTML(kind,v)}</div>
+        <div class="row"><button class="teal" data-save="${kind}">Save changes</button>
+        <button class="danger" data-del="1">Delete</button></div>
+      </details></div>`;
   }
 
   // Create new content
