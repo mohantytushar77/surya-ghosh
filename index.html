@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfterSchool Academy — Master Your Money. Design the Life You Actually Want.</title>
-<!-- BUILD: academy-v23 -->
+<!-- BUILD: academy-v26 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -294,6 +294,18 @@ a.course,a.book,a.post{cursor:pointer;display:flex}
 a.course{flex-direction:column}
 a.post{flex-direction:column}
 @media (max-width:520px){.card-cover.book-cover{display:none}}
+
+
+/* course sections */
+.course-section{margin-bottom:46px}
+.course-section:last-child{margin-bottom:0}
+.cs-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:18px;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
+.cs-head h3{font-size:clamp(19px,2.2vw,25px);font-weight:600;letter-spacing:-.025em}
+.cs-head p{color:var(--ink-2);font-size:15px;margin:0}
+.course-section.hide,.post-section.hide{display:none}
+.post-section{margin-bottom:46px}
+.post-section:last-child{margin-bottom:0}
 
 /* ---- books ---- */
 .book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -1121,7 +1133,7 @@ header.shrunk .nav{height:58px}
     <div class="section-head reveal">
       <span class="sec-no">03</span><span class="eyebrow">Learn · Step by step</span>
       <h2>Courses for every stage of the journey</h2>
-      <p>Start where you are. Short lessons, real worksheets.</p>
+      <p>Two tracks: the money itself, and the mind that manages it.</p>
     </div>
     <div class="tilt-scene course-grid" id="courseGrid">
       <p class="calc-note" style="grid-column:1/-1">Courses arrive soon.</p>
@@ -1192,6 +1204,7 @@ header.shrunk .nav{height:58px}
       <h2>Notes on money, markets and freedom</h2>
       <p>How economies move, and what it means for you.</p>
     </div>
+    <div class="topic-filter" id="blogFilter" role="tablist" aria-label="Filter posts"></div>
     <div class="blog-list" id="blogList">
       <article class="post">
         <div class="post-head">
@@ -1556,6 +1569,30 @@ document.getElementById('pendingList').addEventListener('click',e=>{
       .sort((a,b)=>+b.querySelector('.v-count').textContent - +a.querySelector('.v-count').textContent)
       .forEach(n=>list.appendChild(n));
   }
+});
+
+/* ---------- Course category filter ---------- */
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('#courseFilter .tchip');
+  if(!chip) return;
+  document.querySelectorAll('#courseFilter .tchip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  const cat=chip.dataset.cat;
+  document.querySelectorAll('#courseGrid .course-section').forEach(sec=>{
+    sec.classList.toggle('hide', !(cat==='all' || sec.dataset.cat===cat));
+  });
+});
+
+/* ---------- Blog section filter ---------- */
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('#blogFilter .tchip');
+  if(!chip) return;
+  document.querySelectorAll('#blogFilter .tchip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  const cat=chip.dataset.cat;
+  document.querySelectorAll('#blogList .post-section').forEach(sec=>{
+    sec.classList.toggle('hide', !(cat==='all' || sec.dataset.cat===cat));
+  });
 });
 
 /* ---------- Answer library topic filter ---------- */
@@ -1945,7 +1982,7 @@ if(firebaseConfig && firebaseConfig.apiKey){
   const votedIds = new Set();
   const esc = t => { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
   window.SFF.live = true;
-  setStatus('● LIVE (build academy-v23) — connected to Firebase.','var(--ok)');
+  setStatus('● LIVE (build academy-v26) — connected to Firebase.','var(--ok)');
   if(location.protocol==='file:'){
     setStatus('⚠ Opened as a local file (file://). Firebase may block this. Run a local server or deploy with Firebase Hosting.','#E0685A');
   }
@@ -2019,21 +2056,66 @@ if(firebaseConfig && firebaseConfig.apiKey){
   };
 
   /* ---- Live COURSES ---- */
-  onSnapshot(query(collection(db,'courses'), orderBy('createdAt','desc')), snap=>{
-    if(snap.empty) return;
-    document.getElementById('courseGrid').innerHTML=snap.docs.map(d=>{
-      const c=d.data();
+  let SECTIONS=[{id:'finance',name:'Finance',desc:''},{id:'psychology',name:'Psychology',desc:''}];
+  let COURSE_DOCS=[];
+
+  function paintCourses(){
+    const grid=document.getElementById('courseGrid');
+    const bar=document.getElementById('courseFilter');
+    if(!grid) return;
+    if(!COURSE_DOCS.length) return;
+
+    // filter chips from the sections Surya defined
+    if(bar) bar.innerHTML =
+      `<button class="tchip active" data-cat="all">All courses</button>`+
+      SECTIONS.map(x=>`<button class="tchip" data-cat="${esc(x.id)}">${esc(x.name)}</button>`).join('');
+
+    const card = (d)=>{
+      const c=d.data, id=d.id;
+      const cat=c.category||SECTIONS[0].id;
+      const secName=(SECTIONS.find(x=>x.id===cat)||{}).name||'Course';
       const cover=c.coverUrl?`<div class="card-cover" style="--img:url('${esc(c.coverUrl)}')"><img src="${esc(c.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
-      return `<a class="course" href="view.html?type=courses&id=${d.id}">
-        ${cover||`<div class="banner"><span class="level">${esc(c.level||'Course')}</span></div>`}
+      return `<a class="course" data-cat="${esc(cat)}" href="view.html?type=courses&id=${id}">
+        ${cover||`<div class="banner"><span class="level">${esc(secName)}</span></div>`}
         <div class="body">
-          ${cover?`<span class="level level-inline">${esc(c.level||'Course')}</span>`:''}
+          <span class="level level-inline">${esc(secName)}${c.level?' · '+esc(c.level):''}</span>
           <h3>${esc(c.title||'')}</h3>
           <p>${esc(c.summary||'')}</p>
           <div class="meta"><span class="price">${esc(c.price||'')}</span><span class="lessons">${esc(c.duration||'')}</span></div>
           <span class="open-link">🔒 View &amp; enrol →</span>
         </div></a>`;
-    }).join('');
+    };
+
+    let html='';
+    SECTIONS.forEach(sec=>{
+      const inSec=COURSE_DOCS.filter(d=>(d.data.category||SECTIONS[0].id)===sec.id);
+      if(!inSec.length) return;
+      html+=`<div class="course-section" data-cat="${esc(sec.id)}">
+        <div class="cs-head"><h3>${esc(sec.name)}</h3>${sec.desc?`<p>${esc(sec.desc)}</p>`:''}</div>
+        <div class="course-grid tilt-scene">${inSec.map(card).join('')}</div>
+      </div>`;
+    });
+    const known=new Set(SECTIONS.map(x=>x.id));
+    const rest=COURSE_DOCS.filter(d=>!known.has(d.data.category||SECTIONS[0].id));
+    if(rest.length) html+=`<div class="course-section" data-cat="other">
+      <div class="cs-head"><h3>More courses</h3></div>
+      <div class="course-grid tilt-scene">${rest.map(card).join('')}</div></div>`;
+    grid.innerHTML=html;
+    grid.classList.remove('course-grid','tilt-scene');
+    if(window.SFF_bindTilt) window.SFF_bindTilt();
+  }
+
+  onSnapshot(doc(db,'site','coursesections'), snap=>{
+    if(snap.exists() && Array.isArray(snap.data().list) && snap.data().list.length){
+      SECTIONS=snap.data().list;
+      paintCourses();
+    }
+  }, ()=>{});
+
+  onSnapshot(query(collection(db,'courses'), orderBy('createdAt','desc')), snap=>{
+    if(snap.empty) return;
+    COURSE_DOCS=snap.docs.map(d=>({id:d.id,data:d.data()}));
+    paintCourses();
   }, err=>reportErr(err,'Loading courses'));
 
   /* ---- Live BOOK SUMMARIES ---- */
@@ -2054,22 +2136,65 @@ if(firebaseConfig && firebaseConfig.apiKey){
   }, err=>reportErr(err,'Loading book summaries'));
 
   /* ---- Live BLOG ---- */
-  onSnapshot(query(collection(db,'posts'), orderBy('createdAt','desc')), snap=>{
-    if(snap.empty) return;
-    document.getElementById('blogList').innerHTML=snap.docs.map(d=>{
-      const b=d.data(), when=b.createdAt&&b.createdAt.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'';
+  let POST_SECTIONS=[{id:'markets',name:'Markets',desc:''},{id:'mindset',name:'Mindset',desc:''},{id:'basics',name:'Basics',desc:''}];
+  let POST_DOCS=[];
+
+  function paintPosts(){
+    const list=document.getElementById('blogList');
+    const bar=document.getElementById('blogFilter');
+    if(!list || !POST_DOCS.length) return;
+
+    if(bar) bar.innerHTML =
+      `<button class="tchip active" data-cat="all">All posts</button>`+
+      POST_SECTIONS.map(x=>`<button class="tchip" data-cat="${esc(x.id)}">${esc(x.name)}</button>`).join('');
+
+    const card = d => {
+      const b=d.data, id=d.id;
+      const cat=b.category||b.tag||POST_SECTIONS[0].id;
+      const secName=(POST_SECTIONS.find(x=>x.id===cat)||{}).name||cat;
+      const when=b.createdAt&&b.createdAt.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'';
       const cover=b.coverUrl?`<div class="post-cover" style="--img:url('${esc(b.coverUrl)}')"><img src="${esc(b.coverUrl)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`:'';
-      return `<a class="post" href="view.html?type=posts&id=${d.id}">
+      return `<a class="post" data-cat="${esc(cat)}" href="view.html?type=posts&id=${id}">
         ${cover}
         <div class="post-head">
-          ${b.tag?`<span class="post-tag">${esc(b.tag)}</span>`:''}
+          <span class="post-tag">${esc(secName)}</span>
           <h3>${esc(b.title||'')}</h3>
           <p class="post-meta">By Surya Ghosh${when?' · '+when:''}</p>
         </div>
         ${b.excerpt?`<p class="post-excerpt">${esc(b.excerpt)}</p>`:''}
         <span class="open-link">Read the full post →</span>
       </a>`;
-    }).join('');
+    };
+
+    let html='';
+    POST_SECTIONS.forEach(sec=>{
+      const inSec=POST_DOCS.filter(d=>(d.data.category||d.data.tag||POST_SECTIONS[0].id)===sec.id);
+      if(!inSec.length) return;
+      html+=`<div class="post-section" data-cat="${esc(sec.id)}">
+        <div class="cs-head"><h3>${esc(sec.name)}</h3>${sec.desc?`<p>${esc(sec.desc)}</p>`:''}</div>
+        <div class="blog-list">${inSec.map(card).join('')}</div>
+      </div>`;
+    });
+    const known=new Set(POST_SECTIONS.map(x=>x.id));
+    const rest=POST_DOCS.filter(d=>!known.has(d.data.category||d.data.tag||POST_SECTIONS[0].id));
+    if(rest.length) html+=`<div class="post-section" data-cat="other">
+      <div class="cs-head"><h3>More writing</h3></div>
+      <div class="blog-list">${rest.map(card).join('')}</div></div>`;
+    list.innerHTML=html;
+    list.classList.remove('blog-list');
+  }
+
+  onSnapshot(doc(db,'site','postsections'), snap=>{
+    if(snap.exists() && Array.isArray(snap.data().list) && snap.data().list.length){
+      POST_SECTIONS=snap.data().list;
+      paintPosts();
+    }
+  }, ()=>{});
+
+  onSnapshot(query(collection(db,'posts'), orderBy('createdAt','desc')), snap=>{
+    if(snap.empty) return;
+    POST_DOCS=snap.docs.map(d=>({id:d.id,data:d.data()}));
+    paintPosts();
   }, err=>reportErr(err,'Loading blog posts'));
 
   window.SFF.vote = (id,delta)=>{
